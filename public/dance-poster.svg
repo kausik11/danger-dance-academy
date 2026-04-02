@@ -1,0 +1,50 @@
+<svg width="900" height="1080" viewBox="0 0 900 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1080" rx="48" fill="#04010A"/>
+  <rect width="900" height="1080" rx="48" fill="url(#bg)"/>
+  <circle cx="171" cy="181" r="184" fill="#7C3AED" fill-opacity="0.36"/>
+  <circle cx="724" cy="226" r="220" fill="#2563EB" fill-opacity="0.28"/>
+  <circle cx="483" cy="848" r="286" fill="#C026D3" fill-opacity="0.18"/>
+  <path d="M0 874C120 812 227 781 353 800C479 819 541 918 684 923C765 926 837 900 900 857V1080H0V874Z" fill="url(#floor)" fill-opacity="0.72"/>
+  <g opacity="0.55">
+    <path d="M179 89L450 772" stroke="url(#beam)" stroke-width="74" stroke-linecap="round"/>
+    <path d="M717 89L450 772" stroke="url(#beam2)" stroke-width="74" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#glow)">
+    <path d="M454 266C482 266 509 279 523 308C540 343 540 384 519 420L492 465L542 566L510 590L442 493H398L367 596L325 586L362 436L340 385C323 346 328 305 357 283C381 265 417 261 454 266Z" fill="#EBF4FF"/>
+    <path d="M515 347C597 343 639 384 644 461C649 545 598 599 507 613L483 571C541 556 571 529 569 479C568 431 544 401 494 394L515 347Z" fill="#D8B4FE"/>
+    <path d="M358 306C286 323 251 371 251 444C251 513 285 557 358 574L377 531C328 515 304 486 304 444C304 401 327 372 377 356L358 306Z" fill="#93C5FD"/>
+    <circle cx="454" cy="222" r="57" fill="#F8FAFC"/>
+  </g>
+  <g opacity="0.9">
+    <circle cx="151" cy="192" r="16" fill="#F5D0FE"/>
+    <circle cx="245" cy="133" r="9" fill="#C4B5FD"/>
+    <circle cx="694" cy="157" r="14" fill="#BFDBFE"/>
+    <circle cx="760" cy="246" r="11" fill="#DDD6FE"/>
+    <circle cx="667" cy="896" r="10" fill="#F0ABFC"/>
+    <circle cx="206" cy="842" r="15" fill="#A5B4FC"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="118" y1="72" x2="774" y2="1010" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#12051F"/>
+      <stop offset="0.42" stop-color="#07091B"/>
+      <stop offset="1" stop-color="#150228"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="450" y1="800" x2="450" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A" stop-opacity="0"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="189" y1="123" x2="487" y2="692" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#A855F7" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="beam2" x1="714" y1="123" x2="432" y2="692" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#38BDF8" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="181" y="95" width="532" height="570" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="24" result="effect1_foregroundBlur_40_2"/>
+    </filter>
+  </defs>
+</svg>

@@ -1,0 +1,57 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { academyData } from "@/lib/academy";
+
+type NavbarProps = {
+  ctaHref?: string;
+  ctaLabel?: string;
+};
+
+export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
+  return (
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed inset-x-0 top-0 z-40"
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <div className="glass-panel flex w-full items-center justify-between rounded-full px-4 py-3 sm:px-6">
+          <a href="#top" className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[radial-gradient(circle_at_top,_#dbeafe,_#38bdf8_48%,_#082f49_100%)] shadow-[0_0_28px_rgba(56,189,248,0.4)]" />
+            <div>
+              <p className="font-display text-base text-white sm:text-lg">
+                {academyData.shortName}
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 sm:text-xs">
+                Baranagar
+              </p>
+            </div>
+          </a>
+
+          {!ctaHref ? (
+            <nav className="hidden items-center gap-6 lg:flex">
+              {academyData.navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm text-slate-300 hover:text-white"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          ) : null}
+
+          <a
+            href={ctaHref ?? `tel:${academyData.phone}`}
+            className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-5 text-sm font-semibold text-slate-950 shadow-[0_0_32px_rgba(56,189,248,0.32)] hover:scale-[1.02]"
+          >
+            {ctaLabel ?? "Call Now"}
+          </a>
+        </div>
+      </div>
+    </motion.header>
+  );
+}
