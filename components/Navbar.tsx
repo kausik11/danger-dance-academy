@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { academyData } from "@/lib/academy";
 
 type NavbarProps = {
@@ -19,7 +20,16 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="glass-panel flex w-full items-center justify-between rounded-full px-4 py-3 sm:px-6">
           <a href="#top" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[radial-gradient(circle_at_top,_#dbeafe,_#38bdf8_48%,_#082f49_100%)] shadow-[0_0_28px_rgba(56,189,248,0.4)]" />
+            <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/40 shadow-[0_0_28px_rgba(56,189,248,0.22)] ring-1 ring-white/10">
+              <Image
+                src="/logo.jpeg"
+                alt={`${academyData.shortName} logo`}
+                fill
+                sizes="48px"
+                className="object-cover"
+                priority
+              />
+            </span>
             <div>
               <p className="font-display text-base text-white sm:text-lg">
                 {academyData.shortName}
