@@ -10,6 +10,7 @@ import {
   Sparkles,
   Torus,
 } from "@react-three/drei";
+import { PCFShadowMap } from "three";
 import type { Mesh } from "three";
 import { motion } from "framer-motion";
 
@@ -132,7 +133,11 @@ export function ThreeScene() {
         >
           <div className="overflow-hidden rounded-[30px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_rgba(2,6,23,0.95)_52%)]">
             <Suspense fallback={<SceneFallback />}>
-              <Canvas shadows dpr={[1, 1.8]} className="h-[30rem] w-full">
+              <Canvas
+                shadows={{ type: PCFShadowMap }}
+                dpr={[1, 1.8]}
+                className="h-[30rem] w-full"
+              >
                 <color attach="background" args={["#030712"]} />
                 <fog attach="fog" args={["#030712", 7, 14]} />
                 <PerspectiveCamera makeDefault position={[0, 0, 7.6]} fov={42} />
