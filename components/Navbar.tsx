@@ -41,12 +41,12 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
           </a>
 
           {!ctaHref ? (
-            <nav className="hidden items-center gap-6 lg:flex">
+            <nav className="hidden items-center gap-4 xl:gap-5 lg:flex">
               {academyData.navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-sm text-slate-300 hover:text-white"
+                  className="text-xs uppercase tracking-[0.18em] text-slate-300 hover:text-white xl:text-sm xl:tracking-[0.1em]"
                 >
                   {item.label}
                 </a>

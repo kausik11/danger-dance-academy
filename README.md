@@ -1,5 +1,63 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Backend Setup
+
+The academy admin/backend now stores content in MongoDB, protects the admin
+panel with email/password login, and uploads gallery/blog/admin images to
+Cloudinary.
+
+### Environment
+
+1. Create `frontend/.env.local`
+2. Copy the values from `frontend/.env.example`
+3. Set these values:
+
+- `MONGODB_URI`
+- `MONGODB_DB_NAME`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+- `ADMIN_NAME`
+- `ADMIN_SESSION_SECRET`
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
+
+### MongoDB Atlas
+
+1. Create a MongoDB Atlas cluster
+2. Create a database user
+3. Allow the deployment IPs in Network Access
+4. Copy the Atlas connection string into `MONGODB_URI`
+5. Set `MONGODB_DB_NAME` to the database you want the academy app to use
+
+On the first authenticated/admin or content request, the academy collections are seeded automatically for:
+
+- Services
+- Events
+- Gallery
+- FAQs
+- Blog
+- Success Stories
+
+### Admin Login
+
+Visit `/admin/login` and sign in with the bootstrap admin email/password from
+your environment.
+
+### Cloudinary Uploads
+
+The admin panel uploads images through a protected server route and stores the
+returned Cloudinary URL in MongoDB content records.
+
+### API endpoints
+
+- `GET /api/academy`
+- `GET, POST /api/academy/[module]`
+- `GET, PATCH, DELETE /api/academy/[module]/[id]`
+- `POST /api/admin/auth/login`
+- `POST /api/admin/auth/logout`
+- `POST /api/admin/uploads`
+
 ## Getting Started
 
 First, run the development server:

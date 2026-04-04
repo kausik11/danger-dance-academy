@@ -19,9 +19,12 @@ export const academyData = {
     "A performance-focused dance space where beginners and young dancers build rhythm, confidence, stage presence, and technique in a supportive environment.",
   navItems: [
     { label: "About", href: "#about" },
-    { label: "Testimonials", href: "#testimonials" },
-    { label: "Reviews", href: "#reviews" },
-    { label: "3D Experience", href: "#experience" },
+    { label: "Services", href: "#services" },
+    { label: "Events", href: "#events" },
+    { label: "Gallery", href: "#gallery" },
+    { label: "FAQs", href: "#faqs" },
+    { label: "Blog", href: "#blog" },
+    { label: "Stories", href: "#stories" },
     { label: "Join", href: "#join" },
   ],
   highlights: [
