@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { academyData } from "@/lib/academy";
 
@@ -54,13 +53,15 @@ export function AboutSection() {
           <div className="absolute -inset-6 bg-[radial-gradient(circle,_rgba(168,85,247,0.22),_transparent_62%)] blur-3xl" />
           <div className="glass-panel relative overflow-hidden rounded-[34px] p-4">
             <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#070612]">
-              <Image
-                src="/dance-poster.svg"
-                alt="Danger Dance Academy visual poster"
-                width={900}
-                height={1080}
+              <video
+                src="/about.mp4"
                 className="h-[30rem] w-full object-cover"
-                priority
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/dance-poster.svg"
               />
             </div>
 

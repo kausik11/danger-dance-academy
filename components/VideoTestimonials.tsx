@@ -39,9 +39,12 @@ export function VideoTestimonials() {
               <video
                 src={item.videoSrc}
                 className="aspect-[4/5] w-full object-cover"
+                autoPlay
+                muted
+                loop
                 controls
                 playsInline
-                preload="metadata"
+                preload="auto"
                 poster="/dance-poster.svg"
               />
             </div>
