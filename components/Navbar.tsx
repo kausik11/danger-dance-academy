@@ -13,6 +13,7 @@ type NavbarProps = {
 
 export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   const pathname = usePathname();
+  const showContactButton = pathname !== "/contact";
 
   return (
     <motion.header
@@ -62,21 +63,41 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
             </nav>
           ) : null}
 
-          {(ctaHref ?? `tel:${academyData.phone}`).startsWith("/") ? (
-            <Link
-              href={ctaHref ?? "/join"}
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-5 text-sm font-semibold text-slate-950 shadow-[0_0_32px_rgba(56,189,248,0.32)] hover:scale-[1.02]"
-            >
-              {ctaLabel ?? "Call Now"}
-            </Link>
-          ) : (
-            <a
-              href={ctaHref ?? `tel:${academyData.phone}`}
-              className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-5 text-sm font-semibold text-slate-950 shadow-[0_0_32px_rgba(56,189,248,0.32)] hover:scale-[1.02]"
-            >
-              {ctaLabel ?? "Call Now"}
-            </a>
-          )}
+          <div className="flex items-center gap-3">
+            {ctaHref ? (
+              ctaHref.startsWith("/") ? (
+                <Link
+                  href={ctaHref}
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-white/12 bg-white/5 px-5 text-sm font-semibold text-white hover:border-cyan-300/35 hover:bg-cyan-300/10"
+                >
+                  {ctaLabel ?? "Action"}
+                </Link>
+              ) : (
+                <a
+                  href={ctaHref}
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-white/12 bg-white/5 px-5 text-sm font-semibold text-white hover:border-cyan-300/35 hover:bg-cyan-300/10"
+                >
+                  {ctaLabel ?? "Action"}
+                </a>
+              )
+            ) : null}
+
+            {showContactButton ? (
+              <Link
+                href="/contact"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-5 text-sm font-semibold text-slate-950 shadow-[0_0_32px_rgba(56,189,248,0.32)] hover:scale-[1.02]"
+              >
+                Contact Us
+              </Link>
+            ) : (
+              <a
+                href={`tel:${academyData.phone}`}
+                className="inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-5 text-sm font-semibold text-slate-950 shadow-[0_0_32px_rgba(56,189,248,0.32)] hover:scale-[1.02]"
+              >
+                Call Now
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </motion.header>

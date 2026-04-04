@@ -2,6 +2,7 @@
 
 import { startTransition, useEffect, useState } from "react";
 import { GenerateButton } from "@/components/GenerateButton";
+import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Navbar } from "@/components/Navbar";
 import { PromptInput } from "@/components/PromptInput";
 import { ResultPreview } from "@/components/ResultPreview";
@@ -194,6 +195,8 @@ export default function DashboardPage() {
           </div>
         </section>
       </main>
+
+      <FloatingWhatsAppButton />
     </div>
   );
 }

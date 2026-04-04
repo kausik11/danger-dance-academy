@@ -10,6 +10,7 @@ export const academyData = {
     videoSrc: "/12022733_1920_1080_30fps.mp4",
   },
   phone: "8910492292",
+  whatsAppNumber: "918910492292",
   socialPlatforms: [
     { label: "Instagram", platform: "instagram" },
     { label: "Facebook", platform: "facebook" },

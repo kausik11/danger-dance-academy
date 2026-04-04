@@ -1,6 +1,7 @@
 "use client";
 
 import { MotionConfig } from "framer-motion";
+import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import ShaderBackground from "@/components/ui/shader-background";
 
@@ -22,6 +23,7 @@ export function HomeClientShell({ children }: HomeClientShellProps) {
         </div>
 
         <div className="relative z-10">{children}</div>
+        <FloatingWhatsAppButton />
       </div>
     </MotionConfig>
   );
