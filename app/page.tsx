@@ -4,10 +4,7 @@ import { CTASection } from "@/components/CTASection";
 import { EventsSection } from "@/components/EventsSection";
 import { FaqSection } from "@/components/FaqSection";
 import { GallerySection } from "@/components/GallerySection";
-<<<<<<< Updated upstream
 import { HomeClientShell } from "@/components/HomeClientShell";
-=======
->>>>>>> Stashed changes
 import { Hero } from "@/components/Hero";
 import { HomeThreeScene } from "@/components/HomeThreeScene";
 import { Navbar } from "@/components/Navbar";
@@ -32,7 +29,6 @@ export default async function Home() {
 
         <Navbar />
 
-<<<<<<< Updated upstream
         <main className="relative z-10">
           <Hero />
           <AboutSection />
@@ -47,22 +43,6 @@ export default async function Home() {
           <HomeThreeScene />
           <CTASection />
         </main>
-=======
-      <main className="relative z-10">
-        <Hero />
-        <AboutSection />
-        <ServicesSection services={academyModules.services} />
-        <EventsSection events={academyModules.events} />
-        <GallerySection gallery={academyModules.gallery} />
-        <FaqSection faqs={academyModules.faqs} />
-        <BlogSection posts={academyModules.blog} />
-        <SuccessStoriesSection stories={academyModules.successStories} />
-        <VideoTestimonials />
-        <ReviewsSection />
-        <HomeThreeScene />
-        <CTASection />
-      </main>
->>>>>>> Stashed changes
 
         <footer className="mx-auto flex max-w-7xl flex-col gap-3 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
           <p>
