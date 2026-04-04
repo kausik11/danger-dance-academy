@@ -13,6 +13,7 @@ import {
 import { PCFShadowMap } from "three";
 import type { Mesh } from "three";
 import { motion } from "framer-motion";
+import ShaderBackground from "@/components/ui/shader-background";
 import {
   listContainerVariants,
   listItemVariants,
@@ -88,7 +89,9 @@ function EnergyCore() {
 
 function SceneFallback() {
   return (
-    <div className="flex h-[30rem] items-center justify-center rounded-[32px] border border-white/10 bg-[radial-gradient(circle,_rgba(139,92,246,0.36),_rgba(15,23,42,0.95)_58%)]">
+    <div className="relative flex h-[30rem] items-center justify-center overflow-hidden rounded-[32px] border border-white/10 bg-[#050816]">
+      <ShaderBackground className="absolute inset-0 h-full w-full opacity-55" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(129,140,248,0.28),rgba(8,15,30,0.86)_56%),linear-gradient(180deg,rgba(4,8,24,0.1)_0%,rgba(2,6,23,0.78)_100%)]" />
       <div className="h-40 w-40 rounded-full bg-[radial-gradient(circle,_rgba(244,114,182,0.95),_rgba(129,140,248,0.7)_44%,_rgba(8,15,30,0)_72%)] blur-xl" />
     </div>
   );
@@ -150,14 +153,17 @@ export function ThreeScene() {
           variants={sectionMediaVariants}
           className="glass-panel overflow-hidden rounded-[36px] p-3 will-change-transform"
         >
-          <div className="overflow-hidden rounded-[30px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_rgba(2,6,23,0.95)_52%)]">
+          <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[#050816]">
+            {/* Keep the shader behind the Three.js canvas so the motion reads as atmospheric background, not a competing focal point. */}
+            <ShaderBackground className="absolute inset-0 h-full w-full opacity-60" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),rgba(2,6,23,0.78)_52%),linear-gradient(180deg,rgba(8,15,30,0.08)_0%,rgba(2,6,23,0.72)_100%)]" />
             <Suspense fallback={<SceneFallback />}>
               <Canvas
+                gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
                 shadows={{ type: PCFShadowMap }}
-                dpr={[1, 1.8]}
-                className="h-[30rem] w-full"
+                dpr={[1, 1.5]}
+                className="relative z-10 h-[30rem] w-full"
               >
-                <color attach="background" args={["#030712"]} />
                 <fog attach="fog" args={["#030712", 7, 14]} />
                 <PerspectiveCamera makeDefault position={[0, 0, 7.6]} fov={42} />
                 <ambientLight intensity={0.9} />
