@@ -1,16 +1,22 @@
 import { AdminConsole } from "@/components/admin/AdminConsole";
 import { requireAdminPageSession } from "@/lib/admin-session";
 import { getAcademyContent } from "@/lib/academy-cms-store";
+import {
+  listContactSubmissions,
+  type ContactSubmission,
+} from "@/lib/contact-submissions";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const admin = await requireAdminPageSession();
   let content = null;
+  let contactSubmissions: ContactSubmission[] = [];
   let errorMessage: string | null = null;
 
   try {
     content = await getAcademyContent();
+    contactSubmissions = await listContactSubmissions();
   } catch (error) {
     errorMessage =
       error instanceof Error ? error.message : "Unknown admin error.";
@@ -42,6 +48,7 @@ export default async function AdminPage() {
     <AdminConsole
       admin={{ email: admin.email, name: admin.name }}
       initialContent={content}
+      initialContactSubmissions={contactSubmissions}
     />
   );
 }

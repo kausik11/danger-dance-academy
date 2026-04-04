@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState, useTransition } from "react";
+import { AdminContactSubmissionsPanel } from "@/components/admin/AdminContactSubmissionsPanel";
 import {
   academyAdminDefaults,
   academyAdminFields,
@@ -16,6 +17,7 @@ import {
   type AcademyCollectionSlug,
   type AcademyContentData,
 } from "@/lib/academy-cms";
+import type { ContactSubmission } from "@/lib/contact-submissions";
 
 type AdminConsoleProps = {
   admin: {
@@ -23,6 +25,7 @@ type AdminConsoleProps = {
     name: string;
   };
   initialContent: AcademyContentData;
+  initialContactSubmissions: ContactSubmission[];
 };
 
 type AdminRecord = Record<string, unknown> & {
@@ -33,6 +36,21 @@ type AdminRecord = Record<string, unknown> & {
 };
 
 type AdminRecordsByModule = Record<AcademyCollectionSlug, AdminRecord[]>;
+type AdminSectionSlug = AcademyCollectionSlug | "contact-submissions";
+
+function formatStableDate(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
 
 function mapContentToModules(content: AcademyContentData): AdminRecordsByModule {
   return {
@@ -159,12 +177,16 @@ function isImageUrl(value: AcademyAdminFormValue | undefined) {
   );
 }
 
-export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
+export function AdminConsole({
+  admin,
+  initialContent,
+  initialContactSubmissions,
+}: AdminConsoleProps) {
   const [recordsByModule, setRecordsByModule] = useState<AdminRecordsByModule>(
     () => mapContentToModules(initialContent),
   );
-  const [selectedModule, setSelectedModule] =
-    useState<AcademyCollectionSlug>("services");
+  const [selectedSection, setSelectedSection] =
+    useState<AdminSectionSlug>("services");
   const [selectedItemIds, setSelectedItemIds] = useState<
     Record<AcademyCollectionSlug, string | null>
   >(() => buildInitialSelections(initialContent));
@@ -175,12 +197,19 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
   const [error, setError] = useState<string | null>(null);
   const [uploadingField, setUploadingField] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-
-  const selectedItems = recordsByModule[selectedModule];
-  const selectedItemId = selectedItemIds[selectedModule];
+  const selectedModule =
+    selectedSection === "contact-submissions" ? null : selectedSection;
+  const selectedItems = useMemo(
+    () => (selectedModule ? recordsByModule[selectedModule] : []),
+    [recordsByModule, selectedModule],
+  );
+  const selectedItemId = selectedModule ? selectedItemIds[selectedModule] : null;
   const activeItem = useMemo(
-    () => selectedItems.find((item) => item.id === selectedItemId) ?? null,
-    [selectedItems, selectedItemId],
+    () =>
+      selectedModule
+        ? selectedItems.find((item) => item.id === selectedItemId) ?? null
+        : null,
+    [selectedItems, selectedItemId, selectedModule],
   );
 
   function syncModuleState(
@@ -202,7 +231,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
       [moduleSlug]: nextSelectedId,
     }));
 
-    if (moduleSlug === selectedModule) {
+    if (moduleSlug === selectedSection) {
       const nextActive =
         nextItems.find((item) => item.id === nextSelectedId) ?? null;
       setFormState(buildFormState(moduleSlug, nextActive));
@@ -238,7 +267,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
   }
 
   function handleModuleChange(moduleSlug: AcademyCollectionSlug) {
-    setSelectedModule(moduleSlug);
+    setSelectedSection(moduleSlug);
     setNotice(null);
     setError(null);
 
@@ -256,7 +285,17 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
     setFormState(buildFormState(moduleSlug, nextActive));
   }
 
+  function handleContactSubmissionsChange() {
+    setSelectedSection("contact-submissions");
+    setNotice(null);
+    setError(null);
+  }
+
   function handleSelectExisting(itemId: string) {
+    if (!selectedModule) {
+      return;
+    }
+
     const item = selectedItems.find((entry) => entry.id === itemId) ?? null;
     setSelectedItemIds((current) => ({
       ...current,
@@ -268,6 +307,10 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
   }
 
   function handleCreateNew() {
+    if (!selectedModule) {
+      return;
+    }
+
     setSelectedItemIds((current) => ({
       ...current,
       [selectedModule]: null,
@@ -285,6 +328,10 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
   }
 
   function handleSave() {
+    if (!selectedModule) {
+      return;
+    }
+
     setNotice(null);
     setError(null);
 
@@ -336,7 +383,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
   }
 
   function handleDelete() {
-    if (!selectedItemId) {
+    if (!selectedModule || !selectedItemId) {
       return;
     }
 
@@ -384,6 +431,10 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
   }
 
   async function handleUpload(fieldName: string, file: File) {
+    if (!selectedModule) {
+      return;
+    }
+
     setError(null);
     setNotice(null);
     setUploadingField(fieldName);
@@ -485,7 +536,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
                   type="button"
                   onClick={() => handleModuleChange(moduleSlug)}
                   className={`w-full rounded-[26px] border px-4 py-4 text-left ${
-                    selectedModule === moduleSlug
+                    selectedSection === moduleSlug
                       ? "border-cyan-300/40 bg-cyan-300/12"
                       : "border-white/10 bg-black/20 hover:border-cyan-300/25 hover:bg-cyan-300/8"
                   }`}
@@ -506,8 +557,41 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
                 </button>
               );
             })}
+
+            <button
+              type="button"
+              onClick={handleContactSubmissionsChange}
+              className={`w-full rounded-[26px] border px-4 py-4 text-left ${
+                selectedSection === "contact-submissions"
+                  ? "border-cyan-300/40 bg-cyan-300/12"
+                  : "border-white/10 bg-black/20 hover:border-cyan-300/25 hover:bg-cyan-300/8"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-display text-lg text-white">
+                    Contact Submissions
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300/75">
+                    Website enquiries and admin follow-up tracking.
+                  </p>
+                </div>
+                <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
+                  {initialContactSubmissions.length}
+                </span>
+              </div>
+            </button>
           </aside>
 
+          {selectedSection === "contact-submissions" ? (
+            <div className="xl:col-span-2">
+              <AdminContactSubmissionsPanel
+                initialSubmissions={initialContactSubmissions}
+                embedded
+              />
+            </div>
+          ) : (
+            <>
           <section className="rounded-[30px] border border-white/10 bg-black/20 p-4">
             <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
               <div>
@@ -515,7 +599,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
                   Records
                 </p>
                 <p className="mt-2 font-display text-xl text-white">
-                  {academyModuleRegistry[selectedModule].label}
+                  {selectedModule ? academyModuleRegistry[selectedModule].label : ""}
                 </p>
               </div>
               <button
@@ -551,7 +635,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="font-semibold text-white">
-                          {getRecordIdentity(selectedModule, item)}
+                          {getRecordIdentity(selectedModule!, item)}
                         </p>
                         <p className="mt-2 text-xs uppercase tracking-[0.24em] text-slate-500">
                           {item.published ? "Published" : "Draft"}
@@ -559,7 +643,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
                       </div>
                       <span className="text-xs text-slate-500">
                         {typeof item.updatedAt === "string"
-                          ? new Date(item.updatedAt).toLocaleDateString()
+                          ? formatStableDate(item.updatedAt)
                           : ""}
                       </span>
                     </div>
@@ -614,7 +698,7 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
             ) : null}
 
             <div className="mt-6 grid gap-5 md:grid-cols-2">
-              {academyAdminFields[selectedModule].map((field) => {
+              {(selectedModule ? academyAdminFields[selectedModule] : []).map((field) => {
                 const value = formState[field.name];
                 const wideField =
                   field.type === "textarea" || field.type === "image";
@@ -770,6 +854,8 @@ export function AdminConsole({ admin, initialContent }: AdminConsoleProps) {
               })}
             </div>
           </section>
+            </>
+          )}
         </div>
       </section>
     </main>
