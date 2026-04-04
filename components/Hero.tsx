@@ -110,7 +110,7 @@ export function Hero() {
             className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
             <a
-              href="#join"
+              href="/join"
               className="inline-flex h-14 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-8 text-sm font-semibold text-slate-950 shadow-[0_0_48px_rgba(96,165,250,0.36)] hover:scale-[1.02]"
             >
               {academyData.hero.ctaLabel}
