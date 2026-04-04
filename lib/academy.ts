@@ -2,6 +2,7 @@ export const academyData = {
   academyName: "Danger Dance Academy Baranagar",
   shortName: "Danger Dance Academy",
   tagline: "Best dance class in Baranagar, Dunlop & Belghoria",
+  email: "hello@dangerdanceacademy.com",
   hero: {
     title: "Danger Dance Academy",
     subtitle: "Unleash Your Inner Dancer",
@@ -25,7 +26,52 @@ export const academyData = {
     { label: "FAQs", href: "/faqs" },
     { label: "Blog", href: "/blog" },
     { label: "Stories", href: "/stories" },
+    { label: "Contact", href: "/contact" },
     { label: "Join", href: "/join" },
+  ],
+  contactCenters: [
+    {
+      id: "baranagar-studio",
+      name: "Baranagar Main Studio",
+      area: "Baranagar, Kolkata",
+      address:
+        "32/4 Baranagar Road, near Dunlop More, Baranagar, Kolkata, West Bengal 700036",
+      hours: "Mon, Wed, Fri | 5:00 PM - 8:30 PM",
+      phone: "+91 89104 92292",
+      email: "hello@dangerdanceacademy.com",
+      mapEmbedUrl:
+        "https://www.google.com/maps?q=Baranagar+Kolkata+West+Bengal&output=embed",
+      mapUrl:
+        "https://www.google.com/maps/search/?api=1&query=Baranagar+Kolkata+West+Bengal",
+    },
+    {
+      id: "dunlop-admissions",
+      name: "Dunlop Admissions Desk",
+      area: "Dunlop, Kolkata",
+      address:
+        "58 BT Road, close to Dunlop Metro, Dunlop, Kolkata, West Bengal 700108",
+      hours: "Tue, Thu, Sat | 4:30 PM - 7:30 PM",
+      phone: "+91 89104 92292",
+      email: "hello@dangerdanceacademy.com",
+      mapEmbedUrl:
+        "https://www.google.com/maps?q=Dunlop+Kolkata+West+Bengal&output=embed",
+      mapUrl:
+        "https://www.google.com/maps/search/?api=1&query=Dunlop+Kolkata+West+Bengal",
+    },
+    {
+      id: "belghoria-batch",
+      name: "Belghoria Practice Batch",
+      area: "Belghoria, Kolkata",
+      address:
+        "12 Feeder Road, near Belghoria Station, Belghoria, Kolkata, West Bengal 700056",
+      hours: "Sun | 9:00 AM - 12:00 PM",
+      phone: "+91 89104 92292",
+      email: "hello@dangerdanceacademy.com",
+      mapEmbedUrl:
+        "https://www.google.com/maps?q=Belghoria+Kolkata+West+Bengal&output=embed",
+      mapUrl:
+        "https://www.google.com/maps/search/?api=1&query=Belghoria+Kolkata+West+Bengal",
+    },
   ],
   highlights: [
     {
