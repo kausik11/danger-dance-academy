@@ -1,69 +1,46 @@
 import "server-only";
-import { headers } from "next/headers";
 import type {
   AcademyCollectionSlug,
   AcademyModuleRecordBySlug,
 } from "@/lib/academy-cms";
+import { getAcademyContentWithFallback } from "@/lib/academy-cms-store";
 
-type AcademyModuleResponse<T extends AcademyCollectionSlug> = {
-  items: AcademyModuleRecordBySlug[T][];
-};
-
-async function getBaseUrl() {
-  const explicitUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-
-  if (explicitUrl) {
-    return explicitUrl.replace(/\/$/, "");
+function mapModuleFromContent<T extends AcademyCollectionSlug>(
+  content: Awaited<ReturnType<typeof getAcademyContentWithFallback>>,
+  moduleSlug: T,
+): AcademyModuleRecordBySlug[T][] {
+  switch (moduleSlug) {
+    case "services":
+      return content.services as AcademyModuleRecordBySlug[T][];
+    case "events":
+      return content.events as AcademyModuleRecordBySlug[T][];
+    case "gallery":
+      return content.gallery as AcademyModuleRecordBySlug[T][];
+    case "faqs":
+      return content.faqs as AcademyModuleRecordBySlug[T][];
+    case "blog":
+      return content.blog as AcademyModuleRecordBySlug[T][];
+    case "success-stories":
+      return content.successStories as AcademyModuleRecordBySlug[T][];
   }
-
-  const headerStore = await headers();
-  const host =
-    headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "localhost:3000";
-  const protocol = headerStore.get("x-forwarded-proto") ?? "http";
-
-  return `${protocol}://${host}`;
 }
 
 export async function fetchAcademyModule<T extends AcademyCollectionSlug>(
   moduleSlug: T,
 ): Promise<AcademyModuleRecordBySlug[T][]> {
-  const baseUrl = await getBaseUrl();
-  const response = await fetch(`${baseUrl}/api/academy/${moduleSlug}`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error(`Unable to load academy module "${moduleSlug}".`);
-  }
-
-  const data = (await response.json()) as AcademyModuleResponse<T>;
-
-  return data.items;
+  const content = await getAcademyContentWithFallback();
+  return mapModuleFromContent(content, moduleSlug);
 }
 
 export async function fetchHomepageAcademyModules() {
-  const [
-    services,
-    events,
-    gallery,
-    faqs,
-    blog,
-    successStories,
-  ] = await Promise.all([
-    fetchAcademyModule("services"),
-    fetchAcademyModule("events"),
-    fetchAcademyModule("gallery"),
-    fetchAcademyModule("faqs"),
-    fetchAcademyModule("blog"),
-    fetchAcademyModule("success-stories"),
-  ]);
+  const content = await getAcademyContentWithFallback();
 
   return {
-    services,
-    events,
-    gallery,
-    faqs,
-    blog,
-    successStories,
+    services: content.services,
+    events: content.events,
+    gallery: content.gallery,
+    faqs: content.faqs,
+    blog: content.blog,
+    successStories: content.successStories,
   };
 }

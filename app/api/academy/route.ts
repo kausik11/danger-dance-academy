@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { academyModuleRegistry } from "@/lib/academy-cms";
-import { getAcademyContent } from "@/lib/academy-cms-store";
+import { getAcademyContentWithFallback } from "@/lib/academy-cms-store";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET() {
   try {
-    const content = await getAcademyContent();
+    const content = await getAcademyContentWithFallback();
 
     return NextResponse.json({
       modules: Object.entries(academyModuleRegistry).map(([slug, config]) => ({

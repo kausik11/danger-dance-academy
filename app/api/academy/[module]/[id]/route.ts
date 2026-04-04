@@ -5,7 +5,7 @@ import {
 } from "@/lib/academy-cms";
 import {
   deleteAcademyModuleItem,
-  getAcademyModuleItem,
+  getAcademyModuleItemWithFallback,
   updateAcademyModuleItem,
 } from "@/lib/academy-cms-store";
 import {
@@ -41,7 +41,7 @@ export async function GET(_request: Request, context: ModuleItemRouteContext) {
       return createModuleError(moduleSlug);
     }
 
-    const item = await getAcademyModuleItem(moduleSlug, id);
+    const item = await getAcademyModuleItemWithFallback(moduleSlug, id);
 
     if (!item) {
       return NextResponse.json(

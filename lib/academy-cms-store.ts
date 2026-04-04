@@ -22,6 +22,7 @@ import { getMongoDb } from "@/lib/mongodb";
 
 declare global {
   var academySeedPromise: Promise<void> | undefined;
+  var academyReadFallbackLogged: boolean | undefined;
 }
 
 const sortByUpdatedAt = {
@@ -346,6 +347,42 @@ async function listCollection<T extends AcademyCollectionSlug>(
   return items as AcademyModuleRecordBySlug[T][];
 }
 
+function getSeedModuleCollection<T extends AcademyCollectionSlug>(
+  moduleSlug: T,
+): AcademyModuleRecordBySlug[T][] {
+  const seedContent = createSeedContent();
+  const key = academyModuleRegistry[moduleSlug].dataKey;
+
+  return seedContent[key] as AcademyModuleRecordBySlug[T][];
+}
+
+function logReadFallback(error: unknown) {
+  if (global.academyReadFallbackLogged) {
+    return;
+  }
+
+  global.academyReadFallbackLogged = true;
+
+  const message =
+    error instanceof Error ? error.message : "Unknown academy content error.";
+
+  console.warn(
+    `[academy-cms] Falling back to built-in seed content for public reads: ${message}`,
+  );
+}
+
+async function withSeedFallback<T>(
+  readOperation: () => Promise<T>,
+  fallbackFactory: () => T,
+): Promise<T> {
+  try {
+    return await readOperation();
+  } catch (error) {
+    logReadFallback(error);
+    return fallbackFactory();
+  }
+}
+
 export async function getAcademyContent(): Promise<AcademyContentData> {
   await ensureAcademyCollectionsSeeded();
 
@@ -369,11 +406,24 @@ export async function getAcademyContent(): Promise<AcademyContentData> {
   };
 }
 
+export async function getAcademyContentWithFallback(): Promise<AcademyContentData> {
+  return withSeedFallback(getAcademyContent, createSeedContent);
+}
+
 export async function listAcademyModule<T extends AcademyCollectionSlug>(
   moduleSlug: T,
 ): Promise<AcademyModuleRecordBySlug[T][]> {
   await ensureAcademyCollectionsSeeded();
   return listCollection(moduleSlug);
+}
+
+export async function listAcademyModuleWithFallback<T extends AcademyCollectionSlug>(
+  moduleSlug: T,
+): Promise<AcademyModuleRecordBySlug[T][]> {
+  return withSeedFallback(
+    () => listAcademyModule(moduleSlug),
+    () => getSeedModuleCollection(moduleSlug),
+  );
 }
 
 export async function getAcademyModuleItem<T extends AcademyCollectionSlug>(
@@ -393,6 +443,16 @@ export async function getAcademyModuleItem<T extends AcademyCollectionSlug>(
   );
 
   return item as AcademyModuleRecordBySlug[T] | null;
+}
+
+export async function getAcademyModuleItemWithFallback<T extends AcademyCollectionSlug>(
+  moduleSlug: T,
+  id: string,
+): Promise<AcademyModuleRecordBySlug[T] | null> {
+  return withSeedFallback(
+    () => getAcademyModuleItem(moduleSlug, id),
+    () => getSeedModuleCollection(moduleSlug).find((item) => item.id === id) ?? null,
+  );
 }
 
 export async function createAcademyModuleItem<T extends AcademyCollectionSlug>(

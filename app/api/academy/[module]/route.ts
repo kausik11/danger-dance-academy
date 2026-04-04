@@ -5,7 +5,7 @@ import {
 } from "@/lib/academy-cms";
 import {
   createAcademyModuleItem,
-  listAcademyModule,
+  listAcademyModuleWithFallback,
 } from "@/lib/academy-cms-store";
 import {
   AdminAuthorizationError,
@@ -41,7 +41,7 @@ export async function GET(request: Request, context: ModuleRouteContext) {
 
     const url = new URL(request.url);
     const includeDrafts = url.searchParams.get("includeDrafts") === "true";
-    const collection = await listAcademyModule(moduleSlug);
+    const collection = await listAcademyModuleWithFallback(moduleSlug);
     const filtered = includeDrafts
       ? collection
       : collection.filter((item) => item.published);
