@@ -9,6 +9,11 @@ export const academyData = {
     videoSrc: "/12022733_1920_1080_30fps.mp4",
   },
   phone: "8910492292",
+  socialPlatforms: [
+    { label: "Instagram", platform: "instagram" },
+    { label: "Facebook", platform: "facebook" },
+    { label: "YouTube", platform: "youtube" },
+  ],
   trainer: "Surya Sir",
   about:
     "A performance-focused dance space where beginners and young dancers build rhythm, confidence, stage presence, and technique in a supportive environment.",

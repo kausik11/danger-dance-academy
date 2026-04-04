@@ -2,18 +2,25 @@
 
 import { motion } from "framer-motion";
 import { academyData } from "@/lib/academy";
+import {
+  listContainerVariants,
+  listItemVariants,
+  sectionHeadingVariants,
+  sectionViewport,
+} from "@/lib/animationVariants";
 
 export function VideoTestimonials() {
   return (
-    <section
+    <motion.section
       id="testimonials"
       className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10"
+      initial="hidden"
+      whileInView="visible"
+      viewport={sectionViewport}
+      variants={listContainerVariants}
     >
       <motion.div
-        initial={{ opacity: 0, y: 22 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5 }}
+        variants={sectionHeadingVariants}
         className="max-w-3xl"
       >
         <p className="text-sm uppercase tracking-[0.3em] text-sky-200/70">
@@ -24,16 +31,13 @@ export function VideoTestimonials() {
         </h2>
       </motion.div>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
-        {academyData.videoTestimonials.map((item, index) => (
+      <motion.div variants={listContainerVariants} className="mt-10 grid gap-6 lg:grid-cols-3">
+        {academyData.videoTestimonials.map((item) => (
           <motion.article
-            key={`${item.name}-${index}`}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.22 }}
-            transition={{ duration: 0.45, delay: index * 0.08 }}
-            whileHover={{ scale: 1.02 }}
-            className="glass-panel overflow-hidden rounded-[30px] p-4"
+            key={item.name}
+            variants={listItemVariants}
+            whileHover={{ y: -6, scale: 1.01 }}
+            className="glass-panel overflow-hidden rounded-[30px] p-4 will-change-transform"
           >
             <div className="overflow-hidden rounded-[24px] border border-white/10 bg-black/30">
               <video
@@ -56,7 +60,7 @@ export function VideoTestimonials() {
             </div>
           </motion.article>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

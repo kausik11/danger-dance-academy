@@ -13,6 +13,15 @@ import {
 import { PCFShadowMap } from "three";
 import type { Mesh } from "three";
 import { motion } from "framer-motion";
+import {
+  listContainerVariants,
+  listItemVariants,
+  sectionBodyVariants,
+  sectionContentVariants,
+  sectionHeadingVariants,
+  sectionMediaVariants,
+  sectionViewport,
+} from "@/lib/animationVariants";
 
 function EnergyCore() {
   const coreRef = useRef<Mesh>(null);
@@ -91,45 +100,55 @@ export function ThreeScene() {
       id="experience"
       className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10"
     >
-      <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={sectionViewport}
+        variants={sectionContentVariants}
+        className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]"
+      >
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.28 }}
-          transition={{ duration: 0.5 }}
+          variants={sectionContentVariants}
         >
-          <p className="text-sm uppercase tracking-[0.3em] text-sky-200/70">
+          <motion.p
+            variants={sectionHeadingVariants}
+            className="text-sm uppercase tracking-[0.3em] text-sky-200/70"
+          >
             3D Experience
-          </p>
-          <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
+          </motion.p>
+          <motion.h2
+            variants={sectionHeadingVariants}
+            className="mt-4 font-display text-4xl text-white sm:text-5xl"
+          >
             A motion core that reacts to drag and floats like stage energy.
-          </h2>
-          <p className="mt-6 max-w-xl text-base leading-8 text-slate-300/[0.82]">
+          </motion.h2>
+          <motion.p
+            variants={sectionBodyVariants}
+            className="mt-6 max-w-xl text-base leading-8 text-slate-300/[0.82]"
+          >
             This premium section uses React Three Fiber to add a lightweight interactive visual. Drag to rotate, watch it hover in space, and use it as a base for a dancer model later if you want to upgrade.
-          </p>
+          </motion.p>
 
-          <div className="mt-8 grid gap-4">
+          <motion.div variants={listContainerVariants} className="mt-8 grid gap-4">
             {[
               "Interactive drag controls with smooth spring motion",
               "Glow-driven abstract form as a fast fallback to a dancer model",
               "Lightweight sparkles and floating animation for stage atmosphere",
             ].map((item) => (
-              <div
+              <motion.div
                 key={item}
+                variants={listItemVariants}
                 className="glass-panel rounded-[24px] px-5 py-4 text-sm leading-7 text-slate-200"
               >
                 {item}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 28, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.55 }}
-          className="glass-panel overflow-hidden rounded-[36px] p-3"
+          variants={sectionMediaVariants}
+          className="glass-panel overflow-hidden rounded-[36px] p-3 will-change-transform"
         >
           <div className="overflow-hidden rounded-[30px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_rgba(2,6,23,0.95)_52%)]">
             <Suspense fallback={<SceneFallback />}>
@@ -155,7 +174,7 @@ export function ThreeScene() {
             </Suspense>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -2,6 +2,12 @@
 
 import { motion } from "framer-motion";
 import { academyData } from "@/lib/academy";
+import {
+  listContainerVariants,
+  listItemVariants,
+  sectionHeadingVariants,
+  sectionViewport,
+} from "@/lib/animationVariants";
 
 function StarRow() {
   return (
@@ -29,15 +35,16 @@ function StarRow() {
 
 export function ReviewsSection() {
   return (
-    <section
+    <motion.section
       id="reviews"
       className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10"
+      initial="hidden"
+      whileInView="visible"
+      viewport={sectionViewport}
+      variants={listContainerVariants}
     >
       <motion.div
-        initial={{ opacity: 0, y: 22 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5 }}
+        variants={sectionHeadingVariants}
         className="max-w-3xl"
       >
         <p className="text-sm uppercase tracking-[0.3em] text-sky-200/70">
@@ -48,15 +55,13 @@ export function ReviewsSection() {
         </h2>
       </motion.div>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
-        {academyData.reviews.map((review, index) => (
+      <motion.div variants={listContainerVariants} className="mt-10 grid gap-6 lg:grid-cols-3">
+        {academyData.reviews.map((review) => (
           <motion.article
             key={review.author}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.45, delay: index * 0.08 }}
-            className="glass-panel rounded-[30px] p-6"
+            variants={listItemVariants}
+            whileHover={{ y: -6 }}
+            className="glass-panel rounded-[30px] p-6 will-change-transform"
           >
             <StarRow />
             <p className="mt-5 text-lg leading-8 text-white">
@@ -68,7 +73,7 @@ export function ReviewsSection() {
             </div>
           </motion.article>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }
