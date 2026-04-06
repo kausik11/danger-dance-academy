@@ -74,6 +74,10 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
         };
 
     async function initBurn() {
+      type JQueryWithBurn = JQuery<HTMLElement> & {
+        burn: (option?: unknown, settings?: unknown) => unknown;
+      };
+
       const jqueryModule = await import("jquery");
       const $ = jqueryModule.default;
 
@@ -107,9 +111,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
         return;
       }
 
-      const $text = $(textElement) as JQuery<HTMLElement> & {
-        burn: (option?: unknown, settings?: unknown) => unknown;
-      };
+      const $text = $(textElement) as unknown as JQueryWithBurn;
 
       $text.burn(false);
       $text.burn(settings);
