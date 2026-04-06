@@ -112,7 +112,7 @@ export function ThreeScene() {
         >
           <motion.p
             variants={sectionHeadingVariants}
-            className="text-sm uppercase tracking-[0.3em] text-sky-200/70"
+            className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70"
           >
             3D Experience
           </motion.p>

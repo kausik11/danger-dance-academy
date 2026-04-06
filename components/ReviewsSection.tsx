@@ -47,7 +47,7 @@ export function ReviewsSection() {
         variants={sectionHeadingVariants}
         className="max-w-3xl"
       >
-        <p className="text-sm uppercase tracking-[0.3em] text-sky-200/70">
+        <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
           Reviews
         </p>
         <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">

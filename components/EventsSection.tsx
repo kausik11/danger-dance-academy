@@ -13,7 +13,7 @@ export function EventsSection({ events }: EventsSectionProps) {
     <section id="events" className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-sky-200/70">
+          <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
             Events
           </p>
           <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
@@ -68,9 +68,9 @@ export function EventsSection({ events }: EventsSectionProps) {
                 href={event.registrationUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-5 text-sm font-semibold text-slate-950"
+                className="mt-6 inline-flex h-12 items-center justify-center rounded-full border border-amber-200/40 bg-[linear-gradient(135deg,#fff7d6_0%,#f5d67a_24%,#d8a73c_58%,#fff1b8_100%)] px-6 text-sm font-semibold tracking-[0.14em] text-slate-950 shadow-[0_14px_34px_rgba(245,158,11,0.26),inset_0_1px_0_rgba(255,255,255,0.68)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(245,158,11,0.32),inset_0_1px_0_rgba(255,255,255,0.76)]"
               >
-                Register Event
+                Call To Know More
               </a>
             ) : null}
           </article>

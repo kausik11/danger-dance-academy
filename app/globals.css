@@ -175,6 +175,24 @@ textarea {
   color: transparent;
 }
 
+.section-eyebrow {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.85rem;
+}
+
+.section-eyebrow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72%;
+  height: 0.2rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 242, 254, 0.92) 24%, rgba(125, 211, 252, 0.9) 62%, rgba(56, 189, 248, 0.72) 100%);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.22);
+}
+
 .content-scale p:not(:where(h1 p, h2 p, h3 p, h4 p, h5 p, h6 p)) {
   font-size: clamp(1.02rem, 0.98rem + 0.18vw, 1.16rem);
   line-height: 1.9;

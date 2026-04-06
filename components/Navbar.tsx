@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
@@ -17,10 +17,136 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   const pathname = usePathname();
   const showContactButton = pathname !== "/contact";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const brandTextRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsScrolled(window.scrollY > 18);
+    }
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const textElement = brandTextRef.current;
+
+    if (!textElement) {
+      return;
+    }
+
+    let disposed = false;
+    let cleanup: (() => void) | undefined;
+
+    const settings = isScrolled
+      ? {
+          a: 1.18,
+          k: 0.26,
+          w: 30,
+          wind: 0.14,
+          diffusion: 1.3,
+          flames: [
+            { x: 0, hsla: [54, 100, 92, 0.9], y: 0.04, blur: 0.04 },
+            { x: 0, hsla: [43, 100, 72, 0.82], y: 0.14, blur: 0.08 },
+            { x: 0, hsla: [29, 98, 61, 0.7], y: 0.28, blur: 0.12 },
+            { x: 0, hsla: [17, 94, 50, 0.54], y: 0.42, blur: 0.18 },
+            { x: 0, hsla: [8, 88, 44, 0.36], y: 0.58, blur: 0.24 },
+          ],
+        }
+      : {
+          a: 1.02,
+          k: 0.22,
+          w: 27,
+          wind: 0.1,
+          diffusion: 1.22,
+          flames: [
+            { x: 0, hsla: [56, 100, 94, 0.76], y: 0.04, blur: 0.03 },
+            { x: 0, hsla: [44, 100, 78, 0.64], y: 0.12, blur: 0.06 },
+            { x: 0, hsla: [31, 98, 67, 0.52], y: 0.22, blur: 0.1 },
+            { x: 0, hsla: [18, 92, 55, 0.4], y: 0.34, blur: 0.15 },
+            { x: 0, hsla: [8, 84, 46, 0.24], y: 0.48, blur: 0.2 },
+          ],
+        };
+
+    async function initBurn() {
+      const jqueryModule = await import("jquery");
+      const $ = jqueryModule.default;
+
+      if (disposed) {
+        return;
+      }
+
+      const win = window as typeof window & {
+        jQuery?: typeof $;
+        $?: typeof $;
+      };
+      win.jQuery = $;
+      win.$ = $;
+
+      if (!($.fn as typeof $.fn & { burn?: unknown }).burn) {
+        await new Promise<void>((resolve, reject) => {
+          $.getScript("/vendor/jquery.burn.js")
+            .done(() => resolve())
+            .fail(() => reject(new Error("Failed to load jquery.burn.js")));
+        });
+      }
+
+      if (disposed) {
+        return;
+      }
+
+      const burn = ($.fn as typeof $.fn & { burn?: (option?: unknown, settings?: unknown) => unknown })
+        .burn;
+
+      if (!burn) {
+        return;
+      }
+
+      const $text = $(textElement) as JQuery<HTMLElement> & {
+        burn: (option?: unknown, settings?: unknown) => unknown;
+      };
+
+      $text.burn(false);
+      $text.burn(settings);
+      cleanup = () => {
+        $text.burn(false);
+      };
+    }
+
+    void initBurn();
+
+    return () => {
+      disposed = true;
+      cleanup?.();
+    };
+  }, [isScrolled]);
 
   function closeMenu() {
     setIsMenuOpen(false);
   }
+
+  const brandTextClass = isScrolled
+    ? "text-white drop-shadow-[0_2px_16px_rgba(15,23,42,0.42)]"
+    : "text-white/96 drop-shadow-[0_2px_14px_rgba(15,23,42,0.42)]";
+  const locationPillClass = isScrolled
+    ? "border-white/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.08)_100%)] text-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_24px_rgba(2,8,23,0.18)]"
+    : "border-white/18 bg-[linear-gradient(180deg,rgba(15,23,42,0.24)_0%,rgba(15,23,42,0.12)_100%)] text-white/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_24px_rgba(2,8,23,0.18)]";
+  const navLinkBaseClass =
+    "shrink-0 text-[0.96rem] font-semibold tracking-[0.01em] transition";
+  const navLinkInactiveClass = isScrolled
+    ? "text-white/78 hover:text-cyan-100"
+    : "text-white/82 hover:text-sky-100";
+  const navLinkActiveClass = isScrolled
+    ? "text-sky-200"
+    : "text-cyan-100";
+  const menuButtonClass = isScrolled
+    ? "border-white/18 bg-white/10 text-white shadow-[0_10px_24px_rgba(2,8,23,0.2)] hover:border-cyan-200/35 hover:text-cyan-100"
+    : "border-white/22 bg-slate-950/14 text-white shadow-[0_10px_24px_rgba(2,8,23,0.16)] hover:border-cyan-200/35 hover:text-cyan-100";
 
   function renderActionButton() {
     if (ctaHref) {
@@ -78,7 +204,27 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
       className="fixed inset-x-0 top-0 z-40"
     >
       <div className="mx-auto max-w-[92rem] px-3 py-4 sm:px-5 lg:px-6">
-        <div className="overflow-hidden rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.97)_0%,rgba(248,250,252,0.94)_100%)] shadow-[0_22px_56px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.96)] backdrop-blur-xl">
+        <motion.div
+          animate={
+            isScrolled
+              ? {
+                  background:
+                    "linear-gradient(135deg, rgba(8, 15, 34, 0.78) 0%, rgba(18, 58, 94, 0.7) 30%, rgba(34, 104, 163, 0.52) 68%, rgba(15, 23, 42, 0.78) 100%)",
+                  borderColor: "rgba(186, 230, 253, 0.2)",
+                  boxShadow:
+                    "0 28px 72px rgba(2, 8, 23, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -18px 36px rgba(14, 165, 233, 0.1)",
+                }
+              : {
+                  background:
+                    "linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%)",
+                  borderColor: "rgba(255, 255, 255, 0.34)",
+                  boxShadow:
+                    "0 20px 52px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.32)",
+                }
+          }
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="overflow-hidden rounded-[28px] border backdrop-blur-xl"
+        >
           <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-5 lg:px-6 xl:gap-8">
             <Link
               href="/"
@@ -97,11 +243,17 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                   />
                 </span>
                 <div className="min-w-0">
-                  <p className="truncate font-display text-base text-slate-900 sm:text-[1.12rem]">
+                  <p
+                    ref={brandTextRef}
+                    className={`truncate font-display text-base sm:text-[1.12rem] ${brandTextClass}`}
+                  >
                     {academyData.shortName}
                   </p>
                   <div className="mt-2 hidden 2xl:flex">
-                    <div className="inline-flex items-center gap-3 rounded-full border border-slate-200/90 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(241,245,249,0.92)_100%)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_10px_24px_rgba(15,23,42,0.06)]">
+                    <div
+                      className={`inline-flex items-center gap-3 rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] ${locationPillClass}`}
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-sky-400/70 shadow-[0_0_10px_rgba(56,189,248,0.45)]" />
                       <span>Baranagar</span>
                       <span className="h-1.5 w-1.5 rounded-full bg-sky-400/70 shadow-[0_0_10px_rgba(56,189,248,0.45)]" />
                       <span>Dunlop</span>
@@ -120,10 +272,10 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                     key={item.href}
                     href={item.href}
                     onClick={closeMenu}
-                    className={`shrink-0 text-[0.84rem] font-semibold uppercase tracking-[0.06em] transition ${
+                    className={`${navLinkBaseClass} ${
                       pathname === item.href
-                        ? "text-sky-700"
-                        : "text-slate-700/90 hover:text-sky-700"
+                        ? navLinkActiveClass
+                        : navLinkInactiveClass
                     }`}
                   >
                     {item.label}
@@ -141,7 +293,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
               aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen((current) => !current)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300/70 bg-white text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition hover:border-sky-300 hover:text-sky-700 xl:hidden"
+              className={`inline-flex h-11 w-11 items-center justify-center rounded-full transition xl:hidden ${menuButtonClass}`}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -161,9 +313,9 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                   animate={{ y: 0 }}
                   exit={{ y: -8 }}
                   transition={{ duration: 0.24, ease: "easeOut" }}
-                  className="border-t border-slate-200/80 px-4 pb-4 pt-4 sm:px-5 lg:px-6"
+                  className="border-t border-white/12 px-4 pb-4 pt-4 sm:px-5 lg:px-6"
                 >
-                  <div className="mb-4 text-[10px] uppercase tracking-[0.24em] text-slate-500 sm:hidden">
+                  <div className="mb-4 text-[10px] uppercase tracking-[0.24em] text-white/62 sm:hidden">
                     Baranagar | Dunlop | Belghoria
                   </div>
 
@@ -184,10 +336,10 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                           <Link
                             href={item.href}
                             onClick={closeMenu}
-                            className={`block rounded-2xl px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] transition ${
+                            className={`block rounded-2xl px-4 py-3 text-sm font-semibold tracking-[0.01em] transition ${
                               pathname === item.href
-                                ? "bg-sky-100 text-sky-700"
-                                : "bg-white/70 text-slate-700 hover:bg-slate-100 hover:text-sky-700"
+                                ? "bg-cyan-300/18 text-cyan-100"
+                                : "bg-white/8 text-white/82 hover:bg-white/14 hover:text-cyan-100"
                             }`}
                           >
                             {item.label}
@@ -210,7 +362,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
               </motion.div>
             ) : null}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </motion.header>
   );

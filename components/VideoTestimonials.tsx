@@ -24,17 +24,17 @@ export function VideoTestimonials() {
         variants={sectionHeadingVariants}
         className="max-w-5xl"
       >
-        <p className="text-sm uppercase tracking-[0.3em] text-sky-200/70">
+        <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
           Video Testimonials
         </p>
         <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
           <h2 className="max-w-3xl font-display text-4xl text-white sm:text-5xl">
-            Watch the energy, confidence, and joy in motion.
-          </h2>
-          <EyeFollowWord
+            Watch  <EyeFollowWord
             className="self-start lg:shrink-0"
             ariaLabel="Eyes following your movement"
-          />
+          /> the energy, confidence, and joy in motion.
+          </h2>
+         
         </div>
       </motion.div>
 

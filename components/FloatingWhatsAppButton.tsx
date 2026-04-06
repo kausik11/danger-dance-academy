@@ -1,16 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { IoLogoWhatsapp } from "react-icons/io";
 import { academyData } from "@/lib/academy";
-
-function WhatsAppIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 32" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M19.11 17.41c-.28-.14-1.65-.81-1.91-.9-.26-.1-.44-.14-.63.14-.19.28-.72.9-.88 1.09-.16.19-.33.21-.61.07-.28-.14-1.18-.43-2.25-1.36-.83-.74-1.4-1.66-1.56-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.49.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.63-1.51-.87-2.07-.23-.55-.46-.47-.63-.48h-.54c-.19 0-.49.07-.74.35-.26.28-.98.96-.98 2.34 0 1.37 1 2.69 1.14 2.88.14.19 1.97 3 4.78 4.2.67.29 1.2.47 1.61.6.68.21 1.29.18 1.78.11.54-.08 1.65-.67 1.88-1.31.23-.63.23-1.18.16-1.31-.07-.12-.25-.19-.53-.33Z" />
-      <path d="M16 3C8.82 3 3 8.73 3 15.8c0 2.25.59 4.46 1.72 6.41L3 29l7.02-1.82A13.13 13.13 0 0 0 16 28.6c7.18 0 13-5.73 13-12.8S23.18 3 16 3Zm0 23.5c-1.89 0-3.74-.5-5.36-1.46l-.38-.22-4.17 1.08 1.12-4.06-.25-.41A10.57 10.57 0 0 1 5.4 15.8C5.4 10.03 10.11 5.4 16 5.4c5.89 0 10.6 4.63 10.6 10.4 0 5.77-4.71 10.7-10.6 10.7Z" />
-    </svg>
-  );
-}
 
 export function FloatingWhatsAppButton() {
   const whatsAppUrl = `https://wa.me/${academyData.whatsAppNumber}?text=${encodeURIComponent(
@@ -41,7 +33,7 @@ export function FloatingWhatsAppButton() {
           whileHover={{ rotate: 360 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
-          <WhatsAppIcon className="h-8 w-8 drop-shadow-[0_5px_12px_rgba(6,78,59,0.3)]" />
+          <IoLogoWhatsapp className="h-8 w-8 drop-shadow-[0_5px_12px_rgba(6,78,59,0.3)]" />
         </motion.span>
       </span>
     </motion.a>

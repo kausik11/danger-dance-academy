@@ -38,11 +38,12 @@ export default async function Home() {
           <GallerySection gallery={academyModules.gallery} />
           {/* <BlogSection posts={academyModules.blog} /> */}
           <SuccessStoriesSection stories={academyModules.successStories} />
-          <VideoTestimonials />
+         
           <ReviewsSection />
-          <HomeThreeScene />
+          {/* <HomeThreeScene /> */}
           <CTASection />
           <FaqSection faqs={academyModules.faqs} />
+           <VideoTestimonials />
         </main>
 
         <footer className="mx-auto flex max-w-7xl flex-col gap-3 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">

@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FaYoutube } from "react-icons/fa";
+import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
 import { academyData } from "@/lib/academy";
 import {
   listContainerVariants,
@@ -11,32 +13,6 @@ import {
   sectionViewport,
 } from "@/lib/animationVariants";
 
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
-      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-      <circle cx="12" cy="12" r="4.2" />
-      <circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function FacebookIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M13.5 21v-7h2.5l.4-3h-2.9V9.1c0-.9.3-1.6 1.6-1.6H16.5V4.8c-.2 0-.9-.1-1.9-.1-2.8 0-4.6 1.7-4.6 4.8V11H7.5v3H10V21h3.5Z" />
-    </svg>
-  );
-}
-
-function YouTubeIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M21.3 7.2a2.9 2.9 0 0 0-2-2A38 38 0 0 0 12 4.8a38 38 0 0 0-7.3.4 2.9 2.9 0 0 0-2 2A30.6 30.6 0 0 0 2.3 12c0 1.6.1 3.2.4 4.8a2.9 2.9 0 0 0 2 2 38 38 0 0 0 7.3.4 38 38 0 0 0 7.3-.4 2.9 2.9 0 0 0 2-2c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8ZM10.1 15.5V8.5l6 3.5-6 3.5Z" />
-    </svg>
-  );
-}
-
 function SocialIcon({
   platform,
   className,
@@ -46,11 +22,11 @@ function SocialIcon({
 }) {
   switch (platform) {
     case "instagram":
-      return <InstagramIcon className={className} />;
+      return <IoLogoInstagram className={className} />;
     case "facebook":
-      return <FacebookIcon className={className} />;
+      return <IoLogoFacebook className={className} />;
     case "youtube":
-      return <YouTubeIcon className={className} />;
+      return <FaYoutube className={className} />;
     default:
       return null;
   }
@@ -98,7 +74,7 @@ export function CTASection() {
           <div className="max-w-2xl">
             <motion.p
               variants={sectionHeadingVariants}
-              className="text-sm uppercase tracking-[0.3em] text-white/70"
+              className="section-eyebrow text-sm uppercase tracking-[0.3em] text-white/70"
             >
               Join Now
             </motion.p>
@@ -152,7 +128,7 @@ export function CTASection() {
                     className="glass-card group flex cursor-default items-center gap-3 rounded-[24px] px-4 py-3 transition hover:border-white/35 hover:bg-white/12 will-change-transform"
                   >
                     <span
-                      className={`flex h-11 w-11 items-center justify-center rounded-full shadow-[0_10px_24px_rgba(15,23,42,0.28)] transition duration-300 ${getSocialBadgeClass(item.platform)}`}
+                      className={`flex h-12 w-12 items-center justify-center rounded-full shadow-[0_10px_24px_rgba(15,23,42,0.28)] transition duration-300 ${getSocialBadgeClass(item.platform)}`}
                     >
                       <SocialIcon
                         platform={item.platform}
