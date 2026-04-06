@@ -1,12 +1,12 @@
 import { AboutSection } from "@/components/AboutSection";
 import { ChairmanMessageSection } from "@/components/ChairmanMessageSection";
 import { CTASection } from "@/components/CTASection";
+import { DanceStylesSection } from "@/components/DanceStylesSection";
 import { EventsSection } from "@/components/EventsSection";
 import { FaqSection } from "@/components/FaqSection";
 import { GallerySection } from "@/components/GallerySection";
 import { HomeClientShell } from "@/components/HomeClientShell";
 import { Hero } from "@/components/Hero";
-import { HomeThreeScene } from "@/components/HomeThreeScene";
 import { Navbar } from "@/components/Navbar";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { ServicesSection } from "@/components/ServicesSection";
@@ -31,6 +31,7 @@ export default async function Home() {
 
         <main className="relative z-10">
           <Hero />
+          <DanceStylesSection />
           <AboutSection />
           <ChairmanMessageSection />
           <ServicesSection services={academyModules.services} />
@@ -38,12 +39,11 @@ export default async function Home() {
           <GallerySection gallery={academyModules.gallery} />
           {/* <BlogSection posts={academyModules.blog} /> */}
           <SuccessStoriesSection stories={academyModules.successStories} />
-         
+
           <ReviewsSection />
-          {/* <HomeThreeScene /> */}
           <CTASection />
           <FaqSection faqs={academyModules.faqs} />
-           <VideoTestimonials />
+          <VideoTestimonials />
         </main>
 
         <footer className="mx-auto flex max-w-7xl flex-col gap-3 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
