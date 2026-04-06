@@ -16,7 +16,8 @@ const displayFont = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Danger Dance Academy Baranagar",
+  // title: "Danger Dance Academy Baranagar",
+  title:"Demo",
   description:
     "Premium dance academy landing page for Danger Dance Academy in Baranagar.",
 };
