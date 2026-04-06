@@ -80,8 +80,9 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
 
       const jqueryModule = await import("jquery");
       const $ = jqueryModule.default;
+      const currentTextElement = brandTextRef.current;
 
-      if (disposed) {
+      if (disposed || !currentTextElement) {
         return;
       }
 
@@ -111,7 +112,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
         return;
       }
 
-      const $text = $(textElement) as unknown as JQueryWithBurn;
+      const $text = $(currentTextElement) as unknown as JQueryWithBurn;
 
       $text.burn(false);
       $text.burn(settings);
