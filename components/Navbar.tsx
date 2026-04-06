@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
@@ -18,7 +18,6 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   const showContactButton = pathname !== "/contact";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const brandTextRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     function handleScroll() {
@@ -32,102 +31,6 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    const textElement = brandTextRef.current;
-
-    if (!textElement) {
-      return;
-    }
-
-    let disposed = false;
-    let cleanup: (() => void) | undefined;
-
-    const settings = isScrolled
-      ? {
-          a: 1.18,
-          k: 0.26,
-          w: 30,
-          wind: 0.14,
-          diffusion: 1.3,
-          flames: [
-            { x: 0, hsla: [54, 100, 92, 0.9], y: 0.04, blur: 0.04 },
-            { x: 0, hsla: [43, 100, 72, 0.82], y: 0.14, blur: 0.08 },
-            { x: 0, hsla: [29, 98, 61, 0.7], y: 0.28, blur: 0.12 },
-            { x: 0, hsla: [17, 94, 50, 0.54], y: 0.42, blur: 0.18 },
-            { x: 0, hsla: [8, 88, 44, 0.36], y: 0.58, blur: 0.24 },
-          ],
-        }
-      : {
-          a: 1.02,
-          k: 0.22,
-          w: 27,
-          wind: 0.1,
-          diffusion: 1.22,
-          flames: [
-            { x: 0, hsla: [56, 100, 94, 0.76], y: 0.04, blur: 0.03 },
-            { x: 0, hsla: [44, 100, 78, 0.64], y: 0.12, blur: 0.06 },
-            { x: 0, hsla: [31, 98, 67, 0.52], y: 0.22, blur: 0.1 },
-            { x: 0, hsla: [18, 92, 55, 0.4], y: 0.34, blur: 0.15 },
-            { x: 0, hsla: [8, 84, 46, 0.24], y: 0.48, blur: 0.2 },
-          ],
-        };
-
-    async function initBurn() {
-      type JQueryWithBurn = JQuery<HTMLElement> & {
-        burn: (option?: unknown, settings?: unknown) => unknown;
-      };
-
-      const jqueryModule = await import("jquery");
-      const $ = jqueryModule.default;
-      const currentTextElement = brandTextRef.current;
-
-      if (disposed || !currentTextElement) {
-        return;
-      }
-
-      const win = window as typeof window & {
-        jQuery?: typeof $;
-        $?: typeof $;
-      };
-      win.jQuery = $;
-      win.$ = $;
-
-      if (!($.fn as typeof $.fn & { burn?: unknown }).burn) {
-        await new Promise<void>((resolve, reject) => {
-          $.getScript("/vendor/jquery.burn.js")
-            .done(() => resolve())
-            .fail(() => reject(new Error("Failed to load jquery.burn.js")));
-        });
-      }
-
-      if (disposed) {
-        return;
-      }
-
-      const burn = ($.fn as typeof $.fn & { burn?: (option?: unknown, settings?: unknown) => unknown })
-        .burn;
-
-      if (!burn) {
-        return;
-      }
-
-      const $text = $(currentTextElement) as unknown as JQueryWithBurn;
-
-      $text.burn(false);
-      $text.burn(settings);
-      cleanup = () => {
-        $text.burn(false);
-      };
-    }
-
-    void initBurn();
-
-    return () => {
-      disposed = true;
-      cleanup?.();
-    };
-  }, [isScrolled]);
 
   function closeMenu() {
     setIsMenuOpen(false);
@@ -247,7 +150,6 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                 </span>
                 <div className="min-w-0">
                   <p
-                    ref={brandTextRef}
                     className={`truncate font-display text-base sm:text-[1.12rem] ${brandTextClass}`}
                   >
                     {academyData.shortName}
