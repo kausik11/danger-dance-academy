@@ -1,5 +1,4 @@
 import { AboutSection } from "@/components/AboutSection";
-import { BlogSection } from "@/components/BlogSection";
 import { ChairmanMessageSection } from "@/components/ChairmanMessageSection";
 import { CTASection } from "@/components/CTASection";
 import { EventsSection } from "@/components/EventsSection";

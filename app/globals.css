@@ -195,6 +195,36 @@ textarea {
   line-height: 1.6;
 }
 
+.nit-eye-lid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 18%;
+  background: linear-gradient(180deg, rgba(191, 219, 254, 0.95) 0%, rgba(224, 242, 254, 0.72) 100%);
+}
+
+.nit-eye-lid-top {
+  top: 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.nit-eye-lid-bottom {
+  bottom: 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.nit-eye-strip {
+  position: absolute;
+  bottom: 8px;
+  left: 14%;
+  right: 14%;
+  z-index: 12;
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.16) 0%, rgba(14, 165, 233, 0.5) 50%, rgba(56, 189, 248, 0.16) 100%);
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
