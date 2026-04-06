@@ -19,6 +19,18 @@ export const academyData = {
   trainer: "Surya Sir",
   about:
     "A performance-focused dance space where beginners and young dancers build rhythm, confidence, stage presence, and technique in a supportive environment.",
+  chairmanMessage: {
+    eyebrow: "Leadership Note",
+    title: "Chairman's Message",
+    quote: "Discipline, expression, and confidence grow together on the dance floor.",
+    paragraphs: [
+      "Danger Dance Academy was built to give every student a space where energy is guided with structure and passion is shaped into performance. We believe dance training should strengthen confidence, musicality, and character at the same time.",
+      "From first steps to stage-ready routines, our focus is on consistent growth, strong basics, and a culture that makes students feel seen, challenged, and inspired. Every class is designed to help dancers discover their own identity while learning to perform as a team.",
+    ],
+    name: "Suryakanta Bagchi",
+    designation: "Chairman, Danger Dance Academy",
+    imageSrc: "/chairman.jpeg",
+  },
   navItems: [
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },

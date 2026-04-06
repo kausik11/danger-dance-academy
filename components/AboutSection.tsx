@@ -93,7 +93,7 @@ export function AboutSection() {
                 <motion.div
                   key={stat.label}
                   variants={listItemVariants}
-                  className="rounded-[24px] border border-white/10 bg-black/25 p-4"
+                  className="glass-card rounded-[24px] p-4"
                 >
                   <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
                     {stat.label}

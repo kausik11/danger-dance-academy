@@ -39,7 +39,7 @@ export function ResultPreview({
         </a>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/[0.85]">
+      <div className="glass-card mt-6 overflow-hidden rounded-[28px]">
         {isLoading ? (
           <div className="aspect-video w-full animate-pulse bg-[linear-gradient(120deg,rgba(15,23,42,1)_0%,rgba(30,41,59,0.85)_50%,rgba(15,23,42,1)_100%)]" />
         ) : (
@@ -58,13 +58,13 @@ export function ResultPreview({
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
+        <div className="glass-card rounded-[24px] p-4">
           <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
             Source
           </p>
           <p className="mt-2 text-sm leading-6 text-slate-200">{sourceLabel}</p>
         </div>
-        <div className="rounded-[24px] border border-white/10 bg-black/20 p-4">
+        <div className="glass-card rounded-[24px] p-4">
           <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
             Status
           </p>
@@ -78,7 +78,7 @@ export function ResultPreview({
         </div>
       </div>
 
-      <div className="mt-4 rounded-[24px] border border-white/10 bg-black/20 p-4">
+      <div className="glass-card mt-4 rounded-[24px] p-4">
         <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
           Prompt Snapshot
         </p>

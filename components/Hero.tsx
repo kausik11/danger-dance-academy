@@ -8,6 +8,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import { Monoton } from "next/font/google";
 import { academyData } from "@/lib/academy";
 import {
   createFadeUp,
@@ -20,6 +21,10 @@ import {
 const titleWords = academyData.hero.title.split(" ");
 const heroTextVariants = createFadeUp(22, 0.72);
 const heroButtonsVariants = createFadeUp(26, 0.78);
+const monoton = Monoton({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -85,13 +90,13 @@ export function Hero() {
 
           <motion.h1
             variants={heroTitleVariants}
-            className="mt-7 font-display text-5xl leading-[0.96] text-white sm:text-7xl lg:text-[5.6rem]"
+            className={`mt-7 text-[3.8rem] leading-[0.9] text-white sm:text-[5.7rem] lg:text-[7.2rem] ${monoton.className}`}
           >
             {titleWords.map((word) => (
               <span key={word} className="mr-[0.22em] inline-block overflow-hidden pb-4">
                 <motion.span
                   variants={heroWordVariants}
-                  className="inline-block bg-[linear-gradient(180deg,#ffffff_0%,#d7efff_48%,#9fd3ff_100%)] bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(96,165,250,0.26)]"
+                  className="inline-block bg-[linear-gradient(180deg,#ffffff_0%,#d7efff_48%,#9fd3ff_100%)] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(96,165,250,0.34)] [-webkit-text-stroke:1px_rgba(255,255,255,0.18)]"
                 >
                   {word}
                 </motion.span>

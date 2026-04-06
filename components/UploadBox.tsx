@@ -102,8 +102,8 @@ export function UploadBox({ file, onFileChange }: UploadBoxProps) {
         }}
         className={`relative cursor-pointer overflow-hidden rounded-[28px] border-2 border-dashed p-5 ${
           isDragging
-            ? "border-cyan-300/60 bg-cyan-300/10"
-            : "border-white/12 bg-black/20 hover:border-cyan-300/35 hover:bg-white/[0.06]"
+            ? "glass-card border-cyan-300/60 bg-cyan-300/10"
+            : "glass-card border-white/12 hover:border-cyan-300/35 hover:bg-white/[0.06]"
         }`}
       >
         <input
@@ -149,7 +149,7 @@ export function UploadBox({ file, onFileChange }: UploadBoxProps) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="w-full max-w-md overflow-hidden rounded-[24px] border border-white/10 bg-slate-950"
+                className="glass-card w-full max-w-md overflow-hidden rounded-[24px]"
               >
                 {isImage ? (
                   <Image

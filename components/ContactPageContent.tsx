@@ -165,7 +165,7 @@ export function ContactPageContent({
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <a
                 href={`tel:${academyPhone}`}
-                className="rounded-[28px] border border-white/10 bg-black/20 p-5 transition hover:border-sky-300/40 hover:bg-black/28"
+                className="glass-card rounded-[28px] p-5 transition hover:border-sky-300/40 hover:bg-white/[0.1]"
               >
                 <div className="flex items-center gap-4">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-400/14 text-sky-100">
@@ -180,7 +180,7 @@ export function ContactPageContent({
 
               <a
                 href={`mailto:${academyEmail}`}
-                className="rounded-[28px] border border-white/10 bg-black/20 p-5 transition hover:border-sky-300/40 hover:bg-black/28"
+                className="glass-card rounded-[28px] p-5 transition hover:border-sky-300/40 hover:bg-white/[0.1]"
               >
                 <div className="flex items-center gap-4">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-400/14 text-sky-100">
@@ -203,10 +203,10 @@ export function ContactPageContent({
                     key={center.id}
                     type="button"
                     onClick={() => handleCenterSelect(center)}
-                    className={`w-full rounded-[28px] border p-5 text-left transition ${
+                    className={`glass-card w-full rounded-[28px] p-5 text-left transition ${
                       isActive
                         ? "border-sky-300/45 bg-sky-400/10 shadow-[0_0_0_1px_rgba(125,211,252,0.25)]"
-                        : "border-white/10 bg-black/16 hover:border-white/20 hover:bg-black/24"
+                        : "hover:border-white/20 hover:bg-white/[0.08]"
                     }`}
                   >
                     <div className="flex items-start justify-between gap-5">
@@ -230,7 +230,7 @@ export function ContactPageContent({
                         </div>
                       </div>
 
-                      <span className="rounded-full border border-white/10 bg-black/20 p-3 text-sky-100">
+                      <span className="glass-pill rounded-full p-3 text-sky-100">
                         <MapPin className="h-5 w-5" />
                       </span>
                     </div>
@@ -252,7 +252,7 @@ export function ContactPageContent({
               />
             </div>
 
-            <div className="mt-4 rounded-[24px] border border-white/10 bg-black/20 p-5">
+            <div className="glass-card mt-4 rounded-[24px] p-5">
               <p className="font-display text-2xl text-white">
                 {activeCenter.name}
               </p>
@@ -304,12 +304,12 @@ export function ContactPageContent({
             </p>
 
             <div className="mt-8 space-y-5 text-sm text-slate-300">
-              <div className="rounded-[24px] border border-white/10 bg-black/18 p-5">
+              <div className="glass-card rounded-[24px] p-5">
                 <p className="font-semibold text-white">Selected Center</p>
                 <p className="mt-2 text-slate-300">{activeCenter.name}</p>
                 <p className="mt-2 text-slate-400">{activeCenter.address}</p>
               </div>
-              <div className="rounded-[24px] border border-white/10 bg-black/18 p-5">
+              <div className="glass-card rounded-[24px] p-5">
                 <p className="font-semibold text-white">What to include</p>
                 <p className="mt-2 leading-7 text-slate-400">
                   Mention the student age group, preferred branch, dance style,

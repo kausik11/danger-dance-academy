@@ -127,7 +127,7 @@ export function CTASection() {
               </motion.a>
               <motion.div
                 whileHover={{ y: -3 }}
-                className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-black/20 px-8 text-sm font-semibold text-white backdrop-blur"
+                className="glass-pill inline-flex h-14 items-center justify-center rounded-full px-8 text-sm font-semibold text-white"
               >
                 {academyData.phone}
               </motion.div>
@@ -135,7 +135,7 @@ export function CTASection() {
 
             <motion.div
               variants={sectionBodyVariants}
-              className="rounded-[30px] border border-white/16 bg-black/18 p-4 backdrop-blur"
+              className="glass-card rounded-[30px] p-4"
             >
               <p className="text-xs uppercase tracking-[0.26em] text-white/58">
                 Follow Us
@@ -149,7 +149,7 @@ export function CTASection() {
                     key={item.platform}
                     variants={listItemVariants}
                     whileHover={{ y: -4 }}
-                    className="group flex cursor-default items-center gap-3 rounded-[24px] border border-white/15 bg-white/8 px-4 py-3 transition hover:border-white/35 hover:bg-white/12 will-change-transform"
+                    className="glass-card group flex cursor-default items-center gap-3 rounded-[24px] px-4 py-3 transition hover:border-white/35 hover:bg-white/12 will-change-transform"
                   >
                     <span
                       className={`flex h-11 w-11 items-center justify-center rounded-full shadow-[0_10px_24px_rgba(15,23,42,0.28)] transition duration-300 ${getSocialBadgeClass(item.platform)}`}

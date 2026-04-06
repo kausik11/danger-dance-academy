@@ -40,7 +40,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                 {academyData.shortName}
               </p>
               <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 sm:text-xs">
-                Baranagar
+                Baranagar | Dunlop | Belghoria
               </p>
             </div>
           </Link>

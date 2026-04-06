@@ -37,13 +37,13 @@ export function EventsSection({ events }: EventsSectionProps) {
                   {event.summary}
                 </p>
               </div>
-              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
+              <span className="glass-pill rounded-full px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
                 {event.status}
               </span>
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="glass-card rounded-2xl p-4">
                 <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
                   Date
                 </p>
@@ -51,7 +51,7 @@ export function EventsSection({ events }: EventsSectionProps) {
                   {new Date(event.date).toLocaleString()}
                 </p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="glass-card rounded-2xl p-4">
                 <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
                   Location
                 </p>

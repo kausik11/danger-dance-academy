@@ -113,7 +113,7 @@ export default function DashboardPage() {
                   This shell stores the uploaded asset and prompt in local state, simulates a three-second generation run, and then displays a downloadable mock video.
                 </p>
               </div>
-              <div className="rounded-2xl border border-cyan-300/20 bg-cyan-300/[0.08] px-4 py-3 text-sm text-cyan-50">
+              <div className="glass-card rounded-2xl border-cyan-300/20 bg-cyan-300/[0.08] px-4 py-3 text-sm text-cyan-50">
                 Frontend-only for now
               </div>
             </div>
@@ -146,7 +146,7 @@ export default function DashboardPage() {
               {statusCards.map((card) => (
                 <div
                   key={card.label}
-                  className="min-w-[9rem] rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
+                  className="glass-card min-w-[9rem] rounded-2xl px-4 py-3"
                 >
                   <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
                     {card.label}
@@ -185,7 +185,7 @@ export default function DashboardPage() {
                 ].map((step) => (
                   <div
                     key={step}
-                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-200"
+                    className="glass-card rounded-2xl px-4 py-3 text-sm text-slate-200"
                   >
                     {step}
                   </div>

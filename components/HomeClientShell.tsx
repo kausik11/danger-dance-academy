@@ -22,7 +22,7 @@ export function HomeClientShell({ children }: HomeClientShellProps) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(167,139,250,0.12),_transparent_26%),linear-gradient(180deg,rgba(3,16,31,0.18)_0%,rgba(3,16,31,0.68)_100%)]" />
         </div>
 
-        <div className="relative z-10">{children}</div>
+        <div className="content-scale relative z-10">{children}</div>
         <FloatingWhatsAppButton />
       </div>
     </MotionConfig>

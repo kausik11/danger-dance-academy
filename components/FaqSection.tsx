@@ -35,7 +35,7 @@ export function FaqSection({ faqs }: FaqSectionProps) {
                   {faq.answer}
                 </p>
               </div>
-              <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-cyan-100">
+              <span className="glass-pill rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-cyan-100">
                 {faq.category}
               </span>
             </div>

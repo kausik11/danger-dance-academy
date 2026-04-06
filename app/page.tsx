@@ -1,5 +1,6 @@
 import { AboutSection } from "@/components/AboutSection";
 import { BlogSection } from "@/components/BlogSection";
+import { ChairmanMessageSection } from "@/components/ChairmanMessageSection";
 import { CTASection } from "@/components/CTASection";
 import { EventsSection } from "@/components/EventsSection";
 import { FaqSection } from "@/components/FaqSection";
@@ -32,16 +33,17 @@ export default async function Home() {
         <main className="relative z-10">
           <Hero />
           <AboutSection />
+          <ChairmanMessageSection />
           <ServicesSection services={academyModules.services} />
           <EventsSection events={academyModules.events} />
           <GallerySection gallery={academyModules.gallery} />
-          <FaqSection faqs={academyModules.faqs} />
-          <BlogSection posts={academyModules.blog} />
+          {/* <BlogSection posts={academyModules.blog} /> */}
           <SuccessStoriesSection stories={academyModules.successStories} />
           <VideoTestimonials />
           <ReviewsSection />
           <HomeThreeScene />
           <CTASection />
+          <FaqSection faqs={academyModules.faqs} />
         </main>
 
         <footer className="mx-auto flex max-w-7xl flex-col gap-3 border-t border-white/10 px-6 py-8 text-sm text-slate-400 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
