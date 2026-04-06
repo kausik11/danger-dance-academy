@@ -13,7 +13,6 @@ import {
 } from "@/lib/animationVariants";
 
 const chairmanNameFont = Playwrite_AT({
-  subsets: ["latin"],
   weight: "300",
 });
 

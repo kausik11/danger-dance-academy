@@ -111,7 +111,8 @@ export function EyeFollowWord({
       };
 
       const onTouchMove = (event: JQuery.TouchMoveEvent) => {
-        const touch = event.originalEvent.touches?.[0];
+        const originalEvent = event.originalEvent;
+        const touch = originalEvent?.touches?.[0];
         if (!touch) {
           return;
         }
