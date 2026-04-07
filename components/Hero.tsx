@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import {
   motion,
   useReducedMotion,
@@ -121,7 +122,45 @@ export function Hero() {
         <div className="h-full w-full bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.24),_transparent_42%),linear-gradient(180deg,rgba(2,6,23,0.08)_0%,rgba(7,20,47,0.5)_70%,rgba(3,10,28,0.76)_100%)]" />
       </motion.div>
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl items-center justify-center px-6 pb-20 pt-32 text-center sm:px-8 lg:px-10">
+      <motion.div
+        className="pointer-events-none absolute inset-x-0 bottom-[-2.5rem] z-[8] overflow-hidden"
+        animate={
+          shouldReduceMotion
+            ? undefined
+            : {
+                y: [0, 8, 0],
+              }
+        }
+        transition={
+          shouldReduceMotion
+            ? undefined
+            : {
+                duration: 6.5,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              }
+        }
+      >
+        <Image
+          src="/all-gif/fire.gif"
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={520}
+          unoptimized
+          className="h-[14rem] w-full object-cover opacity-50 mix-blend-screen sm:h-[16rem] lg:h-[18rem]"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.28) 18%, rgba(0,0,0,0.92) 48%, rgba(0,0,0,1) 100%)",
+            maskImage:
+              "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.28) 18%, rgba(0,0,0,0.92) 48%, rgba(0,0,0,1) 100%)",
+            filter:
+              "saturate(1.15) contrast(1.04) brightness(0.94) drop-shadow(0 -12px 34px rgba(251,146,60,0.14))",
+          }}
+        />
+      </motion.div>
+
+      <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-7xl items-center justify-center px-6 pb-20 pt-32 text-center sm:px-8 lg:px-10">
         <motion.div
           variants={heroContentVariants}
           initial="hidden"

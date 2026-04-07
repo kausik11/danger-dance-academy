@@ -34,7 +34,19 @@ export function ChairmanMessageSection() {
         variants={sectionContentVariants}
         className="glass-panel relative overflow-hidden rounded-[38px] px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
       >
+        <div className="pointer-events-none absolute inset-0">
+          <Image
+            src="/all-gif/fire.gif"
+            alt=""
+            fill
+            unoptimized
+            aria-hidden="true"
+            sizes="100vw"
+            className="object-cover object-center opacity-28 mix-blend-screen"
+          />
+        </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(224,242,254,0.12),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.12),transparent_30%),linear-gradient(135deg,rgba(4,14,28,0.18)_0%,rgba(5,20,40,0.08)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,10,24,0.68)_0%,rgba(4,14,28,0.54)_26%,rgba(3,10,24,0.72)_100%)]" />
 
         <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[1.08fr_0.92fr]">
           <motion.div variants={sectionContentVariants} className="max-w-3xl">

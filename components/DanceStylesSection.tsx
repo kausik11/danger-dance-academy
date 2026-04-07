@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, Sparkles, Star, X } from "lucide-react";
+import type { IconType } from "react-icons";
+import {
+  FaAward,
+  FaChildReaching,
+  FaClipboardCheck,
+  FaMasksTheater,
+  FaPersonChalkboard,
+  FaUserGraduate,
+} from "react-icons/fa6";
 import {
   createFadeUp,
   createStaggerContainer,
@@ -180,13 +189,31 @@ const danceCategories = [
   },
 ] as const;
 
-const spotlightPoints = [
-  "Annual show performance platform",
-  "Diploma and certificate provided",
-  "Examination facility available",
-  "Stage preparation and costume guidance",
-  "Beginner-friendly batches with growth tracking",
-  "Event choreography support for real performances",
+const spotlightPoints: Array<{ label: string; icon: IconType }> = [
+  {
+    label: "Annual show performance platform",
+    icon: FaMasksTheater,
+  },
+  {
+    label: "Diploma and certificate provided",
+    icon: FaAward,
+  },
+  {
+    label: "Examination facility available",
+    icon: FaClipboardCheck,
+  },
+  {
+    label: "Stage preparation and costume guidance",
+    icon: FaUserGraduate,
+  },
+  {
+    label: "Beginner-friendly batches with growth tracking",
+    icon: FaChildReaching,
+  },
+  {
+    label: "Event choreography support for real performances",
+    icon: FaPersonChalkboard,
+  },
 ] as const;
 
 type DanceCategoryId = (typeof danceCategories)[number]["id"];
@@ -202,6 +229,10 @@ export function DanceStylesSection() {
 
   const activeCategory =
     danceCategories.find((category) => category.id === activeCategoryId) ?? danceCategories[0];
+  const totalStyleCount = danceCategories.reduce(
+    (count, category) => count + category.styles.length,
+    0,
+  );
 
   useEffect(() => {
     if (!activeVideo) {
@@ -224,7 +255,7 @@ export function DanceStylesSection() {
   }, [activeVideo]);
 
   return (
-    <section className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
+    <section className="relative mx-auto max-w-[92rem] px-6 py-20 sm:px-8 lg:px-10">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -235,44 +266,60 @@ export function DanceStylesSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.16),_transparent_34%),radial-gradient(circle_at_85%_14%,_rgba(251,191,36,0.14),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.14),_transparent_32%)]" />
 
         <div className="relative z-10">
-          <motion.p
-            variants={sectionHeadingVariants}
-            className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/74"
-          >
-            Dance Programs
-          </motion.p>
           <motion.div
             variants={sectionContentVariants}
-            className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"
+            className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_20rem] xl:items-end"
           >
-            <div className="max-w-3xl">
+            <div className="max-w-4xl">
+              <motion.p
+                variants={sectionHeadingVariants}
+                className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/74"
+              >
+                Dance Programs
+              </motion.p>
               <motion.h2
                 variants={sectionHeadingVariants}
-                className="font-display text-4xl text-white sm:text-5xl"
+                className="mt-4 max-w-5xl font-display text-[2.4rem] leading-[0.98] text-white sm:text-[3.3rem]"
               >
                 Explore styles, watch previews, and choose the right training path.
               </motion.h2>
               <motion.p
                 variants={sectionBodyVariants}
-                className="mt-4 max-w-2xl text-base leading-8 text-slate-300/86"
+                className="mt-4 max-w-3xl text-sm leading-7 text-slate-300/78 sm:text-[15px]"
               >
-                Select a dance type below, then open any style card to preview a sample video.
-                Placeholder clips are used for now and can be replaced with final class reels later.
+                Pick a program group, scan the styles instantly, and open any card to watch a
+                sample preview. The layout is tuned to keep more options visible at once.
               </motion.p>
             </div>
 
             <motion.div
               variants={sectionBodyVariants}
-              className="inline-flex items-center gap-3 self-start rounded-full border border-cyan-200/18 bg-cyan-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100/86"
+              className="grid gap-3 rounded-[28px] border border-cyan-200/16 bg-[linear-gradient(180deg,rgba(13,30,52,0.9)_0%,rgba(9,21,39,0.72)_100%)] p-4 shadow-[0_18px_50px_rgba(2,8,23,0.24)]"
             >
-              <Sparkles className="h-4 w-4" />
-              Click Any Card To Watch
+              <div className="inline-flex items-center gap-2 self-start rounded-full border border-cyan-200/18 bg-cyan-300/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100/86">
+                <Sparkles className="h-3.5 w-3.5" />
+                Click Any Card To Watch
+              </div>
+              <div className="grid grid-cols-2 gap-3 text-white">
+                <div className="rounded-[20px] border border-white/8 bg-white/[0.04] px-3 py-3">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
+                    Program Groups
+                  </p>
+                  <p className="mt-2 font-display text-3xl">{danceCategories.length}</p>
+                </div>
+                <div className="rounded-[20px] border border-white/8 bg-white/[0.04] px-3 py-3">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
+                    Style Options
+                  </p>
+                  <p className="mt-2 font-display text-3xl">{totalStyleCount}</p>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
 
           <motion.div
             variants={categoryVariants}
-            className="scrollbar-thin mt-10 flex gap-4 overflow-x-auto pb-2"
+            className="mt-8 grid gap-4 md:grid-cols-2 2xl:grid-cols-4"
           >
             {danceCategories.map((category, index) => {
               const isActive = category.id === activeCategory.id;
@@ -283,18 +330,18 @@ export function DanceStylesSection() {
                   type="button"
                   variants={cardVariants}
                   onClick={() => setActiveCategoryId(category.id)}
-                  className={`group min-w-[17rem] shrink-0 rounded-[24px] border p-4 text-left transition sm:min-w-[19rem] ${
+                  className={`group rounded-[26px] border p-4 text-left transition ${
                     isActive
-                      ? "border-sky-300/40 bg-[linear-gradient(135deg,rgba(56,189,248,0.22)_0%,rgba(14,165,233,0.12)_100%)] shadow-[0_24px_55px_rgba(14,165,233,0.16)]"
+                      ? "border-sky-300/40 bg-[linear-gradient(135deg,rgba(56,189,248,0.24)_0%,rgba(14,165,233,0.12)_100%)] shadow-[0_24px_55px_rgba(14,165,233,0.16)]"
                       : "border-white/10 bg-white/[0.03] hover:border-white/18 hover:bg-white/[0.06]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.24em] text-sky-100/56">
+                      <p className="text-[10px] uppercase tracking-[0.28em] text-sky-100/56">
                         {category.eyebrow}
                       </p>
-                      <h3 className="mt-2 font-display text-xl text-white sm:text-2xl">
+                      <h3 className="mt-2 font-display text-[1.65rem] leading-none text-white">
                         {category.label}
                       </h3>
                     </div>
@@ -308,6 +355,14 @@ export function DanceStylesSection() {
                       0{index + 1}
                     </span>
                   </div>
+                  <div className="mt-4 flex items-end justify-between gap-4">
+                    <p className="max-w-[15rem] text-xs leading-6 text-slate-300/72">
+                      {category.description}
+                    </p>
+                    <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-200/80">
+                      {category.styles.length} styles
+                    </span>
+                  </div>
                 </motion.button>
               );
             })}
@@ -319,24 +374,42 @@ export function DanceStylesSection() {
               initial="hidden"
               animate="visible"
               variants={categoryVariants}
-              className="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.03)_100%)] p-4 sm:p-5"
+              className="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.03)_100%)] p-4 sm:p-5 lg:p-6"
               >
-                <div className="mb-5 flex flex-col gap-3 border-b border-white/8 pb-5 sm:flex-row sm:items-end sm:justify-between">
+                <div className="mb-5 grid gap-4 border-b border-white/8 pb-5 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-end">
                   <div>
-                  <p className="text-xs uppercase tracking-[0.24em] text-sky-200/62">
-                    {activeCategory.eyebrow}
-                  </p>
-                  <h3 className="mt-2 font-display text-3xl text-white">
-                    {activeCategory.label}
-                  </h3>
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-sky-200/62">
+                      {activeCategory.eyebrow}
+                    </p>
+                    <h3 className="mt-2 font-display text-[2.15rem] leading-none text-white">
+                      {activeCategory.label}
+                    </h3>
+                    <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300/78">
+                      {activeCategory.description}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-[22px] border border-white/8 bg-white/[0.04] px-4 py-3">
+                      <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
+                        Visible Now
+                      </p>
+                      <p className="mt-2 font-display text-3xl text-white">
+                        {activeCategory.styles.length}
+                      </p>
+                    </div>
+                    <div className="rounded-[22px] border border-white/8 bg-white/[0.04] px-4 py-3">
+                      <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
+                        Tap Action
+                      </p>
+                      <p className="mt-2 text-sm font-semibold uppercase tracking-[0.18em] text-cyan-100/80">
+                        Watch
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p className="max-w-xl text-sm leading-7 text-slate-300/78">
-                  {activeCategory.description}
-                </p>
-              </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {activeCategory.styles.map((style) => (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                {activeCategory.styles.map((style, styleIndex) => (
                   <motion.button
                     key={`${activeCategory.id}-${style.name}`}
                     type="button"
@@ -348,35 +421,36 @@ export function DanceStylesSection() {
                         videoSrc: style.videoSrc,
                       })
                     }
-                    className="group overflow-hidden rounded-[26px] border border-white/10 bg-slate-950/46 text-left shadow-[0_18px_44px_rgba(2,8,23,0.24)] transition hover:border-sky-200/26"
+                    className="group overflow-hidden rounded-[26px] border border-white/10 bg-slate-950/48 text-left shadow-[0_18px_44px_rgba(2,8,23,0.24)] transition hover:border-sky-200/26"
                   >
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative aspect-[4/4.7] overflow-hidden">
                       <Image
                         src={style.imageSrc}
                         alt={style.name}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.02)_0%,rgba(2,6,23,0.76)_100%)]" />
-                      <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/16 bg-black/28 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/84 backdrop-blur-md">
-                        <Star className="h-3.5 w-3.5 text-amber-300" />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.03)_0%,rgba(2,6,23,0.66)_58%,rgba(2,6,23,0.94)_100%)]" />
+                      <div className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border border-white/16 bg-black/28 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.22em] text-white/84 backdrop-blur-md">
+                        <Star className="h-3 w-3 text-amber-300" />
                         Demo Clip
                       </div>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-4 p-4">
-                      <div>
-                        <h4 className="font-display text-2xl text-white">
+                      <div className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/14 bg-sky-300/14 text-sky-100 transition group-hover:scale-105 group-hover:border-sky-100/26 group-hover:bg-sky-300/18">
+                        <Play className="h-4.5 w-4.5 fill-current" />
+                      </div>
+                      <div className="absolute inset-x-0 bottom-0 p-4">
+                        <div className="inline-flex rounded-full border border-white/10 bg-black/24 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.22em] text-slate-200/84">
+                          {activeCategory.eyebrow}
+                        </div>
+                        <h4 className="mt-3 font-display text-[1.9rem] leading-none text-white">
                           {style.name}
                         </h4>
-                        <p className="mt-1 text-sm text-slate-300/72">
-                          Tap to open preview video
-                        </p>
+                        <div className="mt-3 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.22em] text-slate-300/72">
+                          <span>Style {String(styleIndex + 1).padStart(2, "0")}</span>
+                          <span>Tap To Preview</span>
+                        </div>
                       </div>
-                      <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/14 bg-sky-300/14 text-sky-100 transition group-hover:scale-105 group-hover:border-sky-100/26 group-hover:bg-sky-300/18">
-                        <Play className="h-5 w-5 fill-current" />
-                      </span>
                     </div>
                   </motion.button>
                 ))}
@@ -386,40 +460,89 @@ export function DanceStylesSection() {
 
           <motion.div
             variants={categoryVariants}
-            className="mt-10 rounded-[32px] border border-amber-300/20 bg-[linear-gradient(135deg,rgba(251,191,36,0.12)_0%,rgba(56,189,248,0.12)_44%,rgba(14,165,233,0.1)_100%)] p-5 shadow-[0_22px_60px_rgba(14,165,233,0.12)] sm:p-6"
+            className="relative mt-12 overflow-hidden rounded-[36px] border border-amber-300/18 bg-[linear-gradient(135deg,rgba(9,16,31,0.96)_0%,rgba(8,18,38,0.94)_42%,rgba(6,14,27,0.98)_100%)] p-5 shadow-[0_28px_90px_rgba(2,8,23,0.34)] sm:p-6 lg:p-7"
           >
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.26em] text-amber-200/78">
-                  Why Families Choose This Academy
-                </p>
-                <h3 className="mt-2 font-display text-3xl text-white">
-                  More than classes. A complete stage-ready journey.
-                </h3>
-              </div>
-              <p className="max-w-2xl text-sm leading-7 text-slate-100/76">
-                These are the promises students and parents notice immediately when they join the
-                academy.
-              </p>
+            <div className="pointer-events-none absolute inset-0">
+              <Image
+                src="/all-gif/fire.gif"
+                alt=""
+                fill
+                unoptimized
+                aria-hidden="true"
+                sizes="100vw"
+                className="object-cover object-center opacity-40 mix-blend-screen"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,10,20,0.18)_0%,rgba(4,10,20,0.72)_26%,rgba(4,10,20,0.9)_62%,rgba(4,10,20,0.98)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.22),transparent_32%),radial-gradient(circle_at_86%_12%,rgba(125,211,252,0.14),transparent_26%),radial-gradient(circle_at_bottom_center,rgba(249,115,22,0.24),transparent_34%)]" />
             </div>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {spotlightPoints.map((point) => (
-                <motion.div
-                  key={point}
-                  variants={cardVariants}
-                  className="rounded-[24px] border border-white/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.06)_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-300 text-slate-950">
-                      <Sparkles className="h-4 w-4" />
-                    </span>
-                    <p className="text-base font-semibold leading-7 text-white">
-                      {point}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="relative z-10">
+              <div className="grid gap-5 border-b border-white/10 pb-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.9fr)] lg:items-end">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.28em] text-amber-200/84">
+                  Why Families Choose This Academy
+                  </p>
+                  <h3 className="mt-3 max-w-3xl font-display text-[2.4rem] leading-[0.98] text-white sm:text-[3rem]">
+                    More than classes. A complete stage-ready journey.
+                  </h3>
+                </div>
+                <div className="grid gap-4">
+                  <p className="max-w-xl text-sm leading-7 text-slate-100/80 sm:text-[15px]">
+                    These are the promises students and parents notice immediately
+                    when they join the academy.
+                  </p>
+                  {/* <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-[22px] border border-white/12 bg-black/22 px-4 py-3 backdrop-blur-md">
+                      <p className="text-[10px] uppercase tracking-[0.24em] text-amber-100/64">
+                        Parent Signal
+                      </p>
+                      <p className="mt-2 font-display text-3xl text-white">Trust</p>
+                    </div>
+                    <div className="rounded-[22px] border border-white/12 bg-black/22 px-4 py-3 backdrop-blur-md">
+                      <p className="text-[10px] uppercase tracking-[0.24em] text-amber-100/64">
+                        Value Points
+                      </p>
+                      <p className="mt-2 font-display text-3xl text-white">
+                        {spotlightPoints.length}
+                      </p>
+                    </div>
+                  </div> */}
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {spotlightPoints.map((point, index) => {
+                  const BenefitIcon = point.icon;
+
+                  return (
+                  <motion.div
+                    key={point.label}
+                    variants={cardVariants}
+                    className="group relative overflow-hidden rounded-[26px] border border-white/12 bg-[linear-gradient(180deg,rgba(8,15,30,0.74)_0%,rgba(10,18,35,0.62)_100%)] p-5 shadow-[0_18px_48px_rgba(2,8,23,0.24)] backdrop-blur-md transition hover:border-amber-200/22"
+                  >
+                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(251,191,36,0.08)_0%,transparent_36%,rgba(56,189,248,0.08)_100%)] opacity-80" />
+                    <div className="relative z-10 flex items-start gap-4">
+                      <div className="grid shrink-0 gap-3">
+                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#ffe07a_0%,#fbbf24_42%,#f97316_100%)] text-slate-950 shadow-[0_12px_28px_rgba(249,115,22,0.28)]">
+                          <BenefitIcon className="h-5 w-5" />
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-amber-100/66">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.22em] text-slate-300/58">
+                          Stage-Ready Benefit
+                        </p>
+                        <p className="mt-2 text-[1.02rem] font-semibold leading-7 text-white">
+                          {point.label}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         </div>

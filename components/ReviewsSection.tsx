@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { academyData } from "@/lib/academy";
 import {
@@ -45,14 +46,43 @@ export function ReviewsSection() {
     >
       <motion.div
         variants={sectionHeadingVariants}
-        className="max-w-3xl"
+        className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-start lg:gap-4"
       >
-        <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
-          Reviews
-        </p>
-        <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
-          Real feedback from students and families.
-        </h2>
+        <div className="max-w-3xl lg:max-w-2xl">
+          <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
+            Reviews
+          </p>
+          <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
+            Real feedback from students and families.
+          </h2>
+        </div>
+
+        <motion.div
+          className="relative w-full max-w-[10rem] shrink-0 self-start lg:max-w-[11rem] lg:self-center"
+          animate={{ y: [0, -8, 0], rotate: [0, -1.25, 0] }}
+          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="absolute inset-3 rounded-full bg-sky-400/24 blur-3xl" />
+          <div className="absolute inset-x-6 bottom-4 h-16 rounded-full bg-amber-300/18 blur-[56px]" />
+          <div className="relative aspect-square overflow-hidden rounded-full">
+            <Image
+              src="/all-gif/google_review.gif"
+              alt="Animated Google review badge"
+              width={640}
+              height={640}
+              unoptimized
+              className="relative h-full w-full object-cover opacity-90 mix-blend-screen"
+              style={{
+                filter:
+                  "saturate(1.18) contrast(1.08) brightness(1.03) drop-shadow(0 18px 42px rgba(56,189,248,0.14))",
+                WebkitMaskImage:
+                  "radial-gradient(circle at center, rgba(0,0,0,1) 58%, rgba(0,0,0,0.88) 72%, rgba(0,0,0,0.42) 86%, rgba(0,0,0,0) 100%)",
+                maskImage:
+                  "radial-gradient(circle at center, rgba(0,0,0,1) 58%, rgba(0,0,0,0.88) 72%, rgba(0,0,0,0.42) 86%, rgba(0,0,0,0) 100%)",
+              }}
+            />
+          </div>
+        </motion.div>
       </motion.div>
 
       <motion.div variants={listContainerVariants} className="mt-10 grid gap-6 lg:grid-cols-3">
