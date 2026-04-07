@@ -81,8 +81,19 @@ export const academyAdminFields: Record<
         { label: "Video", value: "video" },
       ],
     },
-    { name: "assetUrl", label: "Asset URL", type: "image" },
-    { name: "thumbnailUrl", label: "Thumbnail", type: "image" },
+    {
+      name: "assetUrl",
+      label: "Asset URL",
+      type: "image",
+      helpText:
+        "For videos, paste a public YouTube, Facebook, or Instagram link.",
+    },
+    {
+      name: "thumbnailUrl",
+      label: "Thumbnail",
+      type: "image",
+      helpText: "Only needed for image gallery items.",
+    },
     { name: "caption", label: "Caption", type: "textarea" },
     { name: "published", label: "Published", type: "checkbox" },
     { name: "featured", label: "Featured", type: "checkbox" },

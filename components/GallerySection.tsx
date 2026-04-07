@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { GalleryItem } from "@/lib/academy-cms";
+import { VideoFrame } from "@/components/VideoFrame";
 
 type GallerySectionProps = {
   gallery: GalleryItem[];
@@ -29,11 +30,13 @@ export function GallerySection({ gallery }: GallerySectionProps) {
           >
             <div className="relative">
               {item.mediaType === "video" ? (
-                <video
+                <VideoFrame
                   src={item.assetUrl}
-                  className="aspect-[4/3] w-full object-cover"
+                  title={item.title}
+                  className="aspect-[4/3] w-full border-0 object-cover"
                   controls
                   preload="metadata"
+                  poster={item.thumbnailUrl || "/dance-poster.svg"}
                 />
               ) : (
                 <div className="relative aspect-[4/3]">

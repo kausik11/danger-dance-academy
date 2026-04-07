@@ -9,6 +9,7 @@ import {
   sectionViewport,
 } from "@/lib/animationVariants";
 import { EyeFollowWord } from "@/components/EyeFollowWord";
+import { VideoFrame } from "@/components/VideoFrame";
 
 export function VideoTestimonials() {
   return (
@@ -47,14 +48,14 @@ export function VideoTestimonials() {
             className="glass-panel overflow-hidden rounded-[30px] p-4 will-change-transform"
           >
             <div className="overflow-hidden rounded-[24px] border border-white/10 bg-black/30">
-              <video
+              <VideoFrame
                 src={item.videoSrc}
-                className="aspect-[4/5] w-full object-cover"
+                title={`${item.name} testimonial video`}
+                className="aspect-[4/5] w-full border-0 object-cover"
                 autoPlay
                 muted
                 loop
                 controls
-                playsInline
                 preload="auto"
                 poster="/dance-poster.svg"
               />

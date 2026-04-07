@@ -201,6 +201,10 @@ function buildGalleryRecord(
   );
   const mediaType: GalleryItem["mediaType"] =
     mediaTypeValue === "video" ? "video" : "image";
+  const thumbnailUrl =
+    mediaType === "video"
+      ? ""
+      : asString(input, "thumbnailUrl", existing?.thumbnailUrl ?? "/logo.jpeg");
 
   return {
     id: existing?.id ?? randomUUID(),
@@ -211,11 +215,7 @@ function buildGalleryRecord(
     category: asString(input, "category", existing?.category ?? "General"),
     mediaType,
     assetUrl: asString(input, "assetUrl", existing?.assetUrl ?? "/logo.jpeg"),
-    thumbnailUrl: asString(
-      input,
-      "thumbnailUrl",
-      existing?.thumbnailUrl ?? "/logo.jpeg",
-    ),
+    thumbnailUrl,
     caption: asString(input, "caption", existing?.caption ?? ""),
     featured: asBoolean(input, "featured", existing?.featured ?? false),
   };

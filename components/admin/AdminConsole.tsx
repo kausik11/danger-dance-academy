@@ -211,6 +211,10 @@ function buildPayload(
     payload[field.name] = value;
   }
 
+  if (moduleSlug === "gallery" && formState.mediaType === "video") {
+    payload.thumbnailUrl = "";
+  }
+
   return payload;
 }
 
@@ -551,10 +555,24 @@ export function AdminConsole({
   }
 
   function handleFieldChange(name: string, value: AcademyAdminFormValue) {
-    setFormState((current) => ({
-      ...current,
-      [name]: value,
-    }));
+    setFormState((current) => {
+      if (
+        selectedModule === "gallery" &&
+        name === "mediaType" &&
+        value === "video"
+      ) {
+        return {
+          ...current,
+          [name]: value,
+          thumbnailUrl: "",
+        };
+      }
+
+      return {
+        ...current,
+        [name]: value,
+      };
+    });
   }
 
   function handleSave() {
@@ -760,12 +778,30 @@ export function AdminConsole({
 
   function renderField(field: AcademyAdminField) {
     const value = formState[field.name];
+    const isGalleryVideo =
+      selectedModule === "gallery" && formState.mediaType === "video";
+    const isGalleryVideoAssetField =
+      isGalleryVideo && field.name === "assetUrl";
+    const shouldHideField = isGalleryVideo && field.name === "thumbnailUrl";
     const wideField = field.type === "textarea" || field.type === "image";
+    const fieldLabel = isGalleryVideoAssetField ? "Video Link" : field.label;
+    const fieldHelpText =
+      selectedModule === "gallery" && field.name === "assetUrl"
+        ? isGalleryVideo
+          ? "Paste a YouTube, Facebook, or Instagram video URL."
+          : "Provide an image URL or upload an image from your computer."
+        : selectedModule === "gallery" && field.name === "thumbnailUrl"
+          ? "Used only for image gallery items."
+          : field.helpText;
+
+    if (shouldHideField) {
+      return null;
+    }
 
     return (
       <div key={field.name} className={wideField ? "md:col-span-2" : ""}>
         <label className="block">
-          <span className={mutedEyebrowClassName}>{field.label}</span>
+          <span className={mutedEyebrowClassName}>{fieldLabel}</span>
 
           {field.type === "textarea" ? (
             <textarea
@@ -847,10 +883,15 @@ export function AdminConsole({
 
           {field.type === "image" ? (
             <div className="mt-2 rounded-[24px] border border-[#d8e5fb] bg-[#f8fbff] p-4">
-              {isImageUrl(value) ? (
+              {isGalleryVideoAssetField ? (
+                <div className="flex h-40 items-center justify-center rounded-[20px] border border-dashed border-[#cddcf8] bg-white px-6 text-center text-sm text-slate-500">
+                  Paste a public video link instead of uploading a thumbnail or media
+                  file.
+                </div>
+              ) : isImageUrl(value) ? (
                 <Image
                   src={String(value)}
-                  alt={field.label}
+                  alt={fieldLabel}
                   width={640}
                   height={360}
                   className="h-48 w-full rounded-[20px] object-cover"
@@ -868,38 +909,44 @@ export function AdminConsole({
                   handleFieldChange(field.name, event.target.value)
                 }
                 className={`${inputClassName} bg-white`}
-                placeholder="https://..."
+                placeholder={
+                  isGalleryVideoAssetField
+                    ? "https://www.youtube.com/... or https://www.instagram.com/..."
+                    : "https://..."
+                }
               />
 
-              <label className="mt-4 flex cursor-pointer flex-col gap-3 rounded-[20px] border border-[#d8e5fb] bg-white px-4 py-4 text-sm text-slate-700 hover:border-[#bfdbfe] hover:bg-[#f8fbff]">
-                <span>
-                  {uploadingField === field.name
-                    ? "Uploading image..."
-                    : "Upload from your computer"}
-                </span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-[#dbeafe] file:px-4 file:py-2 file:font-semibold file:text-[#2563eb]"
-                  disabled={uploadingField === field.name}
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
+              {!isGalleryVideoAssetField ? (
+                <label className="mt-4 flex cursor-pointer flex-col gap-3 rounded-[20px] border border-[#d8e5fb] bg-white px-4 py-4 text-sm text-slate-700 hover:border-[#bfdbfe] hover:bg-[#f8fbff]">
+                  <span>
+                    {uploadingField === field.name
+                      ? "Uploading image..."
+                      : "Upload from your computer"}
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-[#dbeafe] file:px-4 file:py-2 file:font-semibold file:text-[#2563eb]"
+                    disabled={uploadingField === field.name}
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
 
-                    if (file) {
-                      void handleUpload(field.name, file);
-                    }
+                      if (file) {
+                        void handleUpload(field.name, file);
+                      }
 
-                    event.currentTarget.value = "";
-                  }}
-                />
-              </label>
+                      event.currentTarget.value = "";
+                    }}
+                  />
+                </label>
+              ) : null}
             </div>
           ) : null}
         </label>
 
-        {field.helpText ? (
+        {fieldHelpText ? (
           <p className="mt-2 text-xs leading-5 text-slate-500">
-            {field.helpText}
+            {fieldHelpText}
           </p>
         ) : null}
       </div>
@@ -917,9 +964,9 @@ export function AdminConsole({
               </div>
               <div>
                 <p className={mutedEyebrowClassName}>Protected Panel</p>
-                <p className="mt-1 font-display text-xl text-slate-900">
+                {/* <p className="mt-1 font-display text-xl text-slate-900">
                   Academy CMS
-                </p>
+                </p> */}
               </div>
             </div>
             <p className="mt-4 text-sm leading-6 text-slate-500">
