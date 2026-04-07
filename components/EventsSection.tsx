@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { EventItem } from "@/lib/academy-cms";
 
 type EventsSectionProps = {
@@ -11,14 +12,29 @@ export function EventsSection({ events }: EventsSectionProps) {
 
   return (
     <section id="events" className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div className="max-w-3xl">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-start lg:gap-3">
+        <div className="max-w-3xl lg:max-w-[46rem]">
           <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
             Events
           </p>
           <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
             Upcoming academy showcases and workshops from your API.
           </h2>
+        </div>
+        <div className="pointer-events-none w-full max-w-[8.5rem] self-start lg:max-w-[10rem] lg:self-center">
+          <Image
+            src="/all-gif/animation_spider.gif"
+            alt=""
+            aria-hidden="true"
+            width={480}
+            height={480}
+            unoptimized
+            className="h-auto w-full object-contain opacity-90 mix-blend-screen"
+            style={{
+              filter:
+                "drop-shadow(0 14px 34px rgba(56,189,248,0.14)) saturate(1.06)",
+            }}
+          />
         </div>
       </div>
 
