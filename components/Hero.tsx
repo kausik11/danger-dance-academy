@@ -9,7 +9,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { Changa_One } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
 import { academyData } from "@/lib/academy";
 import {
   createFadeUp,
@@ -24,9 +24,9 @@ const heroSocialLinks = academyData.socialPlatforms.filter(
   (item) => (item.platform === "youtube" || item.platform === "instagram") && "href" in item,
 );
 const heroTextVariants = createFadeUp(22, 0.72);
-const changaOne = Changa_One({
+const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
-  weight: "400",
+  weight: "600",
 });
 
 function InstagramIcon({ className }: { className?: string }) {
@@ -177,21 +177,21 @@ export function Hero() {
 
           <motion.h1
             variants={heroTitleVariants}
-            className={`mt-7 text-[3.8rem] leading-[0.84] text-white sm:text-[5.7rem] lg:text-[7.2rem] ${changaOne.className}`}
+            className="mt-7 text-white"
           >
             {heroTitleLines.map((line, lineIndex) => (
               <span
                 key={line.join(" ")}
-                className={`block ${lineIndex === 0 ? "pb-3" : "pb-4"}`}
+                className={`block ${lineIndex === 0 ? "pb-4" : "pb-5"}`}
               >
                 {line.map((word) => (
                   <span
                     key={word}
-                    className="mr-[0.22em] inline-block overflow-hidden"
+                    className="mr-[0.22em] inline-block pb-2"
                   >
                     <motion.span
                       variants={heroWordVariants}
-                      className="inline-block bg-[linear-gradient(180deg,#ffffff_0%,#d7efff_48%,#9fd3ff_100%)] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(96,165,250,0.34)] [-webkit-text-stroke:1px_rgba(255,255,255,0.18)]"
+                      className={`inline-block text-[36px] font-semibold leading-[1.08] tracking-normal text-[#d7efff] drop-shadow-[0_0_28px_rgba(96,165,250,0.34)] sm:text-[5.2rem] sm:leading-[1.02] lg:text-[6.6rem] lg:leading-[0.96] [text-shadow:0_0_24px_rgba(159,211,255,0.2)] [-webkit-text-stroke:1px_rgba(255,255,255,0.18)] ${playfairDisplay.className}`}
                     >
                       {word}
                     </motion.span>
