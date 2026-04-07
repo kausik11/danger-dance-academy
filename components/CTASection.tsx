@@ -121,11 +121,14 @@ export function CTASection() {
                 className="mt-4 grid gap-3 sm:grid-cols-3"
               >
                 {academyData.socialPlatforms.map((item) => (
-                  <motion.div
+                  <motion.a
                     key={item.platform}
                     variants={listItemVariants}
                     whileHover={{ y: -4 }}
-                    className="glass-card group flex cursor-default items-center gap-3 rounded-[24px] px-4 py-3 transition hover:border-white/35 hover:bg-white/12 will-change-transform"
+                    href={"href" in item ? item.href : undefined}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="glass-card group flex items-center gap-3 rounded-[24px] px-4 py-3 transition hover:border-white/35 hover:bg-white/12 will-change-transform"
                   >
                     <span
                       className={`flex h-12 w-12 items-center justify-center rounded-full shadow-[0_10px_24px_rgba(15,23,42,0.28)] transition duration-300 ${getSocialBadgeClass(item.platform)}`}
@@ -138,7 +141,7 @@ export function CTASection() {
                     <span className="text-sm font-semibold uppercase tracking-[0.12em] text-white/86 transition duration-300 group-hover:text-white">
                       {item.label}
                     </span>
-                  </motion.div>
+                  </motion.a>
                 ))}
               </motion.div>
             </motion.div>

@@ -34,7 +34,7 @@ function extractYouTubeId(url: URL) {
   return null;
 }
 
-function buildInstagramEmbedUrl(url: URL) {
+function buildInstagramEmbedUrl(url: URL, autoPlay?: boolean) {
   const segments = url.pathname.split("/").filter(Boolean);
   const contentType = segments[0];
   const contentId = segments[1];
@@ -43,25 +43,40 @@ function buildInstagramEmbedUrl(url: URL) {
     (contentType === "reel" || contentType === "p" || contentType === "tv") &&
     contentId
   ) {
-    return `https://www.instagram.com/${contentType}/${contentId}/embed/captioned/`;
+    const embedUrl = new URL(
+      `https://www.instagram.com/${contentType}/${contentId}/embed/captioned/`,
+    );
+
+    if (autoPlay) {
+      embedUrl.searchParams.set("autoplay", "1");
+    }
+
+    return embedUrl.toString();
   }
 
   return null;
 }
 
-function buildFacebookEmbedUrl(url: URL) {
+function buildFacebookEmbedUrl(url: URL, autoPlay?: boolean) {
   const host = url.hostname.toLowerCase();
 
   if (!host.includes("facebook.com") && !host.includes("fb.watch")) {
     return null;
   }
 
-  return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(
-    url.toString(),
-  )}&show_text=false&width=1280`;
+  const embedUrl = new URL("https://www.facebook.com/plugins/video.php");
+  embedUrl.searchParams.set("href", url.toString());
+  embedUrl.searchParams.set("show_text", "false");
+  embedUrl.searchParams.set("width", "1280");
+
+  if (autoPlay) {
+    embedUrl.searchParams.set("autoplay", "true");
+  }
+
+  return embedUrl.toString();
 }
 
-export function resolveVideoEmbed(input: string): VideoEmbed {
+export function resolveVideoEmbed(input: string, options?: { autoPlay?: boolean }): VideoEmbed {
   const value = input.trim();
 
   if (!value) {
@@ -86,16 +101,25 @@ export function resolveVideoEmbed(input: string): VideoEmbed {
       const videoId = extractYouTubeId(url);
 
       if (videoId) {
+        const embedUrl = new URL(`https://www.youtube.com/embed/${videoId}`);
+
+        if (options?.autoPlay) {
+          embedUrl.searchParams.set("autoplay", "1");
+          embedUrl.searchParams.set("mute", "1");
+          embedUrl.searchParams.set("playsinline", "1");
+          embedUrl.searchParams.set("rel", "0");
+        }
+
         return {
           kind: "embed",
           provider: "youtube",
-          src: `https://www.youtube.com/embed/${videoId}`,
+          src: embedUrl.toString(),
         };
       }
     }
 
     if (host === "instagram.com") {
-      const embedUrl = buildInstagramEmbedUrl(url);
+      const embedUrl = buildInstagramEmbedUrl(url, options?.autoPlay);
 
       if (embedUrl) {
         return {
@@ -107,7 +131,7 @@ export function resolveVideoEmbed(input: string): VideoEmbed {
     }
 
     if (host === "facebook.com" || host === "m.facebook.com" || host === "fb.watch") {
-      const embedUrl = buildFacebookEmbedUrl(url);
+      const embedUrl = buildFacebookEmbedUrl(url, options?.autoPlay);
 
       if (embedUrl) {
         return {

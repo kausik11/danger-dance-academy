@@ -15,15 +15,19 @@ export const academyData = {
     {
       label: "Instagram",
       platform: "instagram",
-      handle: "dangerdanceacademyofficialpage",
-      href: "https://www.instagram.com/dangerdanceacademyofficialpage/",
+      handle: "dancersuryachoreographer",
+      href: "https://www.instagram.com/dancersuryachoreographer?igsh=bzVnYWVwajY2cTU2",
     },
-    { label: "Facebook", platform: "facebook" },
+    {
+      label: "Facebook",
+      platform: "facebook",
+      href: "https://www.facebook.com/share/18a5KuSizR/",
+    },
     {
       label: "YouTube",
-      platform: "youtube",
+      platform: "youtube", 
       handle: "Danger Dance Academy",
-      href: "https://www.youtube.com/",
+      href: "https://youtu.be/M39fHM_KzNg?si=1BiukIm_wgVQwKFq",
     },
   ],
   trainer: "Surya Sir",
@@ -123,17 +127,20 @@ export const academyData = {
     {
       name: "Akash Dey",
       quote: "Best dance class in Baranagar.",
-      videoSrc: "/testimonial-dance.mp4",
+      videoSrc:
+        "https://www.instagram.com/reel/DWWs2PXCgI8/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     },
     {
       name: "Sukanya",
       quote: "Surya sir is awesome.",
-      videoSrc: "/hero-dance.mp4",
+      videoSrc:
+        "https://www.instagram.com/reel/DWMk-D2D6TK/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     },
     {
       name: "Dimple Sharma",
       quote: "Great environment and vibe.",
-      videoSrc: "/testimonial-dance.mp4",
+      videoSrc:
+        "https://www.instagram.com/reel/DUlS4NPkb_U/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
     },
   ],
   reviews: [

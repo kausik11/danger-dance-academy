@@ -1,6 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import { resolveVideoEmbed } from "@/lib/video-embed";
+
+declare global {
+  interface Window {
+    instgrm?: {
+      Embeds?: {
+        process: () => void;
+      };
+    };
+  }
+}
 
 type VideoFrameProps = {
   src: string;
@@ -25,7 +36,32 @@ export function VideoFrame({
   controls = true,
   preload = "metadata",
 }: VideoFrameProps) {
-  const resolvedVideo = resolveVideoEmbed(src);
+  const resolvedVideo = resolveVideoEmbed(src, { autoPlay });
+
+  useEffect(() => {
+    if (resolvedVideo.kind !== "embed" || resolvedVideo.provider !== "instagram") {
+      return;
+    }
+
+    const existingScript = document.querySelector(
+      'script[src="https://www.instagram.com/embed.js"]',
+    ) as HTMLScriptElement | null;
+
+    function processEmbeds() {
+      window.instgrm?.Embeds?.process();
+    }
+
+    if (existingScript) {
+      processEmbeds();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://www.instagram.com/embed.js";
+    script.onload = processEmbeds;
+    document.body.appendChild(script);
+  }, [resolvedVideo.kind, resolvedVideo.provider, src]);
 
   if (!resolvedVideo.src) {
     return (
@@ -36,6 +72,29 @@ export function VideoFrame({
   }
 
   if (resolvedVideo.kind === "embed") {
+    if (resolvedVideo.provider === "instagram") {
+      return (
+        <div className={className}>
+          <blockquote
+            className="instagram-media !m-0 !min-w-0 !max-w-none"
+            data-instgrm-permalink={src}
+            data-instgrm-version="14"
+            style={{
+              background: "#FFFFFF",
+              border: 0,
+              borderRadius: "0",
+              boxShadow: "none",
+              margin: 0,
+              maxWidth: "100%",
+              minWidth: "100%",
+              padding: 0,
+              width: "100%",
+            }}
+          />
+        </div>
+      );
+    }
+
     return (
       <iframe
         src={resolvedVideo.src}
