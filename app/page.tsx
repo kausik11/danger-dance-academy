@@ -42,7 +42,7 @@ export default async function Home() {
 
           <ReviewsSection />
           <CTASection />
-          <FaqSection faqs={academyModules.faqs} />
+          {/* <FaqSection faqs={academyModules.faqs} /> */}
           <VideoTestimonials />
         </main>
 

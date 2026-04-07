@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { CheckCircle2, Menu, Phone, Send, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,11 +13,35 @@ type NavbarProps = {
   ctaLabel?: string;
 };
 
+type FormState = {
+  name: string;
+  email: string;
+  phone: string;
+  preferredCenterId: string;
+  message: string;
+};
+
+const defaultContactMessage =
+  "Hi, I want to know more about classes, fees, timings, and trial options.";
+
 export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   const pathname = usePathname();
   const showContactButton = pathname !== "/contact";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    phone: "",
+    preferredCenterId: academyData.contactCenters[0]?.id ?? "",
+    message: defaultContactMessage,
+  });
 
   useEffect(() => {
     function handleScroll() {
@@ -32,8 +56,102 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isContactModalOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeContactModal();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isContactModalOpen]);
+
   function closeMenu() {
     setIsMenuOpen(false);
+  }
+
+  function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm((current) => ({ ...current, [key]: value }));
+  }
+
+  function openContactModal() {
+    closeMenu();
+    setFeedback(null);
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      preferredCenterId: academyData.contactCenters[0]?.id ?? "",
+      message: defaultContactMessage,
+    });
+    setIsContactModalOpen(true);
+  }
+
+  function closeContactModal() {
+    setIsContactModalOpen(false);
+    setFeedback(null);
+    setIsSubmitting(false);
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setFeedback(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = (await response.json()) as {
+        error?: string;
+        message?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "Unable to submit the contact form.");
+      }
+
+      setFeedback({
+        type: "success",
+        message:
+          data.message ??
+          "Your enquiry has been sent. The academy team will contact you shortly.",
+      });
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        preferredCenterId: academyData.contactCenters[0]?.id ?? "",
+        message: defaultContactMessage,
+      });
+    } catch (error) {
+      setFeedback({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to submit the contact form.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const brandTextClass = isScrolled
@@ -81,13 +199,13 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
 
     if (showContactButton) {
       return (
-        <Link
-          href="/contact"
-          onClick={closeMenu}
+        <button
+          type="button"
+          onClick={openContactModal}
           className="inline-flex h-10 items-center justify-center rounded-full border border-sky-200/80 bg-[linear-gradient(135deg,#f8fbff_0%,#d8f1ff_46%,#99ddff_100%)] px-5 text-sm font-semibold text-slate-900 shadow-[0_12px_26px_rgba(56,189,248,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(56,189,248,0.2)]"
         >
           Contact Us
-        </Link>
+        </button>
       );
     }
 
@@ -122,16 +240,38 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                 }
               : {
                   background:
-                    "linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%)",
-                  borderColor: "rgba(255, 255, 255, 0.34)",
+                    "linear-gradient(180deg, rgba(7, 16, 33, 0.58) 0%, rgba(10, 24, 46, 0.4) 100%)",
+                  borderColor: "rgba(186, 230, 253, 0.18)",
                   boxShadow:
-                    "0 20px 52px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.32)",
+                    "0 20px 52px rgba(2, 8, 23, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.12)",
                 }
           }
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="overflow-hidden rounded-[28px] border backdrop-blur-xl"
+          className="relative isolate overflow-hidden rounded-[28px] border backdrop-blur-xl"
         >
-          <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-5 lg:px-6 xl:gap-8">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 overflow-hidden">
+            <Image
+              src="/all-gif/fire.gif"
+              alt=""
+              aria-hidden="true"
+              width={1600}
+              height={220}
+              unoptimized
+              className="h-16 w-full object-cover object-bottom opacity-28 sm:h-20"
+              style={{
+                WebkitMaskImage:
+                  "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.22) 30%, rgba(0,0,0,0.96) 100%)",
+                maskImage:
+                  "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.22) 30%, rgba(0,0,0,0.96) 100%)",
+                filter: "saturate(0.92) contrast(0.96) brightness(0.82)",
+              }}
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,7,18,0.04)_0%,rgba(3,7,18,0.24)_42%,rgba(3,7,18,0.68)_100%)]" />
+          </div>
+
+          <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04)_0%,rgba(2,6,23,0.08)_54%,rgba(2,6,23,0.18)_100%)]" />
+
+          <div className="relative z-10 flex items-center justify-between gap-4 px-4 py-3 sm:px-5 lg:px-6 xl:gap-8">
             <Link
               href="/"
               onClick={closeMenu}
@@ -211,7 +351,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.28, ease: "easeOut" }}
-                className="overflow-hidden xl:hidden"
+                className="relative z-10 overflow-hidden xl:hidden"
               >
                 <motion.div
                   initial={{ y: -10 }}
@@ -269,6 +409,172 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
           </AnimatePresence>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {isContactModalOpen ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto px-4 py-4 sm:px-6 sm:py-6"
+          >
+            <button
+              type="button"
+              aria-label="Close contact form"
+              className="absolute inset-0 bg-slate-950/78 backdrop-blur-sm"
+              onClick={closeContactModal}
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 18, scale: 0.98 }}
+              transition={{ duration: 0.24, ease: "easeOut" }}
+              className="glass-panel relative z-10 my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[34px] border border-white/12 sm:max-h-[calc(100svh-3rem)]"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(224,242,254,0.15),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.14),transparent_28%),linear-gradient(180deg,rgba(6,23,44,0.14)_0%,rgba(4,14,28,0.08)_100%)]" />
+
+              <div className="relative z-10 overflow-y-auto p-5 sm:p-8">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="max-w-xl">
+                    <h3 className="mt-0 font-display text-[1rem] leading-none text-white sm:text-4xl">
+                      Ask about classes, fees, and trial options
+                   
+                   <a
+                      href={`tel:${academyData.phone}`}
+                      className="ml-4 inline-flex items-center gap-3 rounded-full border border-white/12 bg-black/20 px-4 py-2 text-sm font-semibold text-white"
+                    >
+                      <Phone className="h-4 w-4 text-sky-200" />
+                      {academyData.phone}
+                    </a> </h3>
+                    
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-label="Close modal"
+                    onClick={closeContactModal}
+                    className="glass-card inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-200 transition hover:text-white"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="mt-2 sm:mt-1">
+                  <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                    <label className="block">
+                      <span className="text-sm font-medium text-slate-200">Full Name</span>
+                      <input
+                        type="text"
+                        value={form.name}
+                        onChange={(event) => updateField("name", event.target.value)}
+                        placeholder="Student or parent name"
+                        className="mt-2 h-12 w-full rounded-2xl border border-white/10 bg-black/20 px-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/40"
+                        required
+                      />
+                    </label>
+
+                    <label className="block">
+                      <span className="text-sm font-medium text-slate-200">Phone</span>
+                      <input
+                        type="tel"
+                        value={form.phone}
+                        onChange={(event) => updateField("phone", event.target.value)}
+                        placeholder="+91 98XXXXXXXX"
+                        className="mt-2 h-12 w-full rounded-2xl border border-white/10 bg-black/20 px-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/40"
+                        required
+                      />
+                    </label>
+
+                    <label className="block">
+                      <span className="text-sm font-medium text-slate-200">Email</span>
+                      <input
+                        type="email"
+                        value={form.email}
+                        onChange={(event) => updateField("email", event.target.value)}
+                        placeholder="name@example.com"
+                        className="mt-2 h-12 w-full rounded-2xl border border-white/10 bg-black/20 px-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/40"
+                        required
+                      />
+                    </label>
+
+                    <label className="block">
+                      <span className="text-sm font-medium text-slate-200">
+                        Preferred Center
+                      </span>
+                      <select
+                        value={form.preferredCenterId}
+                        onChange={(event) =>
+                          updateField("preferredCenterId", event.target.value)
+                        }
+                        className="mt-2 h-12 w-full rounded-2xl border border-white/10 bg-black/20 px-4 text-sm text-white outline-none transition focus:border-sky-300/40"
+                        required
+                      >
+                        {academyData.contactCenters.map((center) => (
+                          <option
+                            key={center.id}
+                            value={center.id}
+                            className="bg-slate-950"
+                          >
+                            {center.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+
+                  <label className="mt-4 block sm:mt-5">
+                    <span className="text-sm font-medium text-slate-200">Message</span>
+                    <textarea
+                      value={form.message}
+                      onChange={(event) => updateField("message", event.target.value)}
+                      rows={5}
+                      placeholder="Tell us which class or support you need."
+                      className="mt-2 w-full rounded-[28px] border border-white/10 bg-black/20 px-4 py-4 text-sm leading-7 text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/40"
+                      required
+                    />
+                  </label>
+
+                  {feedback ? (
+                    <div
+                      className={`mt-5 rounded-[24px] border px-4 py-3 text-sm ${
+                        feedback.type === "success"
+                          ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-100"
+                          : "border-rose-400/30 bg-rose-400/10 text-rose-100"
+                      }`}
+                    >
+                      {feedback.type === "success" ? (
+                        <span className="inline-flex items-center gap-2">
+                          <CheckCircle2 className="h-4 w-4" />
+                          {feedback.message}
+                        </span>
+                      ) : (
+                        feedback.message
+                      )}
+                    </div>
+                  ) : null}
+
+                  <div className="mt-5 flex flex-wrap items-center gap-4 sm:mt-6">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="inline-flex h-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#e0f2fe_0%,#93c5fd_44%,#38bdf8_100%)] px-6 text-sm font-semibold text-slate-950 shadow-[0_0_32px_rgba(56,189,248,0.3)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        <Send className="h-4 w-4" />
+                        {isSubmitting ? "Sending..." : "Send Enquiry"}
+                      </span>
+                    </button>
+                    <p className="text-sm text-slate-400">
+                      The team will contact you shortly with batch and fee details.
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </motion.header>
   );
 }

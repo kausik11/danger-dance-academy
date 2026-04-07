@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { academyData } from "@/lib/academy";
 import {
@@ -55,12 +56,26 @@ export function AboutSection() {
               <motion.article
                 key={item.title}
                 variants={listItemVariants}
-                className="glass-panel rounded-[26px] p-5 will-change-transform"
+                className="glass-panel relative overflow-hidden rounded-[26px] p-5 will-change-transform"
               >
-                <h3 className="font-display text-2xl text-white">{item.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-slate-300/80">
-                  {item.description}
-                </p>
+                <div className="pointer-events-none absolute inset-0">
+                  <Image
+                    src="/all-gif/fire.gif"
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover object-center opacity-52 mix-blend-screen"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,10,20,0.56)_0%,rgba(4,10,20,0.46)_38%,rgba(4,10,20,0.76)_100%)]" />
+                </div>
+                <div className="relative z-10">
+                  <h3 className="font-display text-2xl text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-300/80">
+                    {item.description}
+                  </p>
+                </div>
               </motion.article>
             ))}
           </motion.div>
@@ -93,14 +108,28 @@ export function AboutSection() {
                 <motion.div
                   key={stat.label}
                   variants={listItemVariants}
-                  className="glass-card rounded-[24px] p-4"
+                  className="glass-card relative overflow-hidden rounded-[24px] p-4"
                 >
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
-                    {stat.label}
-                  </p>
-                  <p className="mt-3 text-sm font-semibold leading-6 text-white">
-                    {stat.value}
-                  </p>
+                  <div className="pointer-events-none absolute inset-0">
+                    <Image
+                      src="/all-gif/fire.gif"
+                      alt=""
+                      aria-hidden="true"
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 100vw, 33vw"
+                      className="object-cover object-center opacity-46 mix-blend-screen"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,11,22,0.62)_0%,rgba(5,11,22,0.52)_42%,rgba(5,11,22,0.8)_100%)]" />
+                  </div>
+                  <div className="relative z-10">
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-400">
+                      {stat.label}
+                    </p>
+                    <p className="mt-3 text-sm font-semibold leading-6 text-white">
+                      {stat.value}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

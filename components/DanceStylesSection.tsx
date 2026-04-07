@@ -291,28 +291,20 @@ export function DanceStylesSection() {
                 sample preview. The layout is tuned to keep more options visible at once.
               </motion.p>
             </div>
-
             <motion.div
               variants={sectionBodyVariants}
-              className="grid gap-3 rounded-[28px] border border-cyan-200/16 bg-[linear-gradient(180deg,rgba(13,30,52,0.9)_0%,rgba(9,21,39,0.72)_100%)] p-4 shadow-[0_18px_50px_rgba(2,8,23,0.24)]"
+              className="pointer-events-none relative hidden min-h-[11rem] items-end justify-end xl:flex"
             >
-              <div className="inline-flex items-center gap-2 self-start rounded-full border border-cyan-200/18 bg-cyan-300/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-100/86">
-                <Sparkles className="h-3.5 w-3.5" />
-                Click Any Card To Watch
-              </div>
-              <div className="grid grid-cols-2 gap-3 text-white">
-                <div className="rounded-[20px] border border-white/8 bg-white/[0.04] px-3 py-3">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
-                    Program Groups
-                  </p>
-                  <p className="mt-2 font-display text-3xl">{danceCategories.length}</p>
-                </div>
-                <div className="rounded-[20px] border border-white/8 bg-white/[0.04] px-3 py-3">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
-                    Style Options
-                  </p>
-                  <p className="mt-2 font-display text-3xl">{totalStyleCount}</p>
-                </div>
+              <div className="relative h-[12rem] w-[12rem]">
+                <Image
+                  src="/all-gif/animation_spider.gif"
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  unoptimized
+                  sizes="192px"
+                  className="object-contain object-right-bottom opacity-90"
+                />
               </div>
             </motion.div>
           </motion.div>
@@ -355,13 +347,23 @@ export function DanceStylesSection() {
                       0{index + 1}
                     </span>
                   </div>
-                  <div className="mt-4 flex items-end justify-between gap-4">
-                    <p className="max-w-[15rem] text-xs leading-6 text-slate-300/72">
+                  <div className="mt-4">
+                    <p className="min-w-0 text-xs leading-6 text-slate-300/72">
                       {category.description}
                     </p>
-                    <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-200/80">
-                      {category.styles.length} styles
-                    </span>
+                    <div className="mt-4 flex justify-end">
+                      <span className="relative inline-flex shrink-0 overflow-hidden rounded-[18px] border border-amber-200/20 bg-[linear-gradient(135deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0.04)_18%,rgba(245,158,11,0.16)_52%,rgba(125,211,252,0.14)_100%)] px-3 py-2 shadow-[0_14px_34px_rgba(2,8,23,0.22)]">
+                        <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_42%)]" />
+                        <span className="relative flex items-end gap-2 whitespace-nowrap">
+                          <span className="font-display text-[1.15rem] leading-none text-white">
+                            {String(category.styles.length).padStart(2, "0")}
+                          </span>
+                          <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-amber-100/80">
+                            Styles
+                          </span>
+                        </span>
+                      </span>
+                    </div>
                   </div>
                 </motion.button>
               );
@@ -376,8 +378,8 @@ export function DanceStylesSection() {
               variants={categoryVariants}
               className="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.03)_100%)] p-4 sm:p-5 lg:p-6"
               >
-                <div className="mb-5 grid gap-4 border-b border-white/8 pb-5 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-end">
-                  <div>
+                <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/8 pb-5">
+                  <div className="min-w-0 max-w-3xl">
                     <p className="text-[10px] uppercase tracking-[0.28em] text-sky-200/62">
                       {activeCategory.eyebrow}
                     </p>
@@ -388,7 +390,20 @@ export function DanceStylesSection() {
                       {activeCategory.description}
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="relative w-[15.5rem] shrink-0 self-center">
+                    <div className="relative aspect-square overflow-hidden">
+                      <Image
+                        src="/all-gif/dezyne_3d-dance-21994.gif"
+                        alt=""
+                        aria-hidden="true"
+                        fill
+                        unoptimized
+                        sizes="200px"
+                        className="object-contain"
+                      />
+                    </div>
+                  </div>
+                  {/* <div className="grid grid-cols-2 gap-3">
                     <div className="rounded-[22px] border border-white/8 bg-white/[0.04] px-4 py-3">
                       <p className="text-[10px] uppercase tracking-[0.24em] text-slate-400">
                         Visible Now
@@ -405,7 +420,7 @@ export function DanceStylesSection() {
                         Watch
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

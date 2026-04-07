@@ -42,53 +42,69 @@ export function EventsSection({ events }: EventsSectionProps) {
         {events.map((event) => (
           <article
             key={event.id}
-            className="glass-panel rounded-[30px] border border-white/10 p-6"
+            className="glass-panel relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(8,18,32,0.18)_0%,rgba(8,18,32,0.12)_100%)] p-6"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-display text-2xl text-white">
-                  {event.title}
-                </p>
-                <p className="mt-3 text-sm leading-7 text-slate-300/80">
-                  {event.summary}
-                </p>
-              </div>
-              <span className="glass-pill rounded-full px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
-                {event.status}
-              </span>
+            <div className="pointer-events-none absolute inset-0">
+              <Image
+                src="/all-gif/fire.gif"
+                alt=""
+                aria-hidden="true"
+                fill
+                unoptimized
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center opacity-72 mix-blend-screen"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,11,22,0.36)_0%,rgba(5,11,22,0.28)_38%,rgba(5,11,22,0.56)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_center,rgba(251,146,60,0.2),transparent_38%)]" />
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="glass-card rounded-2xl p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
-                  Date
-                </p>
-                <p className="mt-3 text-sm text-white">
-                  {new Date(event.date).toLocaleString()}
-                </p>
+            <div className="relative z-10">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="font-display text-2xl text-white">
+                    {event.title}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-slate-300/80">
+                    {event.summary}
+                  </p>
+                </div>
+                <span className="glass-pill rounded-full px-3 py-1 text-xs uppercase tracking-[0.24em] text-cyan-100">
+                  {event.status}
+                </span>
               </div>
-              <div className="glass-card rounded-2xl p-4">
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
-                  Location
-                </p>
-                <p className="mt-3 text-sm text-white">{event.location}</p>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="glass-card rounded-2xl bg-[rgba(5,18,35,0.22)] p-4">
+                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                    Date
+                  </p>
+                  <p className="mt-3 text-sm text-white">
+                    {new Date(event.date).toLocaleString()}
+                  </p>
+                </div>
+                <div className="glass-card rounded-2xl bg-[rgba(5,18,35,0.22)] p-4">
+                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                    Location
+                  </p>
+                  <p className="mt-3 text-sm text-white">{event.location}</p>
+                </div>
               </div>
+
+              <p className="mt-6 text-sm leading-7 text-slate-400">
+                {event.description}
+              </p>
+
+              {event.registrationUrl ? (
+                <a
+                  href={event.registrationUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex h-12 items-center justify-center rounded-full border border-amber-200/40 bg-[linear-gradient(135deg,#fff7d6_0%,#f5d67a_24%,#d8a73c_58%,#fff1b8_100%)] px-6 text-sm font-semibold tracking-[0.14em] text-slate-950 shadow-[0_14px_34px_rgba(245,158,11,0.26),inset_0_1px_0_rgba(255,255,255,0.68)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(245,158,11,0.32),inset_0_1px_0_rgba(255,255,255,0.76)]"
+                >
+                  Call To Know More
+                </a>
+              ) : null}
             </div>
-
-            <p className="mt-6 text-sm leading-7 text-slate-400">
-              {event.description}
-            </p>
-
-            {event.registrationUrl ? (
-              <a
-                href={event.registrationUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 inline-flex h-12 items-center justify-center rounded-full border border-amber-200/40 bg-[linear-gradient(135deg,#fff7d6_0%,#f5d67a_24%,#d8a73c_58%,#fff1b8_100%)] px-6 text-sm font-semibold tracking-[0.14em] text-slate-950 shadow-[0_14px_34px_rgba(245,158,11,0.26),inset_0_1px_0_rgba(255,255,255,0.68)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(245,158,11,0.32),inset_0_1px_0_rgba(255,255,255,0.76)]"
-              >
-                Call To Know More
-              </a>
-            ) : null}
           </article>
         ))}
       </div>

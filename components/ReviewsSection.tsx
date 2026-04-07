@@ -104,6 +104,25 @@ export function ReviewsSection() {
           </motion.article>
         ))}
       </motion.div>
+
+      <div className="mt-10 flex justify-center">
+        <a
+          href="https://share.google/dDEuwWp8TvpeSqfrj"
+          className="group inline-flex items-center gap-3 overflow-hidden rounded-full border border-amber-200/34 bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.06)_16%,rgba(250,204,21,0.28)_48%,rgba(59,130,246,0.22)_100%)] px-5 py-3 text-left shadow-[0_18px_42px_rgba(2,8,23,0.28),inset_0_1px_0_rgba(255,255,255,0.28)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-amber-100/46 hover:shadow-[0_22px_50px_rgba(2,8,23,0.34),inset_0_1px_0_rgba(255,255,255,0.34)]"
+        >
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/18 bg-[linear-gradient(180deg,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.08)_100%)] text-[1rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]">
+            ★
+          </span>
+          <span className="flex flex-col">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-100/76">
+              Google Business
+            </span>
+            <span className="mt-1 font-display text-xl leading-none text-white">
+              Give A Review
+            </span>
+          </span>
+        </a>
+      </div>
     </motion.section>
   );
 }
