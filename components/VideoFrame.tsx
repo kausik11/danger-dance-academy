@@ -37,9 +37,11 @@ export function VideoFrame({
   preload = "metadata",
 }: VideoFrameProps) {
   const resolvedVideo = resolveVideoEmbed(src, { autoPlay });
+  const isInstagramEmbed =
+    resolvedVideo.kind === "embed" && resolvedVideo.provider === "instagram";
 
   useEffect(() => {
-    if (resolvedVideo.kind !== "embed" || resolvedVideo.provider !== "instagram") {
+    if (!isInstagramEmbed) {
       return;
     }
 
@@ -61,7 +63,7 @@ export function VideoFrame({
     script.src = "https://www.instagram.com/embed.js";
     script.onload = processEmbeds;
     document.body.appendChild(script);
-  }, [resolvedVideo.kind, resolvedVideo.provider, src]);
+  }, [isInstagramEmbed, src]);
 
   if (!resolvedVideo.src) {
     return (
@@ -72,7 +74,7 @@ export function VideoFrame({
   }
 
   if (resolvedVideo.kind === "embed") {
-    if (resolvedVideo.provider === "instagram") {
+    if (isInstagramEmbed) {
       return (
         <div className={className}>
           <blockquote
