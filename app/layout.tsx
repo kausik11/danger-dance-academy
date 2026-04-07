@@ -11,8 +11,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  // title: "Danger Dance Academy Baranagar",
-  title:"Demo",
+  title: "Danger Dance Academy Baranagar",
   description:
     "Premium dance academy landing page for Danger Dance Academy in Baranagar.",
 };
