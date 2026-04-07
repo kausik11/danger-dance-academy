@@ -189,8 +189,12 @@ const spotlightPoints = [
   "Event choreography support for real performances",
 ] as const;
 
+type DanceCategoryId = (typeof danceCategories)[number]["id"];
+
 export function DanceStylesSection() {
-  const [activeCategoryId, setActiveCategoryId] = useState(danceCategories[0].id);
+  const [activeCategoryId, setActiveCategoryId] = useState<DanceCategoryId>(
+    danceCategories[0].id,
+  );
   const [activeVideo, setActiveVideo] = useState<{
     title: string;
     videoSrc: string;
