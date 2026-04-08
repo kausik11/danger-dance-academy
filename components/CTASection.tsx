@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
 import { academyData } from "@/lib/academy";
 import {
@@ -28,6 +29,18 @@ function SocialIcon({
       return <IoLogoFacebook className={className} />;
     case "youtube":
       return <FaYoutube className={className} />;
+    case "linkedin":
+      return <FaLinkedinIn className={className} />;
+    case "x":
+      return <FaXTwitter className={className} />;
+    case "onlyfans":
+      return (
+        <img
+          src="/onlyfans-icon.png"
+          alt="OnlyFans"
+          className={`${className} rounded-full object-cover`}
+        />
+      );
     default:
       return null;
   }
@@ -36,11 +49,17 @@ function SocialIcon({
 function getSocialIconClass(platform: (typeof academyData.socialPlatforms)[number]["platform"]) {
   switch (platform) {
     case "instagram":
-      return "group-hover:-translate-y-1 group-hover:rotate-12";
+      return "group-hover:-translate-y-1.5 group-hover:rotate-[14deg] group-hover:scale-[1.22]";
     case "facebook":
-      return "group-hover:-translate-y-1 group-hover:scale-110";
+      return "group-hover:-translate-y-1.5 group-hover:scale-[1.24]";
     case "youtube":
-      return "group-hover:scale-110 group-hover:translate-x-0.5";
+      return "group-hover:scale-[1.24] group-hover:translate-x-1 group-hover:-translate-y-0.5";
+    case "linkedin":
+      return "group-hover:-translate-y-1.5 group-hover:scale-[1.24]";
+    case "x":
+      return "group-hover:-translate-y-1.5 group-hover:-rotate-[10deg] group-hover:scale-[1.22]";
+    case "onlyfans":
+      return "group-hover:-translate-y-1 group-hover:scale-[1.2] group-hover:tracking-[0.08em]";
     default:
       return "";
   }
@@ -54,6 +73,12 @@ function getSocialBadgeClass(platform: (typeof academyData.socialPlatforms)[numb
       return "bg-[linear-gradient(135deg,rgba(24,119,242,0.98)_0%,rgba(64,93,230,0.92)_100%)] text-white";
     case "youtube":
       return "bg-[linear-gradient(135deg,rgba(255,61,61,0.98)_0%,rgba(199,0,0,0.92)_100%)] text-white";
+    case "linkedin":
+      return "bg-[linear-gradient(135deg,rgba(10,102,194,0.98)_0%,rgba(0,78,153,0.92)_100%)] text-white";
+    case "x":
+      return "bg-[linear-gradient(135deg,rgba(15,23,42,0.98)_0%,rgba(2,6,23,0.92)_100%)] text-white";
+    case "onlyfans":
+      return "bg-[linear-gradient(135deg,rgba(0,175,240,0.98)_0%,rgba(0,116,204,0.92)_100%)] text-white";
     default:
       return "bg-white text-slate-950";
   }
@@ -107,7 +132,7 @@ export function CTASection() {
               variants={sectionHeadingVariants}
               className="mt-4 font-display text-4xl text-white sm:text-5xl"
             >
-              Join the Best Dance Academy Today
+              Join Kolkata's One Of The Best Dance Academy Today.
             </motion.h2>
             <motion.p
               variants={sectionBodyVariants}
@@ -117,7 +142,7 @@ export function CTASection() {
             </motion.p>
           </div>
 
-          <motion.div variants={sectionBodyVariants} className="flex w-full max-w-xl flex-col gap-4">
+          <motion.div variants={sectionBodyVariants} className="flex w-full max-w-3xl flex-col gap-4">
             <div className="flex flex-col gap-4 sm:flex-row">
               <motion.a
                 href={`tel:${academyData.phone}`}
@@ -143,27 +168,28 @@ export function CTASection() {
               </p>
               <motion.div
                 variants={listContainerVariants}
-                className="mt-4 grid gap-3 sm:grid-cols-3"
+                className="mt-4 grid gap-3 sm:grid-cols-2"
               >
                 {academyData.socialPlatforms.map((item) => (
                   <motion.a
                     key={item.platform}
                     variants={listItemVariants}
                     whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
                     href={"href" in item ? item.href : undefined}
                     target="_blank"
                     rel="noreferrer"
-                    className="glass-card group flex items-center gap-3 rounded-[24px] px-4 py-3 transition hover:border-white/35 hover:bg-white/12 will-change-transform"
+                    className="glass-card group flex min-w-0 items-center gap-4 rounded-[24px] px-5 py-4 transition duration-300 hover:border-white/35 hover:bg-white/12 hover:shadow-[0_18px_38px_rgba(15,23,42,0.24)] will-change-transform sm:min-h-[5.75rem]"
                   >
                     <span
-                      className={`flex h-12 w-12 items-center justify-center rounded-full shadow-[0_10px_24px_rgba(15,23,42,0.28)] transition duration-300 ${getSocialBadgeClass(item.platform)}`}
+                      className={`flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full shadow-[0_10px_24px_rgba(15,23,42,0.28)] transition duration-300 group-hover:scale-[1.14] group-hover:shadow-[0_18px_34px_rgba(15,23,42,0.32)] sm:h-16 sm:w-16 ${getSocialBadgeClass(item.platform)}`}
                     >
                       <SocialIcon
                         platform={item.platform}
-                        className={`h-5 w-5 transition duration-300 ${getSocialIconClass(item.platform)}`}
+                        className={`h-6 w-6 transition duration-300 ease-out sm:h-7 sm:w-7 ${getSocialIconClass(item.platform)}`}
                       />
                     </span>
-                    <span className="text-sm font-semibold uppercase tracking-[0.12em] text-white/86 transition duration-300 group-hover:text-white">
+                    <span className="flex-1 whitespace-nowrap text-sm font-semibold uppercase tracking-[0.12em] text-white/86 transition duration-300 group-hover:translate-x-0.5 group-hover:text-white sm:text-[0.95rem]">
                       {item.label}
                     </span>
                   </motion.a>

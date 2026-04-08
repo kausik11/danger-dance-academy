@@ -289,11 +289,22 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                   />
                 </span>
                 <div className="min-w-0">
-                  <p
-                    className={`truncate font-display text-base sm:text-[1.12rem] ${brandTextClass}`}
-                  >
-                    {academyData.shortName}
-                  </p>
+                  <div className="flex items-center gap-2.5">
+                    <p
+                      className={`truncate font-display text-base sm:text-[1.12rem] ${brandTextClass}`}
+                    >
+                      {academyData.shortName}
+                    </p>
+                    <Image
+                      src="/all-gif/littlebird1.gif"
+                      alt=""
+                      aria-hidden="true"
+                      width={52}
+                      height={52}
+                      unoptimized
+                      className="h-[2.7rem] w-[2.7rem] shrink-0 object-contain sm:h-[3rem] sm:w-[3rem]"
+                    />
+                  </div>
                   <div className="mt-2 hidden 2xl:flex">
                     <div
                       className={`inline-flex items-center gap-3 rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] ${locationPillClass}`}

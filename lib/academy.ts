@@ -25,9 +25,24 @@ export const academyData = {
     },
     {
       label: "YouTube",
-      platform: "youtube", 
+      platform: "youtube",
       handle: "Danger Dance Academy",
       href: "https://youtu.be/M39fHM_KzNg?si=1BiukIm_wgVQwKFq",
+    },
+    {
+      label: "LinkedIn",
+      platform: "linkedin",
+      href: "https://www.linkedin.com/in/danger-dance-academy-1b791421a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    },
+    {
+      label: "X",
+      platform: "x",
+      href: "https://x.com/choreog33921752",
+    },
+    {
+      label: "OnlyFans",
+      platform: "onlyfans",
+      href: "https://onlyfans.com/u267544547",
     },
   ],
   trainer: "Surya Sir",

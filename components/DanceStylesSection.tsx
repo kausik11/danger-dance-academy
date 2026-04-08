@@ -29,7 +29,6 @@ const danceCategories = [
   {
     id: "world-best",
     label: "World Best Dance Style",
-    eyebrow: "Global favourites",
     description:
       "Signature forms that build strong technique, body control, musicality, and polished stage presence.",
     styles: [
@@ -68,7 +67,6 @@ const danceCategories = [
   {
     id: "others",
     label: "Other Dance Styles",
-    eyebrow: "Popular performance picks",
     description:
       "Fast-moving crowd favourites for functions, reels, social content, and versatile stage choreography.",
     styles: [
@@ -112,7 +110,6 @@ const danceCategories = [
   {
     id: "traditional",
     label: "Traditional Style",
-    eyebrow: "Rooted in heritage",
     description:
       "Classical training designed to strengthen grace, discipline, expressions, footwork, and cultural understanding.",
     styles: [
@@ -146,7 +143,6 @@ const danceCategories = [
   {
     id: "learn-earn",
     label: "Learn And Earn",
-    eyebrow: "Career and event track",
     description:
       "Practical training for dancers who want to perform, teach, choreograph, and work on live-event assignments.",
     styles: [
@@ -271,15 +267,9 @@ export function DanceStylesSection() {
             className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_20rem] xl:items-end"
           >
             <div className="max-w-4xl">
-              <motion.p
-                variants={sectionHeadingVariants}
-                className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/74"
-              >
-                Dance Programs
-              </motion.p>
               <motion.h2
                 variants={sectionHeadingVariants}
-                className="mt-4 max-w-5xl font-display text-[2.4rem] leading-[0.98] text-white sm:text-[3.3rem]"
+                className="max-w-5xl font-display text-[2.4rem] leading-[0.98] text-white sm:text-[3.3rem]"
               >
                 Explore styles, watch previews, and choose the right training path.
               </motion.h2>
@@ -330,10 +320,7 @@ export function DanceStylesSection() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-[10px] uppercase tracking-[0.28em] text-sky-100/56">
-                        {category.eyebrow}
-                      </p>
-                      <h3 className="mt-2 font-display text-[1.65rem] leading-none text-white">
+                      <h3 className="font-display text-[1.65rem] leading-none text-white">
                         {category.label}
                       </h3>
                     </div>
@@ -380,10 +367,7 @@ export function DanceStylesSection() {
               >
                 <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/8 pb-5">
                   <div className="min-w-0 max-w-3xl">
-                    <p className="text-[10px] uppercase tracking-[0.28em] text-sky-200/62">
-                      {activeCategory.eyebrow}
-                    </p>
-                    <h3 className="mt-2 font-display text-[2.15rem] leading-none text-white">
+                    <h3 className="font-display text-[2.15rem] leading-none text-white">
                       {activeCategory.label}
                     </h3>
                     <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300/78">
@@ -455,10 +439,7 @@ export function DanceStylesSection() {
                         <Play className="h-4.5 w-4.5 fill-current" />
                       </div>
                       <div className="absolute inset-x-0 bottom-0 p-4">
-                        <div className="inline-flex rounded-full border border-white/10 bg-black/24 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.22em] text-slate-200/84">
-                          {activeCategory.eyebrow}
-                        </div>
-                        <h4 className="mt-3 font-display text-[1.9rem] leading-none text-white">
+                        <h4 className="font-display text-[1.9rem] leading-none text-white">
                           {style.name}
                         </h4>
                         <div className="mt-3 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.22em] text-slate-300/72">
