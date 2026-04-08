@@ -78,6 +78,32 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Scroll Video Slider
+
+The homepage includes a premium pinned scroll video slider implemented in:
+
+- `components/ScrollVideoSlider.tsx`
+- `data/sliderData.ts`
+- `hooks/useActiveVideo.ts`
+
+How it works:
+
+- GSAP `ScrollTrigger` pins the section and maps vertical scroll progress to the active slide.
+- Framer Motion handles the cinematic handoff of text, overlays, and thumbnail emphasis.
+- `useActiveVideo` keeps only the active background video playing and pauses the rest for performance.
+
+How to replace videos:
+
+1. Add your local video and poster assets to `public/`.
+2. Update the objects in `data/sliderData.ts`.
+3. Set `videoSrc`, `posterSrc`, and `thumbSrc` to the new local paths.
+
+How to tune scroll sensitivity:
+
+- Adjust `SCROLL_SENSITIVITY` in `components/ScrollVideoSlider.tsx`.
+- Higher values make each slide require more scroll distance.
+- Lower values make the handoff happen faster.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

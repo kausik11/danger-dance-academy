@@ -3,12 +3,12 @@ import { ChairmanMessageSection } from "@/components/ChairmanMessageSection";
 import { CTASection } from "@/components/CTASection";
 import { DanceStylesSection } from "@/components/DanceStylesSection";
 import { EventsSection } from "@/components/EventsSection";
-import { FaqSection } from "@/components/FaqSection";
 import { GallerySection } from "@/components/GallerySection";
 import { HomeClientShell } from "@/components/HomeClientShell";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { ReviewsSection } from "@/components/ReviewsSection";
+import { ScrollVideoSlider } from "@/components/ScrollVideoSlider";
 import { ServicesSection } from "@/components/ServicesSection";
 import { SuccessStoriesSection } from "@/components/SuccessStoriesSection";
 import { VideoTestimonials } from "@/components/VideoTestimonials";
@@ -33,6 +33,7 @@ export default async function Home() {
           <Hero />
           <DanceStylesSection />
           <AboutSection />
+          <ScrollVideoSlider />
           <ChairmanMessageSection />
           <ServicesSection services={academyModules.services} />
           <EventsSection events={academyModules.events} />

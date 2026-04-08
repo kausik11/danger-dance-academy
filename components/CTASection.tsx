@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaYoutube } from "react-icons/fa";
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
@@ -60,7 +61,31 @@ function getSocialBadgeClass(platform: (typeof academyData.socialPlatforms)[numb
 
 export function CTASection() {
   return (
-    <section id="join" className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
+    <section id="join" className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
+      <div className="pointer-events-none absolute left-4 top-0 z-30 flex items-start gap-3 sm:left-8 sm:gap-5 lg:left-12">
+        <div className="relative -top-10 h-28 w-28 sm:-top-12 sm:h-44 sm:w-44">
+          <Image
+            src="/all-gif/tom-running.gif"
+            alt=""
+            aria-hidden="true"
+            fill
+            unoptimized
+            sizes="(max-width: 640px) 112px, 176px"
+            className="object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.22)]"
+          />
+        </div>
+        <div className="relative -top-10 h-28 w-28 sm:-top-12 sm:h-44 sm:w-44">
+          <Image
+            src="/all-gif/jerry_running.gif"
+            alt=""
+            aria-hidden="true"
+            fill
+            unoptimized
+            sizes="(max-width: 640px) 112px, 176px"
+            className="object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.22)]"
+          />
+        </div>
+      </div>
       <motion.div
         initial="hidden"
         whileInView="visible"
