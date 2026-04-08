@@ -291,12 +291,23 @@ export function Hero() {
                   Admission Going On...
                 </p>
                 <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
-                  <a
-                    href="/join"
-                    className="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-[linear-gradient(135deg,#fff7d6_0%,#f5d67a_26%,#d8a73c_58%,#fff1b8_100%)] px-8 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-950 shadow-[0_14px_38px_rgba(245,158,11,0.34),inset_0_1px_0_rgba(255,255,255,0.72)] transition hover:scale-[1.02]"
-                  >
-                    Book Your Slot
-                  </a>
+                  <div className="relative inline-flex items-start justify-center pr-12 pt-3">
+                    <a
+                      href="/join"
+                      className="inline-flex min-w-[15rem] items-center justify-center rounded-full bg-[linear-gradient(135deg,#fff7d6_0%,#f5d67a_26%,#d8a73c_58%,#fff1b8_100%)] px-8 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-slate-950 shadow-[0_14px_38px_rgba(245,158,11,0.34),inset_0_1px_0_rgba(255,255,255,0.72)] transition hover:scale-[1.02]"
+                    >
+                      Book Your Slot
+                    </a>
+                    <Image
+                      src="/all-gif/littlebird1.gif"
+                      alt=""
+                      aria-hidden="true"
+                      width={1080}
+                      height={1080}
+                      unoptimized
+                      className="pointer-events-none absolute -right-2 -top-5 h-20 w-20 object-contain drop-shadow-[0_10px_24px_rgba(255,255,255,0.18)] sm:-right-3 sm:-top-6 sm:h-[5.5rem] sm:w-[5.5rem]"
+                    />
+                  </div>
                   <a
                     href={`tel:${academyData.phone}`}
                     className="inline-flex min-w-[15rem] items-center justify-center rounded-full border border-white/22 bg-white/[0.08] px-8 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-[0_12px_34px_rgba(15,23,42,0.24)] backdrop-blur transition hover:bg-white/[0.14]"
