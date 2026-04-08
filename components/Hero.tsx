@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -77,11 +77,23 @@ function getHeroSocialBadgeClass(platform: (typeof academyData.socialPlatforms)[
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
+
+  useEffect(() => {
+    const scheduleVideoLoad = window.setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 180);
+
+    return () => {
+      window.clearTimeout(scheduleVideoLoad);
+    };
+  }, []);
 
   // Keep the parallax subtle so the hero feels cinematic without causing lag.
   const rawVideoY = useTransform(scrollYProgress, [0, 1], [0, 72]);
@@ -103,15 +115,25 @@ export function Hero() {
         className="absolute -inset-8 will-change-transform"
         style={shouldReduceMotion ? undefined : { y: videoY }}
       >
+        <Image
+          src="/dance-poster.svg"
+          alt=""
+          aria-hidden="true"
+          fill
+          priority
+          sizes="100vw"
+          className={`object-cover transition-opacity duration-500 ${isVideoReady ? "opacity-0" : "opacity-100"}`}
+        />
         <video
-          className="h-full w-full object-cover"
-          src={academyData.hero.videoSrc}
+          className={`h-full w-full object-cover transition-opacity duration-500 ${isVideoReady ? "opacity-100" : "opacity-0"}`}
+          src={shouldLoadVideo ? academyData.hero.videoSrc : undefined}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           poster="/dance-poster.svg"
+          onLoadedData={() => setIsVideoReady(true)}
         />
       </motion.div>
       <div className="absolute inset-0 bg-black/42" />
