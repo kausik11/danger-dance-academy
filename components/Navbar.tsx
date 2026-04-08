@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Menu, Phone, Send, X } from "lucide-react";
 import Image from "next/image";
+import { Playfair_Display } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { academyData } from "@/lib/academy";
@@ -23,6 +24,10 @@ type FormState = {
 
 const defaultContactMessage =
   "Hi, I want to know more about classes, fees, timings, and trial options.";
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: "600",
+});
 
 export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   const pathname = usePathname();
@@ -155,8 +160,8 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   }
 
   const brandTextClass = isScrolled
-    ? "text-white drop-shadow-[0_2px_16px_rgba(15,23,42,0.42)]"
-    : "text-white/96 drop-shadow-[0_2px_14px_rgba(15,23,42,0.42)]";
+    ? "text-[#d7efff] drop-shadow-[0_0_24px_rgba(96,165,250,0.3)] [text-shadow:0_0_20px_rgba(159,211,255,0.18)] [-webkit-text-stroke:1px_rgba(255,255,255,0.14)]"
+    : "text-[#d7efff] drop-shadow-[0_0_28px_rgba(96,165,250,0.34)] [text-shadow:0_0_24px_rgba(159,211,255,0.2)] [-webkit-text-stroke:1px_rgba(255,255,255,0.18)]";
   const locationPillClass = isScrolled
     ? "border-white/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.08)_100%)] text-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_24px_rgba(2,8,23,0.18)]"
     : "border-white/18 bg-[linear-gradient(180deg,rgba(15,23,42,0.24)_0%,rgba(15,23,42,0.12)_100%)] text-white/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_24px_rgba(2,8,23,0.18)]";
@@ -275,23 +280,23 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
             <Link
               href="/"
               onClick={closeMenu}
-              className="min-w-0 flex-1 xl:w-[17.5rem] xl:flex-none 2xl:w-[19.5rem]"
+              className="min-w-0 flex-1 xl:w-[20rem] xl:flex-none 2xl:w-[22rem]"
             >
               <div className="flex items-center gap-3">
-                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_22px_rgba(15,23,42,0.08)]">
+                <span className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_12px_26px_rgba(15,23,42,0.1)] sm:h-16 sm:w-16">
                   <Image
                     src="/logo.jpeg"
                     alt={`${academyData.shortName} logo`}
                     fill
-                    sizes="48px"
+                    sizes="(max-width: 640px) 56px, 64px"
                     className="object-cover"
                     priority
                   />
                 </span>
                 <div className="min-w-0">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2 sm:gap-2.5">
                     <p
-                      className={`truncate font-display text-base sm:text-[1.12rem] ${brandTextClass}`}
+                      className={`text-sm font-semibold leading-[1.05] tracking-normal whitespace-normal sm:text-[1.12rem] ${playfairDisplay.className} ${brandTextClass}`}
                     >
                       {academyData.shortName}
                     </p>
