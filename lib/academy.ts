@@ -7,7 +7,7 @@ export const academyData = {
     title: "Danger Dance Academy",
     subtitle: "Move Your Body. Feel the Rhythm.",
     ctaLabel: "Join Now",
-    videoSrc: "/Video_0430.mp4",
+    videoSrc: "/Video_0430.MP4",
   },
   phone: "8910492292",
   whatsAppNumber: "918910492292",
