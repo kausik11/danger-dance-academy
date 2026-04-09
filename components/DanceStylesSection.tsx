@@ -297,7 +297,7 @@ export function DanceStylesSection() {
 
           <motion.div
             variants={categoryVariants}
-            className="mt-8 grid gap-4 md:grid-cols-2 2xl:grid-cols-4"
+            className="mt-8 -mx-1 flex gap-4 overflow-x-auto px-1 pb-2 snap-x snap-mandatory md:mx-0 md:grid md:overflow-visible md:px-0 md:pb-0 md:grid-cols-2 2xl:grid-cols-4"
           >
             {danceCategories.map((category, index) => {
               const isActive = category.id === activeCategory.id;
@@ -308,7 +308,7 @@ export function DanceStylesSection() {
                   type="button"
                   variants={cardVariants}
                   onClick={() => setActiveCategoryId(category.id)}
-                  className={`group rounded-[26px] border p-4 text-left transition ${
+                  className={`group w-[85vw] max-w-[20rem] shrink-0 snap-start rounded-[26px] border p-4 text-left transition md:w-auto md:max-w-none md:shrink md:snap-none ${
                     isActive
                       ? "border-sky-300/40 bg-[linear-gradient(135deg,rgba(56,189,248,0.24)_0%,rgba(14,165,233,0.12)_100%)] shadow-[0_24px_55px_rgba(14,165,233,0.16)]"
                       : "border-white/10 bg-white/[0.03] hover:border-white/18 hover:bg-white/[0.06]"
