@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 import { academyData } from "@/lib/academy";
 import {
   listContainerVariants,
@@ -38,7 +39,7 @@ export function ReviewsSection() {
   return (
     <motion.section
       id="reviews"
-      className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10"
+      className="relative mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10"
       initial="hidden"
       whileInView="visible"
       viewport={sectionViewport}
@@ -52,13 +53,13 @@ export function ReviewsSection() {
           <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
             Reviews
           </p>
-          <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
+          <h2 className="mt-4 font-display text-3xl text-white sm:text-5xl">
             Real feedback from students and families.
           </h2>
         </div>
 
         <motion.div
-          className="relative w-full max-w-[10rem] shrink-0 self-start lg:max-w-[11rem] lg:self-center"
+          className="relative w-full max-w-[8rem] shrink-0 self-start sm:max-w-[10rem] lg:max-w-[11rem] lg:self-center"
           animate={{ y: [0, -8, 0], rotate: [0, -1.25, 0] }}
           transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -85,16 +86,19 @@ export function ReviewsSection() {
         </motion.div>
       </motion.div>
 
-      <motion.div variants={listContainerVariants} className="mt-10 grid gap-6 lg:grid-cols-3">
+      <motion.div
+        variants={listContainerVariants}
+        className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+      >
         {academyData.reviews.map((review) => (
           <motion.article
             key={review.author}
             variants={listItemVariants}
             whileHover={{ y: -6 }}
-            className="glass-panel rounded-[30px] p-6 will-change-transform"
+            className="glass-panel rounded-[28px] p-5 will-change-transform sm:rounded-[30px] sm:p-6"
           >
             <StarRow />
-            <p className="mt-5 text-lg leading-8 text-white">
+            <p className="mt-5 text-base leading-8 text-white sm:text-lg">
               &ldquo;{review.text}&rdquo;
             </p>
             <div className="mt-8 border-t border-white/10 pt-4">
@@ -108,10 +112,10 @@ export function ReviewsSection() {
       <div className="mt-10 flex justify-center">
         <a
           href="https://share.google/dDEuwWp8TvpeSqfrj"
-          className="group inline-flex items-center gap-3 overflow-hidden rounded-full border border-amber-200/34 bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.06)_16%,rgba(250,204,21,0.28)_48%,rgba(59,130,246,0.22)_100%)] px-5 py-3 text-left shadow-[0_18px_42px_rgba(2,8,23,0.28),inset_0_1px_0_rgba(255,255,255,0.28)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-amber-100/46 hover:shadow-[0_22px_50px_rgba(2,8,23,0.34),inset_0_1px_0_rgba(255,255,255,0.34)]"
+          className="group inline-flex w-full max-w-md items-center justify-center gap-3 overflow-hidden rounded-full border border-amber-200/34 bg-[linear-gradient(135deg,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.06)_16%,rgba(250,204,21,0.28)_48%,rgba(59,130,246,0.22)_100%)] px-5 py-3 text-left shadow-[0_18px_42px_rgba(2,8,23,0.28),inset_0_1px_0_rgba(255,255,255,0.28)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-amber-100/46 hover:shadow-[0_22px_50px_rgba(2,8,23,0.34),inset_0_1px_0_rgba(255,255,255,0.34)] sm:w-auto"
         >
-          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/18 bg-[linear-gradient(180deg,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.08)_100%)] text-[1rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]">
-            ★
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/18 bg-[linear-gradient(180deg,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.08)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.24)]">
+            <Star className="h-5 w-5 fill-current text-amber-100" aria-hidden="true" />
           </span>
           <span className="flex flex-col">
             <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-100/76">

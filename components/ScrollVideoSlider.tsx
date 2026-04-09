@@ -20,6 +20,7 @@ function clampIndex(index: number) {
 export function ScrollVideoSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [isDesktopExperience, setIsDesktopExperience] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,21 @@ export function ScrollVideoSlider() {
   const activeSlide = sliderData[activeIndex];
   const progressPercent = ((activeIndex + 1) / sliderData.length) * 100;
   const { registerVideo } = useActiveVideo(activeSlide.id);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+
+    const syncDesktopExperience = () => {
+      setIsDesktopExperience(mediaQuery.matches);
+    };
+
+    syncDesktopExperience();
+    mediaQuery.addEventListener("change", syncDesktopExperience);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncDesktopExperience);
+    };
+  }, []);
 
   const updateActiveIndex = useCallback((nextIndex: number) => {
     const clampedIndex = clampIndex(nextIndex);
@@ -63,7 +79,9 @@ export function ScrollVideoSlider() {
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const panel = panelRef.current;
-    if (!section || !panel) {
+    if (!section || !panel || !isDesktopExperience) {
+      triggerRef.current = null;
+      isSectionActiveRef.current = false;
       return;
     }
 
@@ -105,7 +123,7 @@ export function ScrollVideoSlider() {
       triggerRef.current = null;
       context.revert();
     };
-  }, [shouldReduceMotion, updateActiveIndex]);
+  }, [isDesktopExperience, shouldReduceMotion, updateActiveIndex]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -134,17 +152,17 @@ export function ScrollVideoSlider() {
     <section
       ref={sectionRef}
       aria-label="Scroll driven video slider"
-      className="relative left-1/2 right-1/2 -mx-[50vw] w-screen overflow-hidden bg-[linear-gradient(180deg,#13061d_0%,#18081f_35%,#090311_100%)] py-8 sm:py-10 lg:py-12"
+      className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-x-clip bg-[linear-gradient(180deg,#13061d_0%,#18081f_35%,#090311_100%)] py-6 sm:py-10 lg:py-12"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(251,113,133,0.14),transparent_24%),radial-gradient(circle_at_84%_14%,rgba(56,189,248,0.12),transparent_26%),radial-gradient(circle_at_bottom_center,rgba(168,85,247,0.12),transparent_32%)]" />
-        <div className="absolute left-[8%] top-[8%] h-28 w-28 rounded-full border border-white/14 bg-white/[0.04] shadow-[0_0_0_8px_rgba(255,255,255,0.03)] backdrop-blur-md sm:h-20 sm:w-20" />
+        <div className="absolute left-[8%] top-[8%] h-20 w-20 rounded-full border border-white/14 bg-white/[0.04] shadow-[0_0_0_8px_rgba(255,255,255,0.03)] backdrop-blur-md sm:h-24 sm:w-24" />
       </div>
 
-      <div className="relative w-full px-3 sm:px-6 lg:px-8">
+      <div className="relative w-full px-2 sm:px-6 lg:px-8">
         <div
           ref={panelRef}
-          className="relative h-[34rem] w-full overflow-hidden rounded-[30px] border border-white/10 bg-black/24 shadow-[0_40px_140px_rgba(2,6,23,0.45)] sm:h-[38rem] sm:rounded-[36px] lg:h-[42rem] xl:h-[46rem]"
+          className="relative h-[32rem] w-full overflow-hidden rounded-[24px] border border-white/10 bg-black/24 shadow-[0_40px_140px_rgba(2,6,23,0.45)] sm:h-[36rem] sm:rounded-[36px] lg:h-[42rem] xl:h-[46rem]"
         >
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0)_18%)]" />
 
@@ -200,18 +218,18 @@ export function ScrollVideoSlider() {
             })}
           </div>
 
-          <div className="relative z-30 flex h-full flex-col justify-between p-4 sm:p-6 lg:p-8">
-            <div className="flex items-start justify-between gap-4">
-              <div className="inline-flex items-center gap-3 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/84 backdrop-blur-xl">
+          <div className="relative z-30 flex h-full flex-col justify-between p-3 sm:p-6 lg:p-8">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="inline-flex max-w-full items-center gap-3 rounded-full border border-white/14 bg-white/[0.06] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/84 backdrop-blur-xl sm:text-[11px] sm:tracking-[0.28em]">
                 <Play className="h-3.5 w-3.5 fill-current" />
                 Best Performance Video
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 self-start">
                 <button
                   type="button"
                   onClick={() => scrollToSlide(activeIndex - 1)}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-300/35 bg-[linear-gradient(135deg,rgba(56,189,248,0.28)_0%,rgba(14,165,233,0.52)_52%,rgba(2,132,199,0.72)_100%)] text-white shadow-[0_14px_32px_rgba(14,165,233,0.34)] backdrop-blur-xl transition hover:scale-[1.04] hover:border-sky-200/55 hover:shadow-[0_18px_38px_rgba(14,165,233,0.42)] focus:outline-none focus:ring-2 focus:ring-sky-300/70"
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-sky-300/35 bg-[linear-gradient(135deg,rgba(56,189,248,0.28)_0%,rgba(14,165,233,0.52)_52%,rgba(2,132,199,0.72)_100%)] text-white shadow-[0_14px_32px_rgba(14,165,233,0.34)] backdrop-blur-xl transition hover:scale-[1.04] hover:border-sky-200/55 hover:shadow-[0_18px_38px_rgba(14,165,233,0.42)] focus:outline-none focus:ring-2 focus:ring-sky-300/70"
                   aria-label="Previous slide"
                 >
                   <ChevronLeft className="h-5 w-5" />
@@ -219,7 +237,7 @@ export function ScrollVideoSlider() {
                 <button
                   type="button"
                   onClick={() => scrollToSlide(activeIndex + 1)}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-amber-300/35 bg-[linear-gradient(135deg,rgba(251,191,36,0.28)_0%,rgba(249,115,22,0.52)_52%,rgba(217,119,6,0.72)_100%)] text-white shadow-[0_14px_32px_rgba(249,115,22,0.32)] backdrop-blur-xl transition hover:scale-[1.04] hover:border-amber-200/55 hover:shadow-[0_18px_38px_rgba(249,115,22,0.42)] focus:outline-none focus:ring-2 focus:ring-amber-300/70"
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-amber-300/35 bg-[linear-gradient(135deg,rgba(251,191,36,0.28)_0%,rgba(249,115,22,0.52)_52%,rgba(217,119,6,0.72)_100%)] text-white shadow-[0_14px_32px_rgba(249,115,22,0.32)] backdrop-blur-xl transition hover:scale-[1.04] hover:border-amber-200/55 hover:shadow-[0_18px_38px_rgba(249,115,22,0.42)] focus:outline-none focus:ring-2 focus:ring-amber-300/70"
                   aria-label="Next slide"
                 >
                   <ChevronRight className="h-5 w-5" />
@@ -227,7 +245,7 @@ export function ScrollVideoSlider() {
               </div>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
               <div className="max-w-4xl">
                 <AnimatePresence initial={false} mode="wait" custom={direction}>
                   <motion.div
@@ -260,7 +278,7 @@ export function ScrollVideoSlider() {
                     <p className="text-sm uppercase tracking-[0.34em] text-sky-100/70">
                       {activeSlide.subtitle}
                     </p>
-                    <h2 className="mt-3 max-w-4xl text-[2.85rem] font-semibold leading-[0.92] tracking-[-0.04em] text-white sm:text-[4rem] lg:text-[6.4rem]">
+                    <h2 className="mt-3 max-w-4xl text-[clamp(2rem,11vw,6.4rem)] font-semibold leading-[0.94] tracking-[-0.04em] text-white">
                       {activeSlide.title}
                     </h2>
                     <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/82 sm:text-base">
@@ -309,7 +327,7 @@ export function ScrollVideoSlider() {
             </div>
 
             <div>
-              <div className="flex gap-3 overflow-x-auto pb-1">
+              <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2 snap-x snap-mandatory sm:pb-1">
                 {sliderData.map((slide, index) => {
                   const isActive = slide.id === activeSlide.id;
 
@@ -318,10 +336,10 @@ export function ScrollVideoSlider() {
                       key={slide.id}
                       type="button"
                       onClick={() => scrollToSlide(index)}
-                      className={`group relative shrink-0 overflow-hidden rounded-[22px] border text-left transition focus:outline-none focus:ring-2 focus:ring-sky-300/60 ${
+                      className={`group relative shrink-0 snap-start overflow-hidden rounded-[22px] border text-left transition focus:outline-none focus:ring-2 focus:ring-sky-300/60 ${
                         isActive
-                          ? "h-32 w-[13rem] border-sky-300/55 bg-white/[0.1] shadow-[0_20px_48px_rgba(56,189,248,0.22)]"
-                          : "h-32 w-[8rem] border-white/10 bg-black/18 opacity-78 hover:opacity-100"
+                          ? "h-24 w-[10.5rem] border-sky-300/55 bg-white/[0.1] shadow-[0_20px_48px_rgba(56,189,248,0.22)] sm:h-32 sm:w-[13rem]"
+                          : "h-24 w-[6.5rem] border-white/10 bg-black/18 opacity-78 hover:opacity-100 sm:h-32 sm:w-[8rem]"
                       }`}
                       aria-label={`Go to ${slide.title}`}
                       aria-current={isActive ? "true" : undefined}

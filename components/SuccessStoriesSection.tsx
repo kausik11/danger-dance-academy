@@ -15,13 +15,13 @@ export function SuccessStoriesSection({
   return (
     <section
       id="stories"
-      className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10"
+      className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10"
     >
       <div className="max-w-3xl">
         <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
           Success Stories
         </p>
-        <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
+        <h2 className="mt-4 font-display text-3xl text-white sm:text-5xl">
           Student journeys connected to the success story endpoint.
         </h2>
       </div>
@@ -42,8 +42,8 @@ export function SuccessStoriesSection({
               />
             </div>
             <div className="p-6">
-              <div className="flex items-center justify-between gap-3">
-                <p className="font-display text-3xl text-white">
+              <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-display text-2xl text-white sm:text-3xl">
                   {story.studentName}
                 </p>
                 <span className="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] text-cyan-100">

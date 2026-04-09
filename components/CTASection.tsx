@@ -35,9 +35,12 @@ function SocialIcon({
       return <FaXTwitter className={className} />;
     case "onlyfans":
       return (
-        <img
+        <Image
           src="/onlyfans-icon.png"
-          alt="OnlyFans"
+          alt=""
+          aria-hidden="true"
+          width={64}
+          height={64}
           className={`${className} rounded-full object-cover`}
         />
       );
@@ -86,27 +89,27 @@ function getSocialBadgeClass(platform: (typeof academyData.socialPlatforms)[numb
 
 export function CTASection() {
   return (
-    <section id="join" className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
-      <div className="pointer-events-none absolute left-4 top-0 z-30 flex items-start gap-3 sm:left-8 sm:gap-5 lg:left-12">
-        <div className="relative -top-10 h-28 w-28 sm:-top-12 sm:h-44 sm:w-44">
+    <section id="join" className="relative mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10">
+      <div className="pointer-events-none absolute left-1/2 top-0 z-30 flex -translate-x-1/2 items-start justify-center gap-2 sm:left-8 sm:translate-x-0 sm:justify-start sm:gap-5 lg:left-12">
+        <div className="relative -top-8 h-20 w-20 sm:-top-12 sm:h-44 sm:w-44">
           <Image
             src="/all-gif/tom-running.gif"
             alt=""
             aria-hidden="true"
             fill
             unoptimized
-            sizes="(max-width: 640px) 112px, 176px"
+            sizes="(max-width: 640px) 80px, 176px"
             className="object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.22)]"
           />
         </div>
-        <div className="relative -top-10 h-28 w-28 sm:-top-12 sm:h-44 sm:w-44">
+        <div className="relative -top-8 h-20 w-20 sm:-top-12 sm:h-44 sm:w-44">
           <Image
             src="/all-gif/jerry_running.gif"
             alt=""
             aria-hidden="true"
             fill
             unoptimized
-            sizes="(max-width: 640px) 112px, 176px"
+            sizes="(max-width: 640px) 80px, 176px"
             className="object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.22)]"
           />
         </div>
@@ -130,9 +133,9 @@ export function CTASection() {
             </motion.p>
             <motion.h2
               variants={sectionHeadingVariants}
-              className="mt-4 font-display text-4xl text-white sm:text-5xl"
+              className="mt-4 font-display text-3xl text-white sm:text-5xl"
             >
-              Join Kolkata's One Of The Best Dance Academy Today.
+              Join Kolkata&apos;s One Of The Best Dance Academy Today.
             </motion.h2>
             <motion.p
               variants={sectionBodyVariants}
@@ -146,14 +149,14 @@ export function CTASection() {
             <div className="flex flex-col gap-4 sm:flex-row">
               <motion.a
                 href={`tel:${academyData.phone}`}
-                className="inline-flex h-14 items-center justify-center rounded-full bg-white px-8 text-sm font-semibold text-slate-950 shadow-[0_0_36px_rgba(255,255,255,0.28)] transition hover:scale-[1.02]"
+                className="inline-flex h-14 w-full items-center justify-center rounded-full bg-white px-8 text-sm font-semibold text-slate-950 shadow-[0_0_36px_rgba(255,255,255,0.28)] transition hover:scale-[1.02] sm:w-auto"
                 whileHover={{ y: -3, scale: 1.01 }}
               >
                 Call Now
               </motion.a>
               <motion.div
                 whileHover={{ y: -3 }}
-                className="glass-pill inline-flex h-14 items-center justify-center rounded-full px-8 text-sm font-semibold text-white"
+                className="glass-pill inline-flex h-14 w-full items-center justify-center rounded-full px-8 text-sm font-semibold text-white sm:w-auto"
               >
                 {academyData.phone}
               </motion.div>
@@ -189,7 +192,7 @@ export function CTASection() {
                         className={`h-6 w-6 transition duration-300 ease-out sm:h-7 sm:w-7 ${getSocialIconClass(item.platform)}`}
                       />
                     </span>
-                    <span className="flex-1 whitespace-nowrap text-sm font-semibold uppercase tracking-[0.12em] text-white/86 transition duration-300 group-hover:translate-x-0.5 group-hover:text-white sm:text-[0.95rem]">
+                    <span className="flex-1 text-sm font-semibold uppercase leading-5 tracking-[0.12em] text-white/86 transition duration-300 group-hover:translate-x-0.5 group-hover:text-white sm:text-[0.95rem]">
                       {item.label}
                     </span>
                   </motion.a>

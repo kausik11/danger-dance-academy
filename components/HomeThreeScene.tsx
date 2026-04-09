@@ -7,8 +7,8 @@ const ThreeScene = dynamic(
   {
     ssr: false,
     loading: () => (
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
-        <div className="glass-panel h-[32rem] animate-pulse rounded-[36px]" />
+      <section className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10">
+        <div className="glass-panel h-[20rem] animate-pulse rounded-[28px] sm:h-[32rem] sm:rounded-[36px]" />
       </section>
     ),
   },

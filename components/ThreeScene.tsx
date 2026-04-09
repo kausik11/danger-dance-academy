@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   Float,
@@ -88,24 +88,41 @@ function EnergyCore() {
 
 function SceneFallback() {
   return (
-    <div className="relative flex h-[30rem] items-center justify-center overflow-hidden rounded-[32px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(129,140,248,0.24),rgba(8,15,30,0.88)_54%),linear-gradient(180deg,rgba(4,8,24,0.1)_0%,rgba(2,6,23,0.82)_100%)]">
-      <div className="h-40 w-40 rounded-full bg-[radial-gradient(circle,_rgba(244,114,182,0.95),_rgba(129,140,248,0.7)_44%,_rgba(8,15,30,0)_72%)] blur-xl" />
+    <div className="relative flex h-[20rem] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(129,140,248,0.24),rgba(8,15,30,0.88)_54%),linear-gradient(180deg,rgba(4,8,24,0.1)_0%,rgba(2,6,23,0.82)_100%)] sm:h-[24rem] sm:rounded-[32px] lg:h-[30rem]">
+      <div className="h-28 w-28 rounded-full bg-[radial-gradient(circle,_rgba(244,114,182,0.95),_rgba(129,140,248,0.7)_44%,_rgba(8,15,30,0)_72%)] blur-xl sm:h-40 sm:w-40" />
     </div>
   );
 }
 
 export function ThreeScene() {
+  const [shouldRenderCanvas, setShouldRenderCanvas] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+    const syncCanvasAvailability = () => {
+      setShouldRenderCanvas(mediaQuery.matches);
+    };
+
+    syncCanvasAvailability();
+    mediaQuery.addEventListener("change", syncCanvasAvailability);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncCanvasAvailability);
+    };
+  }, []);
+
   return (
     <section
       id="experience"
-      className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10"
+      className="relative mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10"
     >
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={sectionViewport}
         variants={sectionContentVariants}
-        className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]"
+        className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[0.92fr_1.08fr]"
       >
         <motion.div
           variants={sectionContentVariants}
@@ -118,7 +135,7 @@ export function ThreeScene() {
           </motion.p>
           <motion.h2
             variants={sectionHeadingVariants}
-            className="mt-4 font-display text-4xl text-white sm:text-5xl"
+            className="mt-4 font-display text-3xl text-white sm:text-5xl"
           >
             A motion core that reacts to drag and floats like stage energy.
           </motion.h2>
@@ -138,7 +155,7 @@ export function ThreeScene() {
               <motion.div
                 key={item}
                 variants={listItemVariants}
-                className="glass-panel rounded-[24px] px-5 py-4 text-sm leading-7 text-slate-200"
+                className="glass-panel rounded-[24px] px-4 py-4 text-sm leading-7 text-slate-200 sm:px-5"
               >
                 {item}
               </motion.div>
@@ -148,31 +165,35 @@ export function ThreeScene() {
 
         <motion.div
           variants={sectionMediaVariants}
-          className="glass-panel overflow-hidden rounded-[36px] p-3 will-change-transform"
+          className="glass-panel overflow-hidden rounded-[28px] p-2 will-change-transform sm:rounded-[36px] sm:p-3"
         >
-          <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.16),rgba(2,6,23,0.9)_54%),linear-gradient(180deg,rgba(8,15,30,0.1)_0%,rgba(2,6,23,0.8)_100%)]">
+          <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.16),rgba(2,6,23,0.9)_54%),linear-gradient(180deg,rgba(8,15,30,0.1)_0%,rgba(2,6,23,0.8)_100%)] sm:rounded-[30px]">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(224,242,254,0.08),transparent_18%),radial-gradient(circle_at_82%_24%,rgba(129,140,248,0.12),transparent_20%)]" />
-            <Suspense fallback={<SceneFallback />}>
-              <Canvas
-                gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-                shadows={{ type: PCFShadowMap }}
-                dpr={[1, 1.5]}
-                className="relative z-10 h-[30rem] w-full"
-              >
-                <fog attach="fog" args={["#030712", 7, 14]} />
-                <PerspectiveCamera makeDefault position={[0, 0, 7.6]} fov={42} />
-                <ambientLight intensity={0.9} />
-                <directionalLight
-                  position={[4, 5, 3]}
-                  intensity={2.1}
-                  color="#c4b5fd"
-                  castShadow
-                />
-                <pointLight position={[-3, -1, 4]} intensity={24} color="#38bdf8" />
-                <pointLight position={[2, 1, -2]} intensity={12} color="#f472b6" />
-                <EnergyCore />
-              </Canvas>
-            </Suspense>
+            {shouldRenderCanvas ? (
+              <Suspense fallback={<SceneFallback />}>
+                <Canvas
+                  gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+                  shadows={{ type: PCFShadowMap }}
+                  dpr={[1, 1.5]}
+                  className="relative z-10 h-[20rem] w-full sm:h-[24rem] lg:h-[30rem]"
+                >
+                  <fog attach="fog" args={["#030712", 7, 14]} />
+                  <PerspectiveCamera makeDefault position={[0, 0, 7.6]} fov={42} />
+                  <ambientLight intensity={0.9} />
+                  <directionalLight
+                    position={[4, 5, 3]}
+                    intensity={2.1}
+                    color="#c4b5fd"
+                    castShadow
+                  />
+                  <pointLight position={[-3, -1, 4]} intensity={24} color="#38bdf8" />
+                  <pointLight position={[2, 1, -2]} intensity={12} color="#f472b6" />
+                  <EnergyCore />
+                </Canvas>
+              </Suspense>
+            ) : (
+              <SceneFallback />
+            )}
           </div>
         </motion.div>
       </motion.div>

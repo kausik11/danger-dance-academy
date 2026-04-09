@@ -91,6 +91,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -101,10 +102,20 @@ html {
 
 body {
   font-family: var(--font-roboto), sans-serif;
+  width: 100%;
+  overflow-x: hidden;
   background-image:
     radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 22rem),
     radial-gradient(circle at top right, rgba(59, 130, 246, 0.2), transparent 28rem),
     linear-gradient(145deg, #020b18 0%, #041427 48%, #03101f 100%);
+}
+
+img,
+video,
+canvas,
+iframe {
+  display: block;
+  max-width: 100%;
 }
 
 a,

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { Play, Sparkles, Star, X } from "lucide-react";
+import { Play, Star, X } from "lucide-react";
 import type { IconType } from "react-icons";
 import {
   FaAward,
@@ -225,10 +225,6 @@ export function DanceStylesSection() {
 
   const activeCategory =
     danceCategories.find((category) => category.id === activeCategoryId) ?? danceCategories[0];
-  const totalStyleCount = danceCategories.reduce(
-    (count, category) => count + category.styles.length,
-    0,
-  );
 
   useEffect(() => {
     if (!activeVideo) {
@@ -251,13 +247,13 @@ export function DanceStylesSection() {
   }, [activeVideo]);
 
   return (
-    <section className="relative mx-auto max-w-[92rem] px-6 py-20 sm:px-8 lg:px-10">
+    <section className="relative mx-auto max-w-[92rem] px-4 py-16 sm:px-8 sm:py-20 lg:px-10">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={sectionViewport}
         variants={sectionContentVariants}
-        className="relative overflow-hidden rounded-[36px] border border-white/12 bg-[linear-gradient(180deg,rgba(7,16,34,0.96)_0%,rgba(10,27,52,0.94)_45%,rgba(6,15,30,0.98)_100%)] p-6 shadow-[0_32px_100px_rgba(2,8,23,0.34)] sm:p-8 lg:p-10"
+        className="relative overflow-hidden rounded-[30px] border border-white/12 bg-[linear-gradient(180deg,rgba(7,16,34,0.96)_0%,rgba(10,27,52,0.94)_45%,rgba(6,15,30,0.98)_100%)] p-5 shadow-[0_32px_100px_rgba(2,8,23,0.34)] sm:rounded-[36px] sm:p-8 lg:p-10"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.16),_transparent_34%),radial-gradient(circle_at_85%_14%,_rgba(251,191,36,0.14),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.14),_transparent_32%)]" />
 
@@ -269,7 +265,7 @@ export function DanceStylesSection() {
             <div className="max-w-4xl">
               <motion.h2
                 variants={sectionHeadingVariants}
-                className="max-w-5xl font-display text-[2.4rem] leading-[0.98] text-white sm:text-[3.3rem]"
+                className="max-w-5xl font-display text-[2rem] leading-[0.98] text-white sm:text-[3.3rem]"
               >
                 Explore styles, watch previews, and choose the right training path.
               </motion.h2>
@@ -283,9 +279,9 @@ export function DanceStylesSection() {
             </div>
             <motion.div
               variants={sectionBodyVariants}
-              className="pointer-events-none relative hidden min-h-[11rem] items-end justify-end xl:flex"
+              className="pointer-events-none relative flex min-h-[5rem] items-end justify-center xl:min-h-[11rem] xl:justify-end"
             >
-              <div className="relative h-[12rem] w-[12rem]">
+              <div className="relative h-20 w-20 sm:h-24 sm:w-24 xl:h-[12rem] xl:w-[12rem]">
                 <Image
                   src="/all-gif/animation_spider.gif"
                   alt=""
@@ -320,7 +316,7 @@ export function DanceStylesSection() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="font-display text-[1.65rem] leading-none text-white">
+                      <h3 className="font-display text-[1.45rem] leading-none text-white sm:text-[1.65rem]">
                         {category.label}
                       </h3>
                     </div>
@@ -365,16 +361,16 @@ export function DanceStylesSection() {
               variants={categoryVariants}
               className="rounded-[32px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.03)_100%)] p-4 sm:p-5 lg:p-6"
               >
-                <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/8 pb-5">
+                <div className="mb-5 flex flex-col gap-4 border-b border-white/8 pb-5 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0 max-w-3xl">
-                    <h3 className="font-display text-[2.15rem] leading-none text-white">
+                    <h3 className="font-display text-[1.8rem] leading-none text-white sm:text-[2.15rem]">
                       {activeCategory.label}
                     </h3>
                     <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300/78">
                       {activeCategory.description}
                     </p>
                   </div>
-                  <div className="relative w-[15.5rem] shrink-0 self-center">
+                  <div className="relative mx-auto w-full max-w-[7rem] shrink-0 self-center md:max-w-[13rem] lg:max-w-[15.5rem]">
                     <div className="relative aspect-square overflow-hidden">
                       <Image
                         src="/all-gif/dezyne_3d-dance-21994.gif"
@@ -439,10 +435,10 @@ export function DanceStylesSection() {
                         <Play className="h-4.5 w-4.5 fill-current" />
                       </div>
                       <div className="absolute inset-x-0 bottom-0 p-4">
-                        <h4 className="font-display text-[1.9rem] leading-none text-white">
+                        <h4 className="font-display text-[clamp(1.45rem,7vw,1.9rem)] leading-none text-white">
                           {style.name}
                         </h4>
-                        <div className="mt-3 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.22em] text-slate-300/72">
+                        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-[11px] uppercase tracking-[0.22em] text-slate-300/72">
                           <span>Style {String(styleIndex + 1).padStart(2, "0")}</span>
                           <span>Tap To Preview</span>
                         </div>
@@ -478,7 +474,7 @@ export function DanceStylesSection() {
                   <p className="text-xs uppercase tracking-[0.28em] text-amber-200/84">
                   Why Families Choose This Academy
                   </p>
-                  <h3 className="mt-3 max-w-3xl font-display text-[2.4rem] leading-[0.98] text-white sm:text-[3rem]">
+                  <h3 className="mt-3 max-w-3xl font-display text-[2rem] leading-[0.98] text-white sm:text-[3rem]">
                     More than classes. A complete stage-ready journey.
                   </h3>
                 </div>
@@ -550,7 +546,7 @@ export function DanceStylesSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/88 px-4 py-8 backdrop-blur-md"
+            className="fixed inset-0 z-[70] flex items-end justify-center overflow-y-auto bg-slate-950/88 px-4 py-8 backdrop-blur-md sm:items-center"
             onClick={() => setActiveVideo(null)}
           >
             <motion.div
@@ -559,14 +555,14 @@ export function DanceStylesSection() {
               exit={{ opacity: 0, y: 18, scale: 0.98 }}
               transition={{ duration: 0.24, ease: "easeOut" }}
               onClick={(event) => event.stopPropagation()}
-              className="w-full max-w-4xl overflow-hidden rounded-[30px] border border-white/14 bg-[linear-gradient(180deg,rgba(10,18,35,0.98)_0%,rgba(4,10,24,0.98)_100%)] shadow-[0_30px_120px_rgba(2,8,23,0.58)]"
+              className="my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[28px] border border-white/14 bg-[linear-gradient(180deg,rgba(10,18,35,0.98)_0%,rgba(4,10,24,0.98)_100%)] shadow-[0_30px_120px_rgba(2,8,23,0.58)] sm:rounded-[30px]"
             >
-              <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
+              <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-5">
                 <div>
                   <p className="text-xs uppercase tracking-[0.24em] text-sky-200/68">
                     Preview Video
                   </p>
-                  <h3 className="mt-1 font-display text-2xl text-white">
+                  <h3 className="mt-1 font-display text-xl text-white sm:text-2xl">
                     {activeVideo.title}
                   </h3>
                 </div>
@@ -579,7 +575,7 @@ export function DanceStylesSection() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <div className="p-4 sm:p-5">
+              <div className="overflow-y-auto p-4 sm:p-5">
                 <div className="overflow-hidden rounded-[24px] border border-white/10 bg-black">
                   <video
                     key={activeVideo.videoSrc}

@@ -62,6 +62,10 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
   }, []);
 
   useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (!isContactModalOpen) {
       return;
     }
@@ -184,7 +188,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
           <Link
             href={ctaHref}
             onClick={closeMenu}
-            className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300/70 bg-white px-5 text-sm font-semibold text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition hover:border-sky-300 hover:text-sky-700"
+            className="inline-flex h-11 w-full items-center justify-center rounded-full border border-slate-300/70 bg-white px-5 text-sm font-semibold text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition hover:border-sky-300 hover:text-sky-700 sm:w-auto"
           >
             {ctaLabel ?? "Action"}
           </Link>
@@ -195,7 +199,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
         <a
           href={ctaHref}
           onClick={closeMenu}
-          className="inline-flex h-10 items-center justify-center rounded-full border border-slate-300/70 bg-white px-5 text-sm font-semibold text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition hover:border-sky-300 hover:text-sky-700"
+          className="inline-flex h-11 w-full items-center justify-center rounded-full border border-slate-300/70 bg-white px-5 text-sm font-semibold text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition hover:border-sky-300 hover:text-sky-700 sm:w-auto"
         >
           {ctaLabel ?? "Action"}
         </a>
@@ -207,7 +211,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
         <button
           type="button"
           onClick={openContactModal}
-          className="inline-flex h-10 items-center justify-center rounded-full border border-sky-200/80 bg-[linear-gradient(135deg,#f8fbff_0%,#d8f1ff_46%,#99ddff_100%)] px-5 text-sm font-semibold text-slate-900 shadow-[0_12px_26px_rgba(56,189,248,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(56,189,248,0.2)]"
+          className="inline-flex h-11 w-full items-center justify-center rounded-full border border-sky-200/80 bg-[linear-gradient(135deg,#f8fbff_0%,#d8f1ff_46%,#99ddff_100%)] px-5 text-sm font-semibold text-slate-900 shadow-[0_12px_26px_rgba(56,189,248,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(56,189,248,0.2)] sm:w-auto"
         >
           Contact Us
         </button>
@@ -218,7 +222,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
       <a
         href={`tel:${academyData.phone}`}
         onClick={closeMenu}
-        className="inline-flex h-10 items-center justify-center rounded-full border border-sky-200/80 bg-[linear-gradient(135deg,#f8fbff_0%,#d8f1ff_46%,#99ddff_100%)] px-5 text-sm font-semibold text-slate-900 shadow-[0_12px_26px_rgba(56,189,248,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(56,189,248,0.2)]"
+        className="inline-flex h-11 w-full items-center justify-center rounded-full border border-sky-200/80 bg-[linear-gradient(135deg,#f8fbff_0%,#d8f1ff_46%,#99ddff_100%)] px-5 text-sm font-semibold text-slate-900 shadow-[0_12px_26px_rgba(56,189,248,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(56,189,248,0.2)] sm:w-auto"
       >
         Call Now
       </a>
@@ -232,7 +236,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
       transition={{ duration: 0.5 }}
       className="fixed inset-x-0 top-0 z-40"
     >
-      <div className="mx-auto max-w-[92rem] px-3 py-4 sm:px-5 lg:px-6">
+      <div className="mx-auto max-w-[92rem] px-3 py-3 sm:px-5 sm:py-4 lg:px-6">
         <motion.div
           animate={
             isScrolled
@@ -252,7 +256,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                 }
           }
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="relative isolate overflow-hidden rounded-[28px] border backdrop-blur-xl"
+          className="relative isolate overflow-hidden rounded-[24px] border backdrop-blur-xl sm:rounded-[28px]"
         >
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 overflow-hidden">
             <Image
@@ -276,14 +280,14 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
 
           <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04)_0%,rgba(2,6,23,0.08)_54%,rgba(2,6,23,0.18)_100%)]" />
 
-          <div className="relative z-10 flex items-center justify-between gap-4 px-4 py-3 sm:px-5 lg:px-6 xl:gap-8">
+          <div className="relative z-10 flex items-center justify-between gap-3 px-3 py-3 sm:gap-4 sm:px-5 lg:px-6 xl:gap-8">
             <Link
               href="/"
               onClick={closeMenu}
               className="min-w-0 flex-1 xl:w-[20rem] xl:flex-none 2xl:w-[22rem]"
             >
               <div className="flex items-center gap-3">
-                <span className="relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white shadow-[0_12px_26px_rgba(15,23,42,0.1)] sm:h-16 sm:w-16">
+                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[1.1rem] border border-slate-200 bg-white shadow-[0_12px_26px_rgba(15,23,42,0.1)] sm:h-16 sm:w-16 sm:rounded-[1.35rem]">
                   <Image
                     src="/logo.jpeg"
                     alt={`${academyData.shortName} logo`}
@@ -296,7 +300,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 sm:gap-2.5">
                     <p
-                      className={`text-sm font-semibold leading-[1.05] tracking-normal whitespace-normal sm:text-[1.12rem] ${playfairDisplay.className} ${brandTextClass}`}
+                      className={`text-[0.95rem] font-semibold leading-[1.05] tracking-normal whitespace-normal sm:text-[1.12rem] ${playfairDisplay.className} ${brandTextClass}`}
                     >
                       {academyData.shortName}
                     </p>
@@ -307,7 +311,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                       width={52}
                       height={52}
                       unoptimized
-                      className="h-[2.7rem] w-[2.7rem] shrink-0 object-contain sm:h-[3rem] sm:w-[3rem]"
+                      className="h-9 w-9 shrink-0 object-contain sm:h-[3rem] sm:w-[3rem]"
                     />
                   </div>
                   <div className="mt-2 hidden 2xl:flex">
@@ -354,7 +358,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
               aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen((current) => !current)}
-              className={`inline-flex h-11 w-11 items-center justify-center rounded-full transition xl:hidden ${menuButtonClass}`}
+              className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition xl:hidden ${menuButtonClass}`}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -374,7 +378,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                   animate={{ y: 0 }}
                   exit={{ y: -8 }}
                   transition={{ duration: 0.24, ease: "easeOut" }}
-                  className="border-t border-white/12 px-4 pb-4 pt-4 sm:px-5 lg:px-6"
+                  className="border-t border-white/12 px-3 pb-4 pt-4 sm:px-5 lg:px-6"
                 >
                   <div className="mb-4 text-[10px] uppercase tracking-[0.24em] text-white/62 sm:hidden">
                     Baranagar | Dunlop | Belghoria
@@ -397,7 +401,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
                           <Link
                             href={item.href}
                             onClick={closeMenu}
-                            className={`block rounded-2xl px-4 py-3 text-sm font-semibold tracking-[0.01em] transition ${
+                            className={`block min-h-11 rounded-2xl px-4 py-3 text-sm font-semibold tracking-[0.01em] transition ${
                               pathname === item.href
                                 ? "bg-cyan-300/18 text-cyan-100"
                                 : "bg-white/8 text-white/82 hover:bg-white/14 hover:text-cyan-100"
@@ -432,7 +436,7 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto px-4 py-4 sm:px-6 sm:py-6"
+            className="fixed inset-0 z-[80] flex items-end justify-center overflow-y-auto px-4 py-4 sm:items-center sm:px-6 sm:py-6"
           >
             <button
               type="button"
@@ -446,37 +450,34 @@ export function Navbar({ ctaHref, ctaLabel }: NavbarProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 18, scale: 0.98 }}
               transition={{ duration: 0.24, ease: "easeOut" }}
-              className="glass-panel relative z-10 my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[34px] border border-white/12 sm:max-h-[calc(100svh-3rem)]"
+              className="glass-panel relative z-10 my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[28px] border border-white/12 sm:max-h-[calc(100svh-3rem)] sm:rounded-[34px]"
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(224,242,254,0.15),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.14),transparent_28%),linear-gradient(180deg,rgba(6,23,44,0.14)_0%,rgba(4,14,28,0.08)_100%)]" />
 
-              <div className="relative z-10 overflow-y-auto p-5 sm:p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="max-w-xl">
-                    <h3 className="mt-0 font-display text-[1rem] leading-none text-white sm:text-4xl">
-                      Ask about classes, fees, and trial options
-                   
-                   <a
-                      href={`tel:${academyData.phone}`}
-                      className="ml-4 inline-flex items-center gap-3 rounded-full border border-white/12 bg-black/20 px-4 py-2 text-sm font-semibold text-white"
-                    >
-                      <Phone className="h-4 w-4 text-sky-200" />
-                      {academyData.phone}
-                    </a> </h3>
-                    
-                  </div>
+              <button
+                type="button"
+                aria-label="Close modal"
+                onClick={closeContactModal}
+                className="glass-card absolute right-4 top-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-200 transition hover:text-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
 
-                  <button
-                    type="button"
-                    aria-label="Close modal"
-                    onClick={closeContactModal}
-                    className="glass-card inline-flex h-11 w-11 items-center justify-center rounded-full text-slate-200 transition hover:text-white"
+              <div className="relative z-10 overflow-y-auto p-4 sm:p-8">
+                <div className="max-w-xl pr-12 sm:pr-16">
+                  <h3 className="font-display text-2xl leading-tight text-white sm:text-4xl">
+                    Ask about classes, fees, and trial options
+                  </h3>
+                  <a
+                    href={`tel:${academyData.phone}`}
+                    className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full border border-white/12 bg-black/20 px-4 py-2 text-sm font-semibold text-white sm:w-auto"
                   >
-                    <X className="h-5 w-5" />
-                  </button>
+                    <Phone className="h-4 w-4 text-sky-200" />
+                    {academyData.phone}
+                  </a>
                 </div>
 
-                <form onSubmit={handleSubmit} className="mt-2 sm:mt-1">
+                <form onSubmit={handleSubmit} className="mt-6 sm:mt-5">
                   <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
                     <label className="block">
                       <span className="text-sm font-medium text-slate-200">Full Name</span>

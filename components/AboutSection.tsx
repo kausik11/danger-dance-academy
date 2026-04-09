@@ -15,7 +15,7 @@ import {
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
+    <section id="about" className="relative mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -90,7 +90,7 @@ export function AboutSection() {
             <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#070612]">
               <video
                 src="/about.mp4"
-                className="h-[30rem] w-full object-cover"
+                className="h-[22rem] w-full object-cover sm:h-[26rem] lg:h-[30rem]"
                 autoPlay
                 muted
                 loop

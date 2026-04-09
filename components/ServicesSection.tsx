@@ -142,12 +142,12 @@ export function ServicesSection({ services }: ServicesSectionProps) {
 
   return (
     <>
-      <section id="services" className="mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-10">
+      <section id="services" className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-10">
         <div className="max-w-3xl">
           <p className="section-eyebrow text-sm uppercase tracking-[0.3em] text-sky-200/70">
             Services
           </p>
-          <h2 className="mt-4 font-display text-4xl text-white sm:text-5xl">
+          <h2 className="mt-4 font-display text-3xl text-white sm:text-5xl">
             Explore hip hop, ballet, modern, and freestyle dance forms for every stage.
           </h2>
         </div>
@@ -170,7 +170,7 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                 </div>
 
                 <div className="p-6">
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-display text-2xl text-white">
                       {service.title}
                     </p>
@@ -215,7 +215,7 @@ export function ServicesSection({ services }: ServicesSectionProps) {
       </section>
 
       {selectedService ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 sm:px-6">
+        <div className="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto px-4 py-8 sm:items-center sm:px-6">
           <button
             type="button"
             aria-label="Close contact form"
@@ -223,16 +223,16 @@ export function ServicesSection({ services }: ServicesSectionProps) {
             onClick={closeContactModal}
           />
 
-          <div className="glass-panel relative z-10 w-full max-w-2xl overflow-hidden rounded-[34px] border border-white/12">
+          <div className="glass-panel relative z-10 my-auto flex max-h-[calc(100svh-2rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[28px] border border-white/12 sm:rounded-[34px]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(224,242,254,0.15),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.14),transparent_28%),linear-gradient(180deg,rgba(6,23,44,0.14)_0%,rgba(4,14,28,0.08)_100%)]" />
 
-            <div className="relative z-10 p-6 sm:p-8">
+            <div className="relative z-10 overflow-y-auto p-5 sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div className="max-w-xl">
                   <span className="glass-pill inline-flex rounded-full px-4 py-2 text-sm text-cyan-100">
                     {selectedService.title}
                   </span>
-                  <h3 className="mt-4 font-display text-3xl text-white sm:text-4xl">
+                  <h3 className="mt-4 font-display text-2xl text-white sm:text-4xl">
                     Contact us for this dance form
                   </h3>
                   <p className="mt-3 text-base leading-8 text-slate-300/82">
