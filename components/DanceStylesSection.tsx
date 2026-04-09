@@ -19,7 +19,6 @@ import {
   sectionBodyVariants,
   sectionContentVariants,
   sectionHeadingVariants,
-  sectionViewport,
 } from "@/lib/animationVariants";
 
 const categoryVariants = createStaggerContainer(0.12, 0.06);
@@ -249,9 +248,8 @@ export function DanceStylesSection() {
   return (
     <section className="relative mx-auto max-w-[92rem] px-4 py-16 sm:px-8 sm:py-20 lg:px-10">
       <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={sectionViewport}
+        initial="visible"
+        animate="visible"
         variants={sectionContentVariants}
         className="relative overflow-hidden rounded-[30px] border border-white/12 bg-[linear-gradient(180deg,rgba(7,16,34,0.96)_0%,rgba(10,27,52,0.94)_45%,rgba(6,15,30,0.98)_100%)] p-5 shadow-[0_32px_100px_rgba(2,8,23,0.34)] sm:rounded-[36px] sm:p-8 lg:p-10"
       >
